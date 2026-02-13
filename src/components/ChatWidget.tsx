@@ -21,7 +21,7 @@ function getKnowledgeResponse(userInput: string): string | null {
   }
   
   if (intent === 'demo') {
-    return `Great! I can help you schedule a demo:\n\n1. 📅 Book directly: calendly.com/denivra/demo\n2. 📧 Email: info@denivra.com\n3. 📞 Call: +1 (347) 803-0812\n\nOr tell me your preferred time and I'll arrange it!`
+    return `Great! I can help you schedule a demo:\n\n1. 📅 Book directly: calendly.com/bsa-denivra/30min\n2. 📧 Email: info@denivra.com\n3. 📞 Call: +1 (347) 803-0812\n\nOr tell me your preferred time and I'll arrange it!`
   }
   
   if (intent === 'voice_ai') {
@@ -131,7 +131,7 @@ export function ChatWidget() {
     }
 
     if (lowerInput.includes('demo') || lowerInput.includes('trial') || lowerInput.includes('try')) {
-      return `Great! I can help you schedule a demo. You can:\n\n1. 📅 Book directly at calendly.com/denivra/demo\n2. 📧 Email us at info@denivra.com\n3. 💬 Tell me your preferred time and I'll pass it to the team\n\nWhich works best for you?`
+      return `Great! I can help you schedule a demo. You can:\n\n1. 📅 Book directly at calendly.com/bsa-denivra/30min\n2. 📧 Email us at info@denivra.com\n3. 💬 Tell me your preferred time and I'll pass it to the team\n\nWhich works best for you?`
     }
 
     if (lowerInput.includes('voice') || lowerInput.includes('phone') || lowerInput.includes('call')) {

@@ -212,7 +212,7 @@ export function ContactPage() {
                 title: 'Book a Demo', 
                 desc: '30-min walkthrough',
                 action: 'Schedule',
-                href: 'https://calendly.com/denivra/demo'
+                href: 'https://calendly.com/bsa-denivra/30min'
               },
               { 
                 icon: Mail, 
