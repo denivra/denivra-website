@@ -100,45 +100,16 @@ export function ChatWidget() {
       // First try to get a local knowledge base response
       const knowledgeResponse = getKnowledgeResponse(userInput)
       
-      if (knowledgeResponse) {
-        // Use knowledge base response (instant)
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: knowledgeResponse,
-          timestamp: new Date(),
-        }
-        setMessages((prev) => [...prev, assistantMessage])
-      } else {
-        // Try to connect to Pivot via API
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            message: userInput,
-            sessionId,
-          }),
-        })
-
-        let assistantContent: string
-
-        if (response.ok) {
-          const data = await response.json()
-          assistantContent = data.message
-        } else {
-          // Fallback response
-          assistantContent = getFallbackResponse(userInput)
-        }
-
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: assistantContent,
-          timestamp: new Date(),
-        }
-
-        setMessages((prev) => [...prev, assistantMessage])
+      // Use knowledge base response or fallback (instant, no API needed)
+      const assistantContent = knowledgeResponse || getFallbackResponse(userInput)
+      
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: assistantContent,
+        timestamp: new Date(),
       }
+      setMessages((prev) => [...prev, assistantMessage])
 
       // Show call option after a few exchanges
       if (messages.length >= 4 && !showCallOption) {
@@ -146,15 +117,6 @@ export function ChatWidget() {
       }
     } catch (error) {
       console.error('Chat error:', error)
-      
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: getFallbackResponse(userInput),
-        timestamp: new Date(),
-      }
-
-      setMessages((prev) => [...prev, assistantMessage])
     } finally {
       setIsLoading(false)
     }
