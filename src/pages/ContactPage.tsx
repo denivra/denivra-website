@@ -19,6 +19,7 @@ declare global {
         }) => void
       }
     }
+    openPivotChat?: () => void
   }
 }
 
@@ -191,8 +192,12 @@ export function ContactPage() {
                 action: 'Open Chat',
                 onClick: () => {
                   // Trigger chat widget open
-                  const chatBtn = document.querySelector('.chat-bubble') as HTMLButtonElement
-                  chatBtn?.click()
+                  if (window.openPivotChat) {
+                    window.openPivotChat()
+                  } else {
+                    const chatBtn = document.querySelector('.chat-bubble') as HTMLButtonElement
+                    chatBtn?.click()
+                  }
                 }
               },
               { 

@@ -44,8 +44,21 @@ function generateSessionId(): string {
   return 'sess_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36)
 }
 
+// Global function to open chat from anywhere
+declare global {
+  interface Window {
+    openPivotChat?: () => void
+  }
+}
+
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
+  
+  // Expose open function globally
+  useEffect(() => {
+    window.openPivotChat = () => setIsOpen(true)
+    return () => { delete window.openPivotChat }
+  }, [])
   const [showCallOption, setShowCallOption] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -200,7 +213,7 @@ export function ChatWidget() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple shadow-lg shadow-primary-500/25 flex items-center justify-center hover:shadow-xl hover:shadow-primary-500/30 transition-shadow"
+            className="chat-bubble fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple shadow-lg shadow-primary-500/25 flex items-center justify-center hover:shadow-xl hover:shadow-primary-500/30 transition-shadow cursor-pointer"
           >
             <MessageSquare className="w-6 h-6 text-white" />
             {/* Notification dot */}
