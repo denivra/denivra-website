@@ -106,13 +106,34 @@ function App() {
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#products" className="text-dark-300 hover:text-white transition-colors">Products</a>
-              <a href="#solutions" className="text-dark-300 hover:text-white transition-colors">Solutions</a>
-              <a href="#case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</a>
-              <a href="#blog" className="text-dark-300 hover:text-white transition-colors">Blog</a>
+              <div className="relative group">
+                <button className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1">
+                  <span>Products</span>
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+                <div className="absolute top-full left-0 mt-2 w-48 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
+                  <a href="/products/voice-ai" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">Voice AI</a>
+                  <a href="#products" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">Nous Assist</a>
+                  <a href="#products" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">Nous Connect</a>
+                  <a href="#products" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-b-xl">Nous Command</a>
+                </div>
+              </div>
+              <div className="relative group">
+                <button className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1">
+                  <span>Solutions</span>
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+                <div className="absolute top-full left-0 mt-2 w-48 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
+                  <a href="/solutions/call-centers" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">Call Centers</a>
+                  <a href="/solutions/small-business" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">Small Business</a>
+                  <a href="/solutions/enterprise" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-b-xl">Enterprise</a>
+                </div>
+              </div>
+              <a href="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</a>
+              <a href="/blog" className="text-dark-300 hover:text-white transition-colors">Blog</a>
               <a href="#roi" className="text-dark-300 hover:text-white transition-colors">ROI</a>
               <a href="#about" className="text-dark-300 hover:text-white transition-colors">About</a>
-              <button className="btn-primary text-sm">Book Demo</button>
+              <a href="/contact" className="btn-primary text-sm">Book Demo</a>
             </div>
 
             <button 
@@ -372,28 +393,29 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">Products</h4>
               <ul className="space-y-2 text-dark-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Nous Assist</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Nous Connect</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Nous Command</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Voice AI</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">Nous Assist</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">Nous Connect</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">Nous Command</a></li>
+                <li><a href="/products/voice-ai" className="hover:text-white transition-colors">Voice AI</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4">Solutions</h4>
               <ul className="space-y-2 text-dark-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Call Centers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Small Business</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Enterprise</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Café Operations</a></li>
+                <li><a href="/solutions/call-centers" className="hover:text-white transition-colors">Call Centers</a></li>
+                <li><a href="/solutions/small-business" className="hover:text-white transition-colors">Small Business</a></li>
+                <li><a href="/solutions/enterprise" className="hover:text-white transition-colors">Enterprise</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
+              <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-dark-400 text-sm">
-                <li>info@denivra.com</li>
-                <li>bsa@denivra.com</li>
+                <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="/case-studies" className="hover:text-white transition-colors">Case Studies</a></li>
+                <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="mailto:info@denivra.com" className="hover:text-white transition-colors">info@denivra.com</a></li>
               </ul>
             </div>
           </div>
@@ -401,8 +423,8 @@ function App() {
           <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-dark-400 text-sm">
             <p>© 2025 Denivra Inc. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms</a>
             </div>
           </div>
         </div>

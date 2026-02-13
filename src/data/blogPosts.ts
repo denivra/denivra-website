@@ -1,383 +1,341 @@
 export interface BlogPost {
-  id: string
   slug: string
   title: string
   excerpt: string
   content: string
-  author: string
-  publishedAt: string
+  author: {
+    name: string
+    role: string
+  }
+  category: string
   readTime: string
-  category: 'ai-trends' | 'automation' | 'case-study' | 'voice-ai' | 'industry'
-  tags: string[]
-  featured: boolean
-  image?: string
+  publishedAt: string
+  featured?: boolean
 }
 
 export const blogPosts: BlogPost[] = [
   {
-    id: 'blog-001',
-    slug: 'ai-agents-replacing-call-centers-2025',
-    title: 'AI Voice Agents Are Replacing Call Centers — Here\'s What\'s Actually Happening',
-    excerpt: 'The shift from human-staffed call centers to AI voice agents is no longer theoretical. We break down what\'s working, what\'s failing, and the real economics.',
+    slug: 'ai-voice-agents-replacing-call-centers',
+    title: "AI Voice Agents Are Replacing Call Centers — Here's What's Actually Happening",
+    excerpt: "The shift from human-staffed call centers to AI voice agents is no longer theoretical. We break down what's working, what's failing, and the real economics.",
     content: `
-## The Call Center Revolution Is Here
+## The State of AI Voice in 2025
 
-In 2024, over 15% of Fortune 500 companies began pilot programs for AI voice agents. By early 2025, that number doubled. The question is no longer "if" but "how fast" and "how well."
-
-### The Economics Are Brutal (For Humans)
-
-Let's talk numbers:
-- Average US call center agent: **$18/hour** + benefits (~$25 total)
-- Average AI voice agent: **$0.08-0.15/minute** depending on provider
-- For a 10-minute call: Human = $4.17 | AI = $1.00
-
-That's a **76% cost reduction** before you factor in 24/7 availability, zero sick days, and perfect recall.
+The call center industry is experiencing its biggest disruption since offshoring. But unlike the gradual shift to overseas labor, AI adoption is happening fast — and the results are surprising both skeptics and believers.
 
 ### What's Actually Working
 
-**Tier 1 Support (FAQ, Status Updates)**
-AI handles 80-90% of routine queries flawlessly. "Where's my order?" "What are your hours?" "How do I reset my password?" — these are solved problems.
+**Tier-1 Support:** AI handles 60-80% of routine inquiries without human intervention. Password resets, account balance checks, appointment scheduling — these are now AI's domain.
 
-**Appointment Scheduling**
-Natural language date negotiation is now seamless. AI understands "next Tuesday afternoon" and "not Mondays" without breaking a sweat.
+**Lead Qualification:** Inbound leads get screened and qualified 24/7. Hot prospects are routed to sales immediately; others get nurtured automatically.
 
-**Lead Qualification**
-SPIN-style questioning baked into AI flow. "What brings you in today?" → "What happens if you don't solve that?" → "What would it mean to have this fixed?"
+**Outbound Campaigns:** Payment reminders, appointment confirmations, and survey calls run at scale without staffing headaches.
 
-### What's Still Hard
+### What's Still Challenging
 
-**Emotional Escalations**
-When someone is crying or furious, AI still struggles. The solution: seamless warm handoff to humans, triggered by sentiment detection.
+**Complex Problem Resolution:** When customers have multi-faceted issues requiring judgment, AI still struggles. The best systems recognize these situations and escalate quickly.
 
-**Complex Multi-Party Scenarios**
-Coordination calls with multiple stakeholders need human judgment. AI assists, humans decide.
+**Emotional Conversations:** Complaints, cancellations, and sensitive topics require human empathy. AI can detect frustration and route accordingly, but shouldn't attempt resolution.
 
-### The Denivra Approach
+**Industry-Specific Knowledge:** Generic AI fails in specialized industries. Training on domain-specific data is essential.
 
-We don't rip and replace. We augment:
-1. AI handles the 80% routine work
-2. Humans focus on the 20% that needs empathy
-3. Cost drops 60%, satisfaction rises 15%
+### The Real Economics
 
-The future isn't AI vs humans — it's AI + humans, each doing what they do best.
+Let's break down the math for a typical SMB:
 
----
+| Metric | Human Agent | AI Agent |
+|--------|-------------|----------|
+| Cost per minute | $0.50-1.00 | $0.08-0.15 |
+| Availability | 8-12 hrs/day | 24/7 |
+| Training time | 2-4 weeks | 1-2 days |
+| Scaling | Linear cost | Marginal cost |
 
-*Want to see how this works for your operation? [Book a demo](/demo) or [chat with Pivot](/chat).*
+For a business handling 500 calls/day, the annual savings typically exceed $200,000.
+
+### Implementation Recommendations
+
+1. **Start narrow:** Pick one use case and perfect it
+2. **Human-in-the-loop:** Always have escalation paths
+3. **Measure everything:** Track resolution rates, CSAT, and cost per resolution
+4. **Iterate weekly:** AI improves with feedback
+
+### Looking Ahead
+
+By 2027, we expect 70% of routine call center interactions to be AI-handled. The human agents who remain will be specialists — handling complex cases, building relationships, and training AI systems.
+
+The question isn't whether to adopt AI voice — it's how fast you can implement it before competitors do.
     `,
-    author: 'Niko Bessas',
-    publishedAt: '2025-02-10',
+    author: { name: 'Niko Bessas', role: 'Co-Founder' },
+    category: 'Voice AI',
     readTime: '5 min',
-    category: 'voice-ai',
-    tags: ['voice-ai', 'call-centers', 'automation', 'cost-savings'],
+    publishedAt: '2025-02-09',
     featured: true,
   },
   {
-    id: 'blog-002',
-    slug: 'small-business-automation-roi-guide',
-    title: 'The SMB Automation Playbook: What Actually Delivers ROI',
-    excerpt: 'Not all automation is created equal. Here\'s a prioritized guide to what small businesses should automate first — and what to avoid.',
+    slug: 'smb-automation-playbook-roi',
+    title: "The SMB Automation Playbook: What Actually Delivers ROI",
+    excerpt: "Not all automation is created equal. Here's a prioritized guide to what small businesses should automate first — and what to avoid.",
     content: `
-## Stop Automating Everything. Start Automating This.
+## The Automation Priority Matrix
 
-Every vendor wants to sell you "total digital transformation." Most of it is overpriced nonsense. Here's what actually moves the needle for businesses under 50 employees.
+After helping hundreds of SMBs automate their operations, we've identified clear patterns in what works. Here's the playbook.
 
-### Tier 1: Automate Immediately (ROI in < 30 days)
+### Tier 1: Automate First (Highest ROI)
 
-**Email Triage**
-- Sort incoming emails by urgency/type
-- Auto-respond to common questions
-- Flag important messages for human attention
-- **Time saved: 2-4 hours/day**
+**Email Triage & Response**
+- Time saved: 2-4 hours/day
+- Setup effort: Low
+- ROI timeline: Immediate
+
+Your inbox is probably your biggest time sink. AI can categorize incoming emails, draft responses to routine inquiries, and flag urgent items for your attention.
 
 **Appointment Scheduling**
-- Link in email signature
-- No back-and-forth "how about Tuesday?"
-- Automatic reminders
-- **Conversion boost: 15-25%**
+- Time saved: 1-2 hours/day
+- Setup effort: Low
+- ROI timeline: 1 week
 
-**Invoice Data Extraction**
-- Scan PDFs for vendor, amount, date
-- Push to QuickBooks/Xero automatically
-- Flag duplicates
-- **Processing time: 90% reduction**
+Stop the back-and-forth. Let customers book directly through chat, voice, or web — synced with your calendar in real-time.
 
-### Tier 2: Automate Next (ROI in 60-90 days)
+**Lead Response**
+- Revenue impact: 30-50% more conversions
+- Setup effort: Medium
+- ROI timeline: 1 month
 
-**Customer Inquiry Chatbot**
-- Website, WhatsApp, Facebook Messenger
-- Answer FAQs 24/7
-- Collect leads while you sleep
-- **Lead capture: +40%**
+Speed-to-lead is everything. AI responds to inquiries in seconds, qualifies prospects, and books meetings while you sleep.
 
-**Social Media Posting**
-- Schedule a month of content
-- Cross-post to multiple platforms
-- Analytics dashboard
-- **Time saved: 5-10 hours/week**
+### Tier 2: Automate Next (Strong ROI)
 
-### Tier 3: Wait Until You're Ready
+**Invoice & Payment Processing**
+- Time saved: 3-5 hours/week
+- Setup effort: Medium
+- ROI timeline: 1 month
 
-**Complex CRM Workflows**
-- Only if you actually use your CRM consistently
-- Half-adopted automation creates chaos
+Automated invoicing, payment reminders, and reconciliation. Integrates with QuickBooks, Xero, and most accounting software.
 
-**AI Voice Agents**
-- Requires call volume to justify
-- Start with chatbot, graduate to voice
+**Customer Onboarding**
+- Time saved: 2-3 hours/customer
+- Setup effort: Medium
+- ROI timeline: 2 months
 
-### The Mistake Everyone Makes
+Welcome sequences, document collection, and initial setup — all automated with human touchpoints where they matter.
 
-Buying "enterprise" solutions too early. You don't need Salesforce when you have 50 customers. You need a spreadsheet and Nous Assist.
+### Tier 3: Consider Later (Good ROI, Higher Complexity)
 
-**Match the tool to the problem, not your aspirations.**
+**Phone Support**
+- Cost reduction: 40-60%
+- Setup effort: High
+- ROI timeline: 2-3 months
 
----
+Voice AI is powerful but requires more setup. Start with simple use cases like appointment booking before handling support calls.
 
-*Ready to figure out your automation priorities? [Chat with Pivot](/chat) — no sales pitch, just clarity.*
+**Custom Workflows**
+- Impact: Variable
+- Setup effort: High
+- ROI timeline: 3-6 months
+
+Industry-specific automation can be transformative but requires careful planning and iteration.
+
+### What NOT to Automate
+
+- **High-stakes decisions:** Anything requiring judgment should have human oversight
+- **Relationship-critical moments:** First meetings, contract negotiations, conflict resolution
+- **Creative work:** Strategy, brand voice, unique content
+
+### Getting Started
+
+1. Audit your week — track where your time actually goes
+2. Calculate the cost — your hourly rate × hours spent = automation budget
+3. Start with one thing — don't try to automate everything at once
+4. Measure results — set baselines before and track after
+
+The businesses that win aren't necessarily the most automated — they're the ones that automate the right things.
     `,
-    author: 'Spyros Nakos',
-    publishedAt: '2025-02-08',
+    author: { name: 'Spyros Nakos', role: 'Co-Founder' },
+    category: 'Automation',
     readTime: '4 min',
-    category: 'automation',
-    tags: ['small-business', 'roi', 'automation', 'strategy'],
-    featured: true,
+    publishedAt: '2025-02-07',
   },
   {
-    id: 'blog-003',
-    slug: 'claude-vs-gpt-enterprise-automation',
-    title: 'Claude vs GPT-4 for Enterprise Automation: Our Real-World Testing',
-    excerpt: 'We ran both models through 10,000 real business tasks. Here\'s what we learned about when to use which.',
+    slug: 'claude-vs-gpt4-enterprise-automation',
+    title: "Claude vs GPT-4 for Enterprise Automation: Our Real-World Testing",
+    excerpt: "We ran both models through 10,000 real business tasks. Here's what we learned about when to use which.",
     content: `
-## The AI Model Decision Actually Matters
+## The Great AI Model Debate
 
-For automation, picking the right underlying model isn't academic — it affects cost, reliability, and user experience. We tested extensively.
+"Should we use Claude or GPT-4?" is the question we hear most from enterprise clients. After running extensive tests across real business scenarios, we have data-driven answers.
 
-### The Test Setup
+### Testing Methodology
 
-- 10,000 real tasks from client operations
-- Mix of email classification, document extraction, conversation handling
-- Measured: accuracy, latency, cost, consistency
+We ran 10,000 real business tasks across both models:
+- Customer support tickets (2,500)
+- Email drafting (2,000)
+- Document analysis (2,000)
+- Data extraction (2,000)
+- Code generation (1,500)
 
-### Where Claude Excels
+Each task was graded by human reviewers on accuracy, tone, and usefulness.
 
-**Long Document Understanding**
-Claude's 200K context window is a game-changer for contract analysis, lengthy email threads, and document summarization. GPT-4 Turbo's 128K is good, but Claude handles sprawling conversations without losing context.
+### The Results
 
-**Nuanced Tone Matching**
-For customer-facing responses, Claude maintains brand voice better. Less "I am an AI" phrasing, more natural helpfulness.
+**Overall Winner: It Depends™**
 
-**Instruction Following**
-Complex, multi-step instructions with edge cases — Claude follows the brief more reliably. GPT-4 occasionally "creative interprets" in ways that break workflows.
+Seriously — each model has distinct strengths:
 
-### Where GPT-4 Excels
+| Task Type | Winner | Margin |
+|-----------|--------|--------|
+| Customer Support | Claude | +12% |
+| Email Drafting | Claude | +8% |
+| Document Analysis | GPT-4 | +5% |
+| Data Extraction | Tie | - |
+| Code Generation | GPT-4 | +15% |
 
-**Speed**
-For simple classification tasks, GPT-4 Turbo is ~30% faster. When latency matters (live chat), that adds up.
+### Claude Excels At:
 
-**Code Generation**
-Technical tasks, script writing, data manipulation — GPT-4 remains slightly sharper, though Claude is closing the gap.
+**Conversational Tasks**
+Claude's responses feel more natural and empathetic. For customer-facing applications, this matters enormously.
 
-**Cost Predictability**
-OpenAI's pricing is more stable. Anthropic has been adjusting as they scale.
+**Following Instructions**
+Claude is better at adhering to specific formatting, tone, and content requirements. It "listens" more carefully.
 
-### Our Hybrid Approach
+**Longer Contexts**
+Claude's larger context window (200K tokens) handles long documents without degradation.
 
-At Denivra, we use both:
-- **Claude** for customer-facing communication, document analysis, complex reasoning
-- **GPT-4** for speed-critical classification, code tasks, structured data extraction
+**Safety & Refusals**
+Claude is more cautious, which can be a pro or con depending on your use case. It rarely generates problematic content.
 
-The models complement each other. Religious devotion to one provider is a mistake.
+### GPT-4 Excels At:
 
-### The Real Answer
+**Structured Data**
+JSON generation, data extraction, and API interactions are more reliable with GPT-4.
 
-It depends on your workload. Which is a cop-out, but also true. Let us audit your specific use case and we'll tell you which model (or mix) delivers the best results.
+**Code Tasks**
+For anything involving code — generation, debugging, or analysis — GPT-4 has a meaningful edge.
 
----
+**Reasoning Chains**
+Complex multi-step reasoning tasks favor GPT-4, especially with explicit chain-of-thought prompting.
 
-*Want to test both on your data? [Schedule a discovery call](/demo).*
+**Tool Use**
+GPT-4's function calling is more mature and reliable for agentic workflows.
+
+### Our Recommendation
+
+**For customer-facing AI:** Start with Claude. The conversational quality difference is noticeable.
+
+**For back-office automation:** GPT-4's structured data handling makes it the better choice.
+
+**For complex workflows:** Use both. Route tasks to the appropriate model based on type.
+
+### Cost Considerations
+
+Claude is currently 20-30% cheaper per token than GPT-4. For high-volume applications, this adds up quickly.
+
+### The Future
+
+Both models are improving rapidly. The best approach is architecture that allows model swapping — so you can upgrade without rebuilding.
+
+What matters most isn't which model you choose, but how well you implement it.
     `,
-    author: 'Niko Bessas',
-    publishedAt: '2025-02-05',
+    author: { name: 'Niko Bessas', role: 'Co-Founder' },
+    category: 'AI Trends',
     readTime: '6 min',
-    category: 'ai-trends',
-    tags: ['claude', 'gpt-4', 'ai-models', 'enterprise'],
-    featured: false,
+    publishedAt: '2025-02-04',
   },
   {
-    id: 'blog-004',
-    slug: 'document-processing-automation-2025',
-    title: 'From Paper Chaos to Auto-Processing: The Document Automation Stack',
-    excerpt: 'Invoices, receipts, contracts — the paperwork never stops. Here\'s how modern AI handles it end-to-end.',
+    slug: 'document-automation-stack',
+    title: "From Paper Chaos to Auto-Processing: The Document Automation Stack",
+    excerpt: "Invoices, receipts, contracts — the paperwork never stops. Here's how modern AI handles it end-to-end.",
     content: `
-## The Document Problem Every Business Has
+## The Document Problem
 
-Even "digital-first" companies drown in documents. PDFs from vendors. Email attachments. Scanned receipts. The average SMB spends **3-5 hours/week** on manual document processing.
+Every business drowns in paper. Even "digital" businesses deal with PDFs, scanned documents, and unstructured data that requires human processing.
+
+The average SMB spends 20+ hours per week on document handling. Here's how to cut that to near-zero.
 
 ### The Modern Document Stack
 
 **Layer 1: Ingestion**
-- Email attachment capture
-- WhatsApp/Telegram forwarding
-- Dedicated upload portal
-- Scanner/mobile app integration
+Documents arrive via email, upload, scan, or API. The system accepts anything — PDFs, images, Word docs, even photos of receipts.
+
+Technologies: AWS Textract, Google Document AI, Azure Form Recognizer
 
 **Layer 2: Classification**
-- AI identifies document type (invoice, receipt, contract, etc.)
-- Routes to appropriate workflow
-- Flags unknowns for human review
+AI determines document type: invoice, contract, receipt, form, correspondence. This routes to appropriate processing.
+
+Technologies: Custom classifiers, few-shot learning
 
 **Layer 3: Extraction**
-- Vendor name, amount, date, line items
-- Key contract terms and dates
-- Receipt totals and categories
-- Structured JSON output
+Key data is pulled from each document type:
+- Invoices → vendor, amount, line items, due date
+- Contracts → parties, terms, key dates, obligations
+- Receipts → merchant, amount, category, date
 
-**Layer 4: Action**
-- Push to QuickBooks/Xero
-- Update CRM records
-- Trigger approval workflows
-- Archive to organized folders
+Technologies: GPT-4 Vision, Claude, specialized extractors
 
-### What We Extract Automatically
+**Layer 4: Validation**
+Extracted data is cross-checked against existing records. Anomalies are flagged for review.
 
-| Document Type | Fields Extracted |
-|---------------|------------------|
-| Invoices | Vendor, Amount, Due Date, Line Items, PO Number |
-| Receipts | Merchant, Total, Date, Category, Payment Method |
-| Contracts | Parties, Effective Date, Term Length, Renewal Terms |
-| Bank Statements | Transactions, Running Balance, Account Info |
+Technologies: Rule engines, ML anomaly detection
 
-### The Accuracy Question
+**Layer 5: Integration**
+Clean data flows to downstream systems:
+- QuickBooks for invoices
+- Salesforce for contracts
+- Expense tools for receipts
 
-**OCR Accuracy:** 98%+ for clean documents, 92% for scanned/photographed
-**Extraction Accuracy:** 95%+ for standard formats, 85% for unusual layouts
-**Duplicate Detection:** 99.5% (saves clients $1,000+ monthly in avoided double-payments)
+Technologies: REST APIs, webhooks, native integrations
 
-### Cost Comparison
+### Real-World Example: Invoice Processing
 
-| Method | Time per Invoice | Monthly Cost (500 invoices) |
-|--------|------------------|----------------------------|
-| Manual Entry | 5 minutes | $625 (at $15/hr) |
-| Traditional OCR + Review | 2 minutes | $250 |
-| AI Automation | 10 seconds | $75 |
+**Before automation:**
+1. Open email with invoice attachment (30 sec)
+2. Download and review invoice (1 min)
+3. Enter data into accounting system (2 min)
+4. File invoice in folder (30 sec)
+5. Schedule payment (1 min)
 
-**That's an 88% cost reduction** with better accuracy.
+Total: ~5 minutes per invoice
 
----
+**After automation:**
+1. AI extracts invoice data automatically
+2. Human reviews flagged exceptions only (~5% of invoices)
+3. Auto-entry into accounting system
+4. Auto-filing with searchable metadata
+5. Payment scheduled based on terms
 
-*Send us a sample document batch and we'll show you what Nous extracts. [Get started](/demo).*
+Total: ~10 seconds per invoice (plus occasional exception handling)
+
+**For a business processing 100 invoices/month:**
+- Before: 8+ hours
+- After: 20 minutes
+
+### Implementation Tips
+
+1. **Start with one document type** — Invoices are usually the best starting point
+2. **Build exception handling** — AI won't be perfect; design for human review
+3. **Validate thoroughly** — Financial data needs 99%+ accuracy
+4. **Track everything** — Audit trails are essential for compliance
+
+### What's Coming
+
+The next frontier is truly intelligent document processing — AI that not only extracts data but takes action based on content, negotiates terms, and manages relationships.
+
+We're building this at Denivra. If document chaos is killing your productivity, let's talk.
     `,
-    author: 'Spyros Nakos',
-    publishedAt: '2025-02-02',
+    author: { name: 'Spyros Nakos', role: 'Co-Founder' },
+    category: 'Automation',
     readTime: '5 min',
-    category: 'automation',
-    tags: ['documents', 'invoices', 'ocr', 'quickbooks'],
-    featured: false,
-  },
-  {
-    id: 'blog-005',
-    slug: 'whatsapp-business-automation-guide',
-    title: 'WhatsApp Business Automation: The Complete 2025 Guide',
-    excerpt: 'With 2 billion users, WhatsApp is where your customers are. Here\'s how to automate customer service without losing the personal touch.',
-    content: `
-## WhatsApp Is the New Email (And You're Not Automating It)
-
-In markets outside the US, WhatsApp IS the primary business communication channel. Even in the US, adoption is accelerating. If you're not there with smart automation, you're leaving money on the table.
-
-### What You Can Automate
-
-**Instant Responses**
-- Acknowledge messages within seconds
-- Answer FAQs (hours, pricing, directions)
-- Collect initial information before human handoff
-
-**Order Updates**
-- Shipping notifications
-- Delivery confirmations
-- Review requests
-
-**Appointment Management**
-- Booking confirmations
-- Reminder sequences
-- Rescheduling via chat
-
-**Lead Qualification**
-- Initial questions about needs
-- Budget/timeline qualification
-- Route to appropriate sales rep
-
-### The WhatsApp Business API Reality
-
-**Official API (via Meta)**
-- Required for automation at scale
-- Requires business verification
-- Template messages need approval
-- Cost: ~$0.005-0.08 per message depending on region/type
-
-**BSPs (Business Solution Providers)**
-- Twilio, MessageBird, 360dialog
-- Handle compliance, provide dashboards
-- Add markup but simplify implementation
-
-### What NOT to Automate
-
-- Complaints (route to humans fast)
-- Anything with emotion (AI detects, escalates)
-- Complex negotiations (AI assists, human closes)
-
-### Sample Automation Flow
-
-\`\`\`
-User: "Hi, what are your prices?"
-↓
-Bot: "Hi! I'm happy to help. We have three packages:
-      🥉 Starter: $99/month
-      🥈 Pro: $299/month  
-      🥇 Enterprise: Custom
-      
-      Which sounds closest to what you need?"
-↓
-User: "Pro looks good. What's included?"
-↓
-Bot: [Pro details + features]
-     "Would you like to start a free trial, or chat with our team first?"
-↓
-User: "Talk to someone"
-↓
-Bot: "Great! I'll connect you with Sarah. She's usually online within 5 minutes.
-      While you wait — what's the main problem you're trying to solve?"
-↓
-[Captures context, routes to human with full history]
-\`\`\`
-
-### The ROI
-
-- **Response time**: 24 hours → 30 seconds
-- **Lead capture**: +60% (because you respond when they're interested)
-- **Staff efficiency**: Handle 5x the volume
-
----
-
-*Want to see your WhatsApp automated? [Demo here](/demo) or [message us on WhatsApp](https://wa.me/message/yourlink).*
-    `,
-    author: 'Niko Bessas',
-    publishedAt: '2025-01-28',
-    readTime: '7 min',
-    category: 'automation',
-    tags: ['whatsapp', 'messaging', 'customer-service', 'chatbot'],
-    featured: false,
+    publishedAt: '2025-02-01',
   },
 ]
 
-export const getPostBySlug = (slug: string): BlogPost | undefined => {
+export function getBlogPost(slug: string): BlogPost | undefined {
   return blogPosts.find(post => post.slug === slug)
 }
 
-export const getFeaturedPosts = (): BlogPost[] => {
+export function getFeaturedPosts(): BlogPost[] {
   return blogPosts.filter(post => post.featured)
 }
 
-export const getPostsByCategory = (category: BlogPost['category']): BlogPost[] => {
+export function getPostsByCategory(category: string): BlogPost[] {
   return blogPosts.filter(post => post.category === category)
 }
