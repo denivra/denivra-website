@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, Loader2, Phone, PhoneCall } from 'lucide-react'
+import { detectIntent, productInfo } from '../data/chatbotKnowledge'
 
 interface Message {
   id: string
@@ -9,8 +10,43 @@ interface Message {
   timestamp: Date
 }
 
+// Try to get a response from the knowledge base
+function getKnowledgeResponse(userInput: string): string | null {
+  const intent = detectIntent(userInput)
+  const lowerInput = userInput.toLowerCase()
+  
+  // Handle based on detected intent
+  if (intent === 'pricing') {
+    return `Our packages:\n\n**${productInfo.nousAssist.name}** — ${productInfo.nousAssist.price}\n${productInfo.nousAssist.tagline}\n\n**${productInfo.nousConnect.name}** — ${productInfo.nousConnect.price} (Most Popular)\n${productInfo.nousConnect.tagline}\n\n**${productInfo.nousCommand.name}** — ${productInfo.nousCommand.price}\n${productInfo.nousCommand.tagline}\n\nAll include one-time setup. Which tier interests you?`
+  }
+  
+  if (intent === 'demo') {
+    return `Great! I can help you schedule a demo:\n\n1. 📅 Book directly: calendly.com/denivra/demo\n2. 📧 Email: info@denivra.com\n3. 📞 Call: +1 (347) 803-0812\n\nOr tell me your preferred time and I'll arrange it!`
+  }
+  
+  if (intent === 'voice_ai') {
+    return `Our Voice AI agents handle calls 24/7:\n\n• Answer customer inquiries\n• Qualify leads automatically\n• Book appointments\n• Handle support tickets\n\n**Clients see 60% cost reduction** in call center ops.\n\nWant to hear a demo call, or discuss your use case?`
+  }
+  
+  if (intent === 'email') {
+    return `Our email automation:\n\n• Triage & categorize incoming mail\n• Auto-respond to common queries\n• Extract data from attachments\n• Route to the right team\n\n**One client saves 6+ hours/day** on email.\n\nWhat does your current email volume look like?`
+  }
+  
+  if (intent === 'integration') {
+    return `We integrate with:\n\n**CRMs:** HubSpot, Pipedrive, Salesforce\n**Accounting:** QuickBooks, Xero\n**Comms:** Gmail, Outlook, WhatsApp, Slack\n**Custom:** Almost any API\n\nWhat systems are you currently using?`
+  }
+  
+  return null
+}
+
+// Generate session ID
+function generateSessionId(): string {
+  return 'sess_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36)
+}
+
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showCallOption, setShowCallOption] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -21,6 +57,7 @@ export function ChatWidget() {
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [sessionId] = useState(() => generateSessionId())
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -42,36 +79,65 @@ export function ChatWidget() {
     }
 
     setMessages((prev) => [...prev, userMessage])
+    const userInput = input.trim()
     setInput('')
     setIsLoading(true)
 
     try {
-      // Connect to Clawdbot/Pivot backend
-      // This would typically be an API call to your Clawdbot instance
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input.trim() }),
-      })
+      // First try to get a local knowledge base response
+      const knowledgeResponse = getKnowledgeResponse(userInput)
+      
+      if (knowledgeResponse) {
+        // Use knowledge base response (instant)
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: knowledgeResponse,
+          timestamp: new Date(),
+        }
+        setMessages((prev) => [...prev, assistantMessage])
+      } else {
+        // Try to connect to Pivot via API
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            message: userInput,
+            sessionId,
+          }),
+        })
 
-      if (!response.ok) throw new Error('Failed to get response')
+        let assistantContent: string
 
-      const data = await response.json()
+        if (response.ok) {
+          const data = await response.json()
+          assistantContent = data.message
+        } else {
+          // Fallback response
+          assistantContent = getFallbackResponse(userInput)
+        }
 
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.message || getLocalResponse(input.trim()),
-        timestamp: new Date(),
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: assistantContent,
+          timestamp: new Date(),
+        }
+
+        setMessages((prev) => [...prev, assistantMessage])
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      // Show call option after a few exchanges
+      if (messages.length >= 4 && !showCallOption) {
+        setShowCallOption(true)
+      }
     } catch (error) {
-      // Fallback to local responses if API is not available
+      console.error('Chat error:', error)
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: getLocalResponse(input.trim()),
+        content: getFallbackResponse(userInput),
         timestamp: new Date(),
       }
 
@@ -81,8 +147,8 @@ export function ChatWidget() {
     }
   }
 
-  // Local response logic for demo/fallback
-  const getLocalResponse = (userInput: string): string => {
+  // Fallback response logic
+  const getFallbackResponse = (userInput: string): string => {
     const lowerInput = userInput.toLowerCase()
 
     if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('pricing')) {
@@ -105,7 +171,7 @@ export function ChatWidget() {
       return `Check out our ROI Calculator on this page! On average, Nous clients see:\n\n• 60% reduction in manual work\n• $5,000-15,000/month in savings\n• Payback within 2-3 months\n\nWant me to help you calculate your specific ROI?`
     }
 
-    if (lowerInput.includes('integrat') || lowerInput.includes('connect') || lowerInput.includes('crm') || lowerInput.includes('quickbooks')) {
+    if (lowerInput.includes('integrat') || lowerInput.includes('connect') || lowerInput.includes('crm') || lowerInput.includes('quickbooks') || lowerInput.includes('hubspot')) {
       return `Nous integrates with:\n\n• CRMs: HubSpot, Pipedrive, Salesforce\n• Accounting: QuickBooks, Xero\n• Communication: Gmail, Outlook, WhatsApp, Slack\n• Calendars: Google Calendar, Outlook\n• Custom APIs: We can connect to almost anything!\n\nWhat systems do you currently use?`
     }
 
@@ -113,7 +179,15 @@ export function ChatWidget() {
       return `Here's how we deploy Nous:\n\n1️⃣ **Discovery** (1-2 days): We audit your workflows\n2️⃣ **Configuration** (3-5 days): We train AI on your data\n3️⃣ **Integration** (2-3 days): We connect to your systems\n4️⃣ **Launch** (1 day): Go live with monitoring\n\nTotal time: Usually under 2 weeks. Want to start with a discovery call?`
     }
 
+    if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
+      return `Hey! 👋 I'm Pivot. How can I help you today?\n\nI can tell you about:\n• Our AI automation products\n• Pricing and packages\n• How we work with clients\n• Scheduling a demo\n\nWhat interests you?`
+    }
+
     return `Thanks for your question! Here's what I can help with:\n\n• 💰 **Pricing** - Our packages and what's included\n• 🎯 **Demo** - Schedule a live walkthrough\n• 📊 **ROI** - Calculate your potential savings\n• 🔌 **Integrations** - What systems we connect to\n• 📞 **Voice AI** - Our phone automation\n• 📧 **Email** - Inbox automation\n\nWhat interests you most?`
+  }
+
+  const handleCallRequest = () => {
+    window.open('tel:+13478030812', '_self')
   }
 
   return (
@@ -126,7 +200,7 @@ export function ChatWidget() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="chat-bubble"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple shadow-lg shadow-primary-500/25 flex items-center justify-center hover:shadow-xl hover:shadow-primary-500/30 transition-shadow"
           >
             <MessageSquare className="w-6 h-6 text-white" />
             {/* Notification dot */}
@@ -142,7 +216,7 @@ export function ChatWidget() {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="chat-widget w-96 h-[32rem] glass rounded-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-96 h-[32rem] bg-dark-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="p-4 border-b border-white/10 flex items-center justify-between bg-dark-900/50">
@@ -158,13 +232,44 @@ export function ChatWidget() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={handleCallRequest}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  title="Call us"
+                >
+                  <Phone className="w-5 h-5 text-primary-400" />
+                </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
+
+            {/* Call CTA (shown after engagement) */}
+            {showCallOption && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="px-4 py-3 bg-primary-500/10 border-b border-primary-500/20"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <PhoneCall className="w-4 h-4 text-primary-400" />
+                    <span className="text-sm">Prefer to talk? Our AI can assess your needs over a call.</span>
+                  </div>
+                  <a
+                    href="tel:+13478030812"
+                    className="px-3 py-1 bg-primary-500 rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors"
+                  >
+                    Call Now
+                  </a>
+                </div>
+              </motion.div>
+            )}
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -222,7 +327,7 @@ export function ChatWidget() {
                 </button>
               </div>
               <p className="text-xs text-dark-500 mt-2 text-center">
-                Powered by Denivra AI
+                Powered by Pivot AI • <a href="tel:+13478030812" className="text-primary-400 hover:underline">Call us</a>
               </p>
             </div>
           </motion.div>
