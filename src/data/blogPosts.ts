@@ -65,7 +65,7 @@ By 2027, we expect 70% of routine call center interactions to be AI-handled. The
 
 The question isn't whether to adopt AI voice — it's how fast you can implement it before competitors do.
     `,
-    author: { name: 'Niko Bessas', role: 'Co-Founder' },
+    author: { name: 'Denivra Team', role: 'Engineering' },
     category: 'Voice AI',
     readTime: '5 min',
     publishedAt: '2025-02-09',
@@ -150,7 +150,7 @@ Industry-specific automation can be transformative but requires careful planning
 
 The businesses that win aren't necessarily the most automated — they're the ones that automate the right things.
     `,
-    author: { name: 'Spyros Nakos', role: 'Co-Founder' },
+    author: { name: 'Denivra Team', role: 'Engineering' },
     category: 'Automation',
     readTime: '4 min',
     publishedAt: '2025-02-07',
@@ -235,7 +235,7 @@ Both models are improving rapidly. The best approach is architecture that allows
 
 What matters most isn't which model you choose, but how well you implement it.
     `,
-    author: { name: 'Niko Bessas', role: 'Co-Founder' },
+    author: { name: 'Denivra Team', role: 'Engineering' },
     category: 'AI Trends',
     readTime: '6 min',
     publishedAt: '2025-02-04',
@@ -321,7 +321,7 @@ The next frontier is truly intelligent document processing — AI that not only 
 
 We're building this at Denivra. If document chaos is killing your productivity, let's talk.
     `,
-    author: { name: 'Spyros Nakos', role: 'Co-Founder' },
+    author: { name: 'Denivra Team', role: 'Engineering' },
     category: 'Automation',
     readTime: '5 min',
     publishedAt: '2025-02-01',

@@ -324,13 +324,12 @@ function App() {
               </p>
               
               <div className="flex items-center space-x-4">
-                <div className="flex -space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center text-white font-bold">N</div>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-white font-bold">S</div>
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
+                  <Bot className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="font-semibold">Niko Bessas & Spyros Nakos</div>
-                  <div className="text-dark-400 text-sm">Co-Founders</div>
+                  <div className="font-semibold">The Denivra Team</div>
+                  <div className="text-dark-400 text-sm">Engineers & AI Specialists</div>
                 </div>
               </div>
             </div>
