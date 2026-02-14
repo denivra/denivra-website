@@ -112,3 +112,73 @@
          flex items-center justify-center cursor-pointer shadow-lg shadow-primary-500/30
          hover:scale-110 transition-transform duration-300;
 }
+
+/* HubSpot Form Overrides */
+#hubspot-form-container .hs-form-field > label {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+#hubspot-form-container .hs-form-field label span {
+  color: #ffffff !important;
+}
+
+#hubspot-form-container .hs-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem !important;
+  padding: 0.75rem 1rem !important;
+}
+
+#hubspot-form-container .hs-input:focus {
+  border-color: #06b6d4 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+}
+
+#hubspot-form-container .hs-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+#hubspot-form-container .hs-button {
+  background: linear-gradient(to right, #06b6d4, #8b5cf6) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.75rem !important;
+  cursor: pointer !important;
+  transition: all 0.3s !important;
+}
+
+#hubspot-form-container .hs-button:hover {
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+#hubspot-form-container .hs-error-msg {
+  color: #ef4444 !important;
+}
+
+#hubspot-form-container .hs-form-required {
+  color: #ef4444 !important;
+}
+
+/* Hide HubSpot branding */
+#hubspot-form-container .hs-form + div,
+#hubspot-form-container .hubspot-link__container,
+#hubspot-form-container .hs-form-iframe + div {
+  display: none !important;
+}
+
+/* Phone input styling */
+#hubspot-form-container .hs-fieldtype-intl-phone .hs-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+#hubspot-form-container select.hs-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+}
