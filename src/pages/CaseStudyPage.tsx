@@ -21,80 +21,207 @@ export function CaseStudyPage() {
     )
   }
 
-  // Better content parser
+  // Enhanced content parser with table support
   const renderContent = (content: string) => {
     const lines = content.trim().split('\n')
     const elements: JSX.Element[] = []
-    let currentList: string[] = []
+    let currentList: { items: string[], ordered: boolean } = { items: [], ordered: false }
     let listKey = 0
+    let tableRows: string[][] = []
+    let tableKey = 0
+    let codeBlock: string[] = []
+    let inCodeBlock = false
+    let codeBlockKey = 0
 
     const flushList = () => {
-      if (currentList.length > 0) {
-        elements.push(
-          <ul key={`list-${listKey++}`} className="my-6 space-y-3">
-            {currentList.map((item, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-dark-200">{item}</span>
-              </li>
-            ))}
-          </ul>
-        )
-        currentList = []
+      if (currentList.items.length > 0) {
+        if (currentList.ordered) {
+          elements.push(
+            <ol key={`list-${listKey++}`} className="my-6 space-y-3 list-none">
+              {currentList.items.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500/20 text-primary-400 text-sm font-semibold flex items-center justify-center mt-0.5">
+                    {i + 1}
+                  </span>
+                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: formatInlineText(item) }} />
+                </li>
+              ))}
+            </ol>
+          )
+        } else {
+          elements.push(
+            <ul key={`list-${listKey++}`} className="my-6 space-y-3">
+              {currentList.items.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: formatInlineText(item) }} />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        currentList = { items: [], ordered: false }
       }
     }
 
+    const flushTable = () => {
+      if (tableRows.length > 0) {
+        const headerRow = tableRows[0]
+        const bodyRows = tableRows.slice(1)
+        elements.push(
+          <div key={`table-${tableKey++}`} className="my-8 overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-white/20">
+                  {headerRow.map((cell, j) => (
+                    <th key={j} className="px-4 py-3 text-left text-sm font-semibold text-white bg-dark-800/50">
+                      {cell.trim()}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {bodyRows.map((row, i) => (
+                  <tr key={i} className="border-b border-white/10 hover:bg-dark-800/30 transition-colors">
+                    {row.map((cell, j) => (
+                      <td key={j} className="px-4 py-3 text-dark-300">
+                        {cell.trim()}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+        tableRows = []
+      }
+    }
+
+    const formatInlineText = (text: string): string => {
+      // Handle bold
+      let result = text.replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+      // Handle inline code
+      result = result.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-dark-800 rounded text-primary-400 text-sm font-mono">$1</code>')
+      // Handle links
+      result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary-400 hover:text-primary-300 underline">$1</a>')
+      return result
+    }
+
     for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim()
+      const line = lines[i]
+      const trimmedLine = line.trim()
       
-      if (!line) {
-        flushList()
+      // Code block handling
+      if (trimmedLine.startsWith('```')) {
+        if (inCodeBlock) {
+          elements.push(
+            <pre key={`code-${codeBlockKey++}`} className="my-6 p-4 bg-dark-800 rounded-lg overflow-x-auto border border-white/10">
+              <code className="text-sm text-dark-200 font-mono whitespace-pre">
+                {codeBlock.join('\n')}
+              </code>
+            </pre>
+          )
+          codeBlock = []
+          inCodeBlock = false
+        } else {
+          flushList()
+          flushTable()
+          inCodeBlock = true
+        }
         continue
       }
 
+      if (inCodeBlock) {
+        codeBlock.push(line)
+        continue
+      }
+      
+      // Skip empty lines
+      if (!trimmedLine) {
+        flushList()
+        flushTable()
+        continue
+      }
+
+      // Horizontal rule
+      if (trimmedLine === '---' || trimmedLine === '***') {
+        flushList()
+        flushTable()
+        elements.push(<hr key={`hr-${i}`} className="my-8 border-t border-white/10" />)
+        continue
+      }
+
+      // Table rows (starts with |)
+      if (trimmedLine.startsWith('|') && trimmedLine.endsWith('|')) {
+        flushList()
+        // Skip separator rows (|---|---|)
+        if (/^\|[\s\-:]+\|$/.test(trimmedLine.replace(/\|/g, '|').replace(/[^|:-]/g, '-'))) {
+          continue
+        }
+        const cells = trimmedLine.slice(1, -1).split('|').map(c => c.trim())
+        // Skip if it's a separator row
+        if (cells.every(c => /^[-:]+$/.test(c))) {
+          continue
+        }
+        tableRows.push(cells)
+        continue
+      } else {
+        flushTable()
+      }
+
       // H2 headers
-      if (line.startsWith('## ')) {
+      if (trimmedLine.startsWith('## ')) {
         flushList()
         elements.push(
           <h2 key={`h2-${i}`} className="text-2xl md:text-3xl font-bold mt-12 mb-6 text-white">
-            {line.replace('## ', '')}
+            {trimmedLine.replace('## ', '')}
           </h2>
         )
         continue
       }
 
       // H3 headers
-      if (line.startsWith('### ')) {
+      if (trimmedLine.startsWith('### ')) {
         flushList()
         elements.push(
           <h3 key={`h3-${i}`} className="text-xl font-semibold mt-8 mb-4 text-white">
-            {line.replace('### ', '')}
+            {trimmedLine.replace('### ', '')}
           </h3>
         )
         continue
       }
 
-      // List items
-      if (line.startsWith('- ')) {
-        currentList.push(line.replace('- ', ''))
+      // Numbered list items
+      if (/^\d+\.\s/.test(trimmedLine)) {
+        if (currentList.items.length > 0 && !currentList.ordered) {
+          flushList()
+        }
+        currentList.ordered = true
+        currentList.items.push(trimmedLine.replace(/^\d+\.\s/, ''))
+        continue
+      }
+
+      // Unordered list items
+      if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ')) {
+        if (currentList.items.length > 0 && currentList.ordered) {
+          flushList()
+        }
+        currentList.ordered = false
+        currentList.items.push(trimmedLine.replace(/^[-*]\s/, ''))
         continue
       }
 
       // Regular paragraphs
       flushList()
       
-      // Handle bold text
-      const parts = line.split(/\*\*(.+?)\*\*/g)
       elements.push(
-        <p key={`p-${i}`} className="text-dark-300 text-lg leading-relaxed my-4">
-          {parts.map((part, j) => 
-            j % 2 === 1 ? <strong key={j} className="text-white font-semibold">{part}</strong> : part
-          )}
-        </p>
+        <p key={`p-${i}`} className="text-dark-300 text-lg leading-relaxed my-4" dangerouslySetInnerHTML={{ __html: formatInlineText(trimmedLine) }} />
       )
     }
 
     flushList()
+    flushTable()
     return elements
   }
 
