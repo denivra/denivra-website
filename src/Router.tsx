@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+// Use basename for GitHub Pages deployment
+const basename = import.meta.env.BASE_URL || '/'
 import App from './App'
 import { 
   CaseStudyPage, 
@@ -29,7 +32,7 @@ import {
 
 export function Router() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         {/* Main */}
         <Route path="/" element={<App />} />
