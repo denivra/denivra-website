@@ -109,9 +109,9 @@ function App() {
                 </div>
               </div>
               
+              <a href="/solutions/enterprise" className="text-dark-300 hover:text-white transition-colors font-medium">Enterprise</a>
               <a href="/pricing" className="text-dark-300 hover:text-white transition-colors">Pricing</a>
-              <a href="/roi-calculator" className="text-dark-300 hover:text-white transition-colors">ROI Calculator</a>
-              <a href="/about" className="text-dark-300 hover:text-white transition-colors">About</a>
+              <a href="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</a>
               <a href="/contact" className="btn-primary text-sm">Book Demo</a>
             </div>
 
@@ -252,8 +252,77 @@ function App() {
         </div>
       </section>
 
+      {/* Dual Track Section */}
+      <section className="py-24 bg-dark-900/50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <h2 className="section-title">Two Ways to <span className="gradient-text">Work With Us</span></h2>
+            <p className="section-subtitle">From coffee shops to Fortune 500 banks — we've got you covered</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* SMB Track */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="card border-primary-500/20 hover:border-primary-500/40 transition-colors"
+            >
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="text-3xl">🚀</div>
+                <h3 className="text-2xl font-bold">For Small Business</h3>
+              </div>
+              <p className="text-primary-400 text-lg mb-4">The Nous Suite</p>
+              <p className="text-dark-300 mb-6">
+                AI automation that handles the work you hate — calls, emails, invoices, 
+                scheduling. Like hiring a night-shift employee who never calls in sick.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> 24/7 Voice AI receptionist</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> Email & invoice automation</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> QuickBooks & CRM integration</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> Hardware included, no cloud fees</li>
+              </ul>
+              <div className="flex items-center justify-between">
+                <div className="text-dark-400">From <span className="text-white font-bold text-xl">$2,800</span> one-time</div>
+                <a href="#products" className="text-primary-400 hover:text-primary-300 font-medium">See Products →</a>
+              </div>
+            </motion.div>
+
+            {/* Enterprise Track */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="card border-accent-purple/20 hover:border-accent-purple/40 transition-colors"
+            >
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="text-3xl">🏢</div>
+                <h3 className="text-2xl font-bold">For Enterprise</h3>
+              </div>
+              <p className="text-accent-purple text-lg mb-4">Red Team Consulting</p>
+              <p className="text-dark-300 mb-6">
+                Banking infrastructure expertise from someone who's built it. 
+                BaaS architecture, payment systems, compliance automation, legacy modernization.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> 15+ years production experience</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> $3.5M+ documented savings</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> 100% regulatory compliance</li>
+                <li className="flex items-center text-dark-300"><Check className="w-4 h-4 text-green-400 mr-2" /> CISM certified</li>
+              </ul>
+              <div className="flex items-center justify-between">
+                <div className="text-dark-400">From <span className="text-white font-bold text-xl">$200/hr</span></div>
+                <a href="/solutions/enterprise" className="text-accent-purple hover:text-accent-purple/80 font-medium">Learn More →</a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Products Section */}
-      <section id="products" className="py-24 bg-dark-900/50 relative">
+      <section id="products" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="section-title">Choose Your <span className="gradient-text">Nous</span></h2>
