@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   Bot, ArrowLeft, Check, ArrowRight, Zap, Play, Menu, X,
@@ -284,7 +284,11 @@ function ProductPageContent({ product }: { product: Product }) {
 }
 
 export function ProductPage() {
-  const { id } = useParams<{ id: string }>()
+  const { id: paramId } = useParams<{ id: string }>()
+  const location = useLocation()
+  
+  // Extract ID from pathname if useParams doesn't work (hardcoded routes)
+  const id = paramId || location.pathname.split('/').pop()
   const product = id ? getProductById(id) : undefined
 
   if (!product) {
@@ -292,6 +296,7 @@ export function ProductPage() {
       <div className="min-h-screen bg-dark-950 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
+          <p className="text-dark-400 mb-4">Looking for: {id || 'unknown'}</p>
           <Link to="/" className="btn-primary">Go Home</Link>
         </div>
       </div>

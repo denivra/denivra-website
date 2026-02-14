@@ -1,13 +1,30 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send, Bot, Loader2, Phone } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, Phone, Calendar, DollarSign, Mic, Mail } from 'lucide-react'
 
 interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  streaming?: boolean
 }
+
+interface QuickAction {
+  label: string
+  value: string
+  icon?: 'calendar' | 'pricing' | 'voice' | 'email'
+}
+
+const INITIAL_BUTTONS: QuickAction[] = [
+  { label: 'View Pricing', value: 'What are your prices?', icon: 'pricing' },
+  { label: 'Book Demo', value: 'I want to schedule a demo', icon: 'calendar' },
+  { label: 'Voice AI', value: 'Tell me about voice AI', icon: 'voice' },
+]
+
+// Gateway WebSocket configuration
+const WS_URL = 'wss://nikolaoss-mac-mini.tailc41dc1.ts.net'
+const WS_TOKEN = '8ba1695d02a39d8e1b006668b6ef4d15671901c85926fd17'
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,13 +32,40 @@ export function ChatWidget() {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm Pivot, Denivra's AI assistant. How can I help you today?\n\nI can tell you about:\n• Pricing & packages\n• Voice AI agents\n• Email automation\n• Scheduling a demo",
+      content: "Hey! 👋 I'm Pivot, Denivra's AI. How can I help?",
       timestamp: new Date(),
     },
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isConnected, setIsConnected] = useState(false)
+  const [sessionKey] = useState(() => `denivra-web:${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const wsRef = useRef<WebSocket | null>(null)
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout>()
+  const pendingMessageRef = useRef<string | null>(null)
+
+  // Persist conversation in sessionStorage
+  useEffect(() => {
+    const saved = sessionStorage.getItem('pivot-chat')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setMessages(parsed.messages.map((m: Message) => ({
+          ...m,
+          timestamp: new Date(m.timestamp)
+        })))
+      } catch {
+        // Ignore parse errors
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (messages.length > 1) {
+      sessionStorage.setItem('pivot-chat', JSON.stringify({ messages }))
+    }
+  }, [messages])
 
   // Expose open function globally
   useEffect(() => {
@@ -37,80 +81,242 @@ export function ChatWidget() {
     scrollToBottom()
   }, [messages])
 
-  const getResponse = (userInput: string): string => {
-    const lower = userInput.toLowerCase()
+  // WebSocket connection management
+  const connectWebSocket = useCallback(() => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) return
 
-    if (lower.includes('price') || lower.includes('cost') || lower.includes('pricing') || lower.includes('how much')) {
-      return `Our packages:\n\n**Nous Assist** — $2,800 (one-time) + $250/mo optional\nFor solopreneurs. Email triage, WhatsApp bot, basic automation.\n\n**Nous Connect** — $7,500 (one-time) + $750/mo optional\nFor growing teams. Voice AI, QuickBooks, CRM sync, analytics.\n\n**Nous Command** — Custom pricing\nEnterprise. Multi-location, legacy systems, white-label.\n\nAll include Mac Mini hardware + setup. Want details on a specific tier?`
+    const ws = new WebSocket(WS_URL)
+    wsRef.current = ws
+
+    ws.onopen = () => {
+      console.log('WebSocket connected')
+      // Authenticate
+      ws.send(JSON.stringify({ 
+        type: 'auth', 
+        token: WS_TOKEN,
+        sessionKey,
+        skillPaths: ['/Users/niko/clawd/skills/denivra-sales']
+      }))
     }
 
-    if (lower.includes('demo') || lower.includes('trial') || lower.includes('try') || lower.includes('schedule') || lower.includes('book') || lower.includes('call')) {
-      return `Let's get you scheduled!\n\n📅 **Book directly:** calendly.com/bsa-denivra/30min\n📧 **Email:** info@denivra.com\n📞 **Call/Text:** +1 (347) 803-0812\n\n30-minute call — we'll show you exactly how Nous works for your business.`
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data)
+        
+        if (data.type === 'auth.ok') {
+          setIsConnected(true)
+          // Send pending message if any
+          if (pendingMessageRef.current) {
+            const msg = pendingMessageRef.current
+            pendingMessageRef.current = null
+            sendWebSocketMessage(msg)
+          }
+          return
+        }
+
+        if (data.type === 'auth.error') {
+          console.error('Auth error:', data.error)
+          setIsConnected(false)
+          return
+        }
+
+        // Handle chat responses
+        if (data.type === 'chat.response' || data.type === 'chat.chunk') {
+          const content = data.content || data.text || data.message || ''
+          
+          setMessages(prev => {
+            const lastMsg = prev[prev.length - 1]
+            if (lastMsg?.streaming) {
+              // Append to streaming message
+              return [
+                ...prev.slice(0, -1),
+                { ...lastMsg, content: lastMsg.content + content }
+              ]
+            } else {
+              // New assistant message
+              return [
+                ...prev,
+                {
+                  id: Date.now().toString(),
+                  role: 'assistant',
+                  content,
+                  timestamp: new Date(),
+                  streaming: true
+                }
+              ]
+            }
+          })
+        }
+
+        if (data.type === 'chat.done' || data.type === 'chat.end') {
+          setMessages(prev => {
+            const lastMsg = prev[prev.length - 1]
+            if (lastMsg?.streaming) {
+              return [
+                ...prev.slice(0, -1),
+                { ...lastMsg, streaming: false }
+              ]
+            }
+            return prev
+          })
+          setIsLoading(false)
+        }
+
+        if (data.type === 'error') {
+          console.error('Chat error:', data.error)
+          setIsLoading(false)
+          // Add error message
+          setMessages(prev => [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              role: 'assistant',
+              content: "Connection issue. Please try again or reach us at +1 (347) 803-0812.",
+              timestamp: new Date()
+            }
+          ])
+        }
+      } catch (e) {
+        console.error('Message parse error:', e)
+      }
     }
 
-    if (lower.includes('cafe') || lower.includes('coffee') || lower.includes('coffee shop')) {
-      return `**Nous Café** is perfect for coffee shop owners!\n\n☕ 12 features built-in:\n• Review monitoring (Google, Yelp)\n• Weather-smart prep sheets\n• Shift swap automation\n• Equipment health alerts\n• Invoice auditing\n\n💰 $1,299 - $1,799 setup\n⚡ ~$2/mo running cost\n📈 1-3 month payback\n\nWant to see how it handles bad reviews?`
+    ws.onclose = () => {
+      console.log('WebSocket closed')
+      setIsConnected(false)
+      // Reconnect after delay if chat is open
+      if (isOpen) {
+        reconnectTimeoutRef.current = setTimeout(connectWebSocket, 3000)
+      }
     }
 
-    if (lower.includes('cpa') || lower.includes('accountant') || lower.includes('accounting') || lower.includes('bookkeep')) {
-      return `**Nous CPA** transforms accounting practices!\n\n📊 Key features:\n• Clients text receipts → QuickBooks\n• AI extracts vendor, amount, date\n• 97% accuracy, overnight processing\n• Invoice auditing & duplicate detection\n• Client-ready dashboards\n\n💰 $15,000 setup + $499-2,499/mo\n⏱️ Save 15+ hours/week\n\nOne CPA processed 312 docs overnight for $4.27. Want details?`
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error)
+      setIsConnected(false)
     }
+  }, [isOpen, sessionKey])
 
-    if (lower.includes('restaurant') || lower.includes('food')) {
-      return `**Nous Restaurant** handles full-service operations!\n\n🍽️ Features:\n• Reservation AI\n• Kitchen display integration\n• Menu engineering\n• Review management\n• Inventory intelligence\n\n💰 $2,500 - $5,000 setup\n\nWant to learn about multi-location management?`
+  // Connect when chat opens
+  useEffect(() => {
+    if (isOpen && !wsRef.current) {
+      connectWebSocket()
     }
-
-    if (lower.includes('salon') || lower.includes('spa') || lower.includes('beauty') || lower.includes('hair')) {
-      return `**Nous Salon** keeps your chairs full!\n\n💇 Features:\n• Voice booking (24/7 phone answering)\n• No-show prevention alerts\n• Client preference memory\n• Rebooking automation\n• Product inventory tracking\n\n💰 $1,800 - $3,500 setup\n📈 20% more rebookings\n\nWant to hear how the voice AI handles appointments?`
+    return () => {
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current)
+      }
     }
+  }, [isOpen, connectWebSocket])
 
-    if (lower.includes('voice') || lower.includes('phone') || lower.includes('call center')) {
-      return `Our Voice AI agents handle calls 24/7:\n\n• Answer customer inquiries\n• Qualify leads automatically\n• Book appointments\n• Handle support tickets\n\nClients see 60% cost reduction in call ops.\n\nWant to hear a demo call?`
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close()
+      }
     }
+  }, [])
 
-    if (lower.includes('email') || lower.includes('inbox')) {
-      return `Our email automation:\n\n• Auto-categorize incoming mail\n• Respond to routine queries\n• Extract data from attachments\n• Route to the right team\n\nOne client saves 6+ hours/day.\n\nWhat's your current email volume?`
+  const sendWebSocketMessage = (text: string) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({
+        type: 'chat.send',
+        sessionKey,
+        message: text,
+        context: {
+          source: 'denivra-website',
+          skill: 'denivra-sales'
+        }
+      }))
     }
-
-    if (lower.includes('integrat') || lower.includes('connect') || lower.includes('crm') || lower.includes('hubspot') || lower.includes('quickbooks')) {
-      return `We integrate with:\n\n**CRMs:** HubSpot, Pipedrive, Salesforce\n**Accounting:** QuickBooks, Xero\n**Comms:** Gmail, Outlook, WhatsApp, Slack\n**Custom:** Almost any API\n\nWhat systems do you use?`
-    }
-
-    if (lower.includes('hi') || lower.includes('hello') || lower.includes('hey')) {
-      return `Hey! 👋 How can I help?\n\nI can tell you about:\n• Pricing & packages\n• Voice AI for calls\n• Email automation\n• Scheduling a demo`
-    }
-
-    return `I can help with:\n\n💰 **Pricing** — Our packages & what's included\n🎯 **Demo** — Schedule a walkthrough\n📞 **Voice AI** — Phone automation\n📧 **Email** — Inbox automation\n🔌 **Integrations** — What we connect to\n\nWhat interests you?`
   }
 
-  const sendMessage = () => {
-    if (!input.trim() || isLoading) return
+  const sendMessage = async (messageText?: string) => {
+    const text = messageText || input.trim()
+    if (!text || isLoading) return
+
+    // Handle special LINK: prefix
+    if (text.startsWith('LINK:')) {
+      window.open(text.replace('LINK:', ''), '_blank')
+      return
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input.trim(),
+      content: text,
       timestamp: new Date(),
     }
 
     setMessages(prev => [...prev, userMessage])
-    const userInput = input.trim()
     setInput('')
     setIsLoading(true)
 
-    // Simulate brief delay for natural feel
-    setTimeout(() => {
-      const response = getResponse(userInput)
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: response,
-        timestamp: new Date(),
-      }
-      setMessages(prev => [...prev, assistantMessage])
-      setIsLoading(false)
-    }, 500)
+    if (isConnected && wsRef.current?.readyState === WebSocket.OPEN) {
+      sendWebSocketMessage(text)
+    } else {
+      // Queue message for when connection is ready
+      pendingMessageRef.current = text
+      connectWebSocket()
+      
+      // Fallback after timeout
+      setTimeout(() => {
+        if (pendingMessageRef.current) {
+          pendingMessageRef.current = null
+          setIsLoading(false)
+          setMessages(prev => [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              role: 'assistant',
+              content: "I'm having trouble connecting. You can reach us directly:\n\n📞 **Call:** +1 (347) 803-0812\n📧 **Email:** info@denivra.com\n📅 **Book:** calendly.com/bsa-denivra/30min",
+              timestamp: new Date()
+            }
+          ])
+        }
+      }, 10000)
+    }
   }
+
+  const handleQuickAction = (action: QuickAction) => {
+    sendMessage(action.value)
+  }
+
+  const getButtonIcon = (icon?: string) => {
+    switch (icon) {
+      case 'calendar': return <Calendar className="w-3 h-3" />
+      case 'pricing': return <DollarSign className="w-3 h-3" />
+      case 'voice': return <Mic className="w-3 h-3" />
+      case 'email': return <Mail className="w-3 h-3" />
+      default: return null
+    }
+  }
+
+  const formatContent = (content: string) => {
+    return content
+      .split('\n')
+      .map((line) => {
+        // Bold
+        line = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        // Italic
+        line = line.replace(/\*(.+?)\*/g, '<em>$1</em>')
+        // Links
+        line = line.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" class="text-primary-400 hover:underline">$1</a>')
+        // Plain URLs
+        line = line.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" class="text-primary-400 hover:underline">$1</a>')
+        // Bullet points
+        if (line.startsWith('• ') || line.startsWith('- ') || line.startsWith('✅ ') || line.startsWith('✓ ')) {
+          return `<div class="ml-2">${line}</div>`
+        }
+        if (line.match(/^<strong>.+<\/strong>$/)) {
+          return `<div class="mt-2 mb-1">${line}</div>`
+        }
+        return line
+      })
+      .join('<br />')
+  }
+
+  const showQuickActions = messages.length === 1
 
   return (
     <>
@@ -122,10 +328,10 @@ export function ChatWidget() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="chat-bubble fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple shadow-lg shadow-primary-500/25 flex items-center justify-center hover:shadow-xl hover:shadow-primary-500/30 transition-shadow cursor-pointer"
+            className="chat-bubble fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple shadow-lg shadow-primary-500/25 flex items-center justify-center hover:shadow-xl hover:shadow-primary-500/30 transition-shadow cursor-pointer group"
           >
-            <MessageSquare className="w-6 h-6 text-white" />
-            <span className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-dark-950" />
+            <MessageSquare className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+            <span className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-dark-950 animate-pulse" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -137,19 +343,19 @@ export function ChatWidget() {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="fixed bottom-6 right-6 z-[9999] w-96 h-[32rem] bg-dark-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-[9999] w-96 max-w-[calc(100vw-3rem)] h-[32rem] max-h-[calc(100vh-6rem)] bg-dark-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-4 border-b border-white/10 flex items-center justify-between bg-dark-900">
+            <div className="p-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-dark-900 to-dark-800">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold text-white">Pivot</div>
-                  <div className="text-xs text-green-400 flex items-center space-x-1">
-                    <span className="w-2 h-2 rounded-full bg-green-400" />
-                    <span>Online</span>
+                  <div className={`text-xs flex items-center space-x-1 ${isConnected ? 'text-green-400' : 'text-yellow-400'}`}>
+                    <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'}`} />
+                    <span>{isConnected ? 'Online' : 'Connecting...'}</span>
                   </div>
                 </div>
               </div>
@@ -172,30 +378,60 @@ export function ChatWidget() {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+              {messages.map((message, idx) => (
+                <div key={message.id}>
                   <div
-                    className={`max-w-[80%] p-3 rounded-2xl ${
-                      message.role === 'user'
-                        ? 'bg-gradient-to-r from-primary-500 to-accent-purple text-white rounded-br-md'
-                        : 'bg-dark-800 text-white rounded-bl-md'
-                    }`}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <p className="text-sm whitespace-pre-line">{message.content}</p>
-                    <p className="text-xs opacity-50 mt-1">
-                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </p>
+                    <div
+                      className={`max-w-[85%] p-3 rounded-2xl ${
+                        message.role === 'user'
+                          ? 'bg-gradient-to-r from-primary-500 to-accent-purple text-white rounded-br-md'
+                          : 'bg-dark-800 text-white rounded-bl-md'
+                      }`}
+                    >
+                      <div 
+                        className="text-sm leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: formatContent(message.content) }}
+                      />
+                      {!message.streaming && (
+                        <p className="text-xs opacity-40 mt-2">
+                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      )}
+                    </div>
                   </div>
+                  
+                  {/* Quick Action Buttons */}
+                  {message.role === 'assistant' && idx === 0 && showQuickActions && (
+                    <div className="flex flex-wrap gap-2 mt-2 ml-1">
+                      {INITIAL_BUTTONS.map((btn, bidx) => (
+                        <button
+                          key={bidx}
+                          onClick={() => handleQuickAction(btn)}
+                          disabled={isLoading}
+                          className="inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-medium 
+                                     bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-primary-500/50
+                                     rounded-full text-white/80 hover:text-white transition-all
+                                     disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {getButtonIcon(btn.icon)}
+                          <span>{btn.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
               
-              {isLoading && (
+              {isLoading && !messages[messages.length - 1]?.streaming && (
                 <div className="flex justify-start">
                   <div className="bg-dark-800 p-3 rounded-2xl rounded-bl-md">
-                    <Loader2 className="w-5 h-5 animate-spin text-primary-400" />
+                    <div className="flex space-x-1">
+                      <span className="w-2 h-2 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-2 h-2 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-2 h-2 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
                   </div>
                 </div>
               )}
@@ -214,9 +450,10 @@ export function ChatWidget() {
                   placeholder="Type a message..."
                   className="flex-1 bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-dark-400
                              focus:outline-none focus:border-primary-500 transition-colors"
+                  disabled={isLoading}
                 />
                 <button
-                  onClick={sendMessage}
+                  onClick={() => sendMessage()}
                   disabled={!input.trim() || isLoading}
                   className="p-3 bg-gradient-to-r from-primary-500 to-accent-purple rounded-xl
                              hover:shadow-lg hover:shadow-primary-500/25 transition-all
@@ -226,7 +463,7 @@ export function ChatWidget() {
                 </button>
               </div>
               <p className="text-xs text-dark-500 mt-2 text-center">
-                Powered by Pivot AI • <a href="tel:+13478030812" className="text-primary-400 hover:underline">Call us</a>
+                Powered by Pivot AI • <a href="tel:+13478030812" className="text-primary-400 hover:underline">Call</a> • <a href="mailto:info@denivra.com" className="text-primary-400 hover:underline">Email</a>
               </p>
             </div>
           </motion.div>

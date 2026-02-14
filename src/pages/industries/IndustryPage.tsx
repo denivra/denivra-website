@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   Bot, ArrowLeft, Check, ArrowRight, Star, DollarSign, Clock, 
@@ -300,7 +300,11 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
 }
 
 export function IndustryPage() {
-  const { slug } = useParams<{ slug: string }>()
+  const { slug: paramSlug } = useParams<{ slug: string }>()
+  const location = useLocation()
+  
+  // Extract slug from pathname if useParams doesn't work (hardcoded routes)
+  const slug = paramSlug || location.pathname.split('/').pop()
   const industry = slug ? getIndustryBySlug(slug) : undefined
 
   if (!industry) {

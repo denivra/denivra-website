@@ -3,6 +3,9 @@ export { CaseStudyPage } from './CaseStudyPage'
 export { CaseStudiesListPage } from './CaseStudiesListPage'
 export { ContactPage } from './ContactPage'
 export { AutomationsPage } from './AutomationsPage'
+export { AboutPage } from './AboutPage'
+export { PricingPage } from './PricingPage'
+export { ROICalculatorPage } from './ROICalculatorPage'
 
 // Solutions
 export { CallCentersPage } from './solutions/CallCentersPage'

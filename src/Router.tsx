@@ -5,6 +5,9 @@ import {
   CaseStudiesListPage, 
   ContactPage,
   AutomationsPage,
+  AboutPage,
+  PricingPage,
+  ROICalculatorPage,
   // Solutions
   CallCentersPage,
   SmallBusinessPage,
@@ -29,6 +32,9 @@ export function Router() {
         {/* Main */}
         <Route path="/" element={<App />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/roi-calculator" element={<ROICalculatorPage />} />
         
         {/* Solutions */}
         <Route path="/solutions/call-centers" element={<CallCentersPage />} />

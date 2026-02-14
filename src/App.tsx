@@ -109,9 +109,9 @@ function App() {
                 </div>
               </div>
               
-              <a href="/automations" className="text-dark-300 hover:text-white transition-colors">Automations</a>
-              <a href="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</a>
-              <a href="#roi" className="text-dark-300 hover:text-white transition-colors">ROI</a>
+              <a href="/pricing" className="text-dark-300 hover:text-white transition-colors">Pricing</a>
+              <a href="/roi-calculator" className="text-dark-300 hover:text-white transition-colors">ROI Calculator</a>
+              <a href="/about" className="text-dark-300 hover:text-white transition-colors">About</a>
               <a href="/contact" className="btn-primary text-sm">Book Demo</a>
             </div>
 
