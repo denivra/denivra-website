@@ -1,79 +1,98 @@
 import { motion } from 'framer-motion'
-import { Check, Sparkles } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 
 interface ProductCardProps {
   name: string
   price: string
+  priceMonthly?: string
   description: string
   features: string[]
-  highlighted: boolean
+  highlighted?: boolean
   tier: 'starter' | 'professional' | 'enterprise'
+  link?: string
 }
 
-export function ProductCard({
-  name,
-  price,
-  description,
-  features,
-  highlighted,
+export function ProductCard({ 
+  name, 
+  price, 
+  priceMonthly,
+  description, 
+  features, 
+  highlighted, 
   tier,
+  link 
 }: ProductCardProps) {
+  const tierColors = {
+    starter: 'from-blue-500/20 to-cyan-500/20',
+    professional: 'from-primary-500/20 to-accent-purple/20',
+    enterprise: 'from-purple-500/20 to-pink-500/20',
+  }
+
+  const tierLabels = {
+    starter: 'Solo Operations',
+    professional: 'Growing Teams',
+    enterprise: 'Enterprise Scale',
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className={`relative rounded-2xl p-8 ${
-        highlighted
-          ? 'bg-gradient-to-br from-primary-500/20 via-accent-purple/20 to-accent-pink/20 border border-primary-500/50'
-          : 'glass'
-      }`}
+      whileHover={{ y: -4 }}
+      className={`
+        relative rounded-2xl p-6 border transition-all
+        ${highlighted 
+          ? 'bg-gradient-to-b from-primary-500/10 to-transparent border-primary-500/50 shadow-lg shadow-primary-500/10' 
+          : 'bg-dark-900/50 border-white/10 hover:border-white/20'
+        }
+      `}
     >
       {highlighted && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <div className="flex items-center space-x-1 bg-gradient-to-r from-primary-500 to-accent-purple px-4 py-1 rounded-full text-sm font-semibold">
-            <Sparkles className="w-4 h-4" />
-            <span>Most Popular</span>
-          </div>
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-500 rounded-full text-xs font-semibold">
+          Most Popular
         </div>
       )}
 
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold mb-2">{name}</h3>
-        <p className="text-dark-400 text-sm">{description}</p>
+      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tierColors[tier]} flex items-center justify-center mb-4`}>
+        <span className="text-2xl">{tier === 'starter' ? '🚀' : tier === 'professional' ? '⚡' : '🏢'}</span>
       </div>
 
-      <div className="mb-6">
-        <span className="text-4xl font-bold gradient-text">{price}</span>
-        {tier !== 'enterprise' && (
-          <span className="text-dark-400 text-sm ml-2">one-time</span>
-        )}
+      <div className="text-xs text-dark-400 uppercase tracking-wide mb-1">{tierLabels[tier]}</div>
+      <h3 className="text-xl font-bold mb-1">{name}</h3>
+      
+      <div className="flex items-baseline space-x-2 mb-2">
+        <span className="text-3xl font-bold gradient-text">{price}</span>
+        {price !== 'Custom' && <span className="text-dark-400 text-sm">one-time</span>}
       </div>
+      
+      {priceMonthly && (
+        <div className="text-sm text-dark-400 mb-4">
+          + {priceMonthly} maintenance <span className="text-dark-500">(optional)</span>
+        </div>
+      )}
 
-      <ul className="space-y-3 mb-8">
+      <p className="text-dark-400 text-sm mb-6">{description}</p>
+
+      <ul className="space-y-3 mb-6">
         {features.map((feature, i) => (
-          <li key={i} className="flex items-start space-x-3">
-            <Check className="w-5 h-5 text-primary-400 shrink-0 mt-0.5" />
-            <span className="text-sm text-dark-200">{feature}</span>
+          <li key={i} className="flex items-start space-x-2 text-sm">
+            <Check className="w-4 h-4 text-primary-400 mt-0.5 flex-shrink-0" />
+            <span className="text-dark-300">{feature}</span>
           </li>
         ))}
       </ul>
 
-      <button
-        className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
-          highlighted
-            ? 'bg-gradient-to-r from-primary-500 to-accent-purple text-white hover:shadow-lg hover:shadow-primary-500/25'
-            : 'border border-white/20 hover:bg-white/10'
-        }`}
+      <a 
+        href={link || '/contact'} 
+        className={`
+          w-full py-3 rounded-xl font-medium text-center transition-all flex items-center justify-center space-x-2
+          ${highlighted 
+            ? 'bg-primary-500 hover:bg-primary-400 text-white' 
+            : 'bg-white/5 hover:bg-white/10 text-white'
+          }
+        `}
       >
-        {tier === 'enterprise' ? 'Contact Sales' : 'Get Started'}
-      </button>
-
-      {tier !== 'enterprise' && (
-        <p className="text-center text-dark-500 text-xs mt-4">
-          + $99-199/mo optional maintenance
-        </p>
-      )}
+        <span>{price === 'Custom' ? 'Contact Sales' : 'Learn More'}</span>
+        <ArrowRight className="w-4 h-4" />
+      </a>
     </motion.div>
   )
 }

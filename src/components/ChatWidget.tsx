@@ -41,11 +41,27 @@ export function ChatWidget() {
     const lower = userInput.toLowerCase()
 
     if (lower.includes('price') || lower.includes('cost') || lower.includes('pricing') || lower.includes('how much')) {
-      return `Our packages:\n\n**Nous Assist** — $499 (one-time)\nEmail + chat automation for small teams\n\n**Nous Connect** — $2,499 (one-time)\nVoice AI + advanced integrations\n\n**Nous Command** — Custom pricing\nEnterprise-grade orchestration\n\nAll include setup & training. Want details on a specific tier?`
+      return `Our packages:\n\n**Nous Assist** — $2,800 (one-time) + $250/mo optional\nFor solopreneurs. Email triage, WhatsApp bot, basic automation.\n\n**Nous Connect** — $7,500 (one-time) + $750/mo optional\nFor growing teams. Voice AI, QuickBooks, CRM sync, analytics.\n\n**Nous Command** — Custom pricing\nEnterprise. Multi-location, legacy systems, white-label.\n\nAll include Mac Mini hardware + setup. Want details on a specific tier?`
     }
 
     if (lower.includes('demo') || lower.includes('trial') || lower.includes('try') || lower.includes('schedule') || lower.includes('book') || lower.includes('call')) {
-      return `Let's get you scheduled!\n\n📅 Book directly: calendly.com/bsa-denivra/30min\n📧 Email: info@denivra.com\n📞 Call: +1 (347) 803-0812\n\nOr tell me your preferred time!`
+      return `Let's get you scheduled!\n\n📅 **Book directly:** calendly.com/bsa-denivra/30min\n📧 **Email:** info@denivra.com\n📞 **Call/Text:** +1 (347) 803-0812\n\n30-minute call — we'll show you exactly how Nous works for your business.`
+    }
+
+    if (lower.includes('cafe') || lower.includes('coffee') || lower.includes('coffee shop')) {
+      return `**Nous Café** is perfect for coffee shop owners!\n\n☕ 12 features built-in:\n• Review monitoring (Google, Yelp)\n• Weather-smart prep sheets\n• Shift swap automation\n• Equipment health alerts\n• Invoice auditing\n\n💰 $1,299 - $1,799 setup\n⚡ ~$2/mo running cost\n📈 1-3 month payback\n\nWant to see how it handles bad reviews?`
+    }
+
+    if (lower.includes('cpa') || lower.includes('accountant') || lower.includes('accounting') || lower.includes('bookkeep')) {
+      return `**Nous CPA** transforms accounting practices!\n\n📊 Key features:\n• Clients text receipts → QuickBooks\n• AI extracts vendor, amount, date\n• 97% accuracy, overnight processing\n• Invoice auditing & duplicate detection\n• Client-ready dashboards\n\n💰 $15,000 setup + $499-2,499/mo\n⏱️ Save 15+ hours/week\n\nOne CPA processed 312 docs overnight for $4.27. Want details?`
+    }
+
+    if (lower.includes('restaurant') || lower.includes('food')) {
+      return `**Nous Restaurant** handles full-service operations!\n\n🍽️ Features:\n• Reservation AI\n• Kitchen display integration\n• Menu engineering\n• Review management\n• Inventory intelligence\n\n💰 $2,500 - $5,000 setup\n\nWant to learn about multi-location management?`
+    }
+
+    if (lower.includes('salon') || lower.includes('spa') || lower.includes('beauty') || lower.includes('hair')) {
+      return `**Nous Salon** keeps your chairs full!\n\n💇 Features:\n• Voice booking (24/7 phone answering)\n• No-show prevention alerts\n• Client preference memory\n• Rebooking automation\n• Product inventory tracking\n\n💰 $1,800 - $3,500 setup\n📈 20% more rebookings\n\nWant to hear how the voice AI handles appointments?`
     }
 
     if (lower.includes('voice') || lower.includes('phone') || lower.includes('call center')) {
