@@ -109,7 +109,33 @@ function App() {
                 </div>
               </div>
               
-              <a href="/solutions/enterprise" className="text-dark-300 hover:text-white transition-colors font-medium">Enterprise</a>
+              <div className="relative group">
+                <a href="/solutions/enterprise" className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1 font-medium">
+                  <span>Enterprise</span>
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </a>
+                <div className="absolute top-full left-0 mt-2 w-64 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
+                  <a href="/enterprise/baas-architecture" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">
+                    <div className="font-medium text-white">🏗️ BaaS Architecture</div>
+                    <div className="text-xs text-dark-400">Partner ecosystems, FBO structures</div>
+                  </a>
+                  <a href="/enterprise/payment-infrastructure" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
+                    <div className="font-medium text-white">💳 Payment Infrastructure</div>
+                    <div className="text-xs text-dark-400">Multi-rail orchestration</div>
+                  </a>
+                  <a href="/enterprise/compliance-automation" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
+                    <div className="font-medium text-white">⚖️ Compliance Automation</div>
+                    <div className="text-xs text-dark-400">AML/BSA, zero audit findings</div>
+                  </a>
+                  <a href="/enterprise/legacy-modernization" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
+                    <div className="font-medium text-white">🔄 Legacy Modernization</div>
+                    <div className="text-xs text-dark-400">AI-assisted code analysis</div>
+                  </a>
+                  <a href="/solutions/enterprise" className="block px-4 py-3 text-sm text-primary-400 hover:text-primary-300 hover:bg-white/5 rounded-b-xl border-t border-white/5">
+                    View All Services →
+                  </a>
+                </div>
+              </div>
               <a href="/pricing" className="text-dark-300 hover:text-white transition-colors">Pricing</a>
               <a href="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</a>
               <a href="/contact" className="btn-primary text-sm">Book Demo</a>

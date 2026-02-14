@@ -9,18 +9,20 @@ const team = [
   {
     name: 'Nikolaos Bessas',
     role: 'Co-Founder & CEO',
-    bio: 'Finance transformation expert with 15+ years in enterprise systems. Led $100M+ digital initiatives at Cross River Bank. Specializes in legacy modernization and AI integration.',
+    bio: 'IT Director → CIO track with 15+ years leading digital transformation at banks and fintechs. Built middleware processing $B+ in transactions, designed BaaS architecture for 140+ fintech partners, and achieved zero findings across 4 consecutive DFS audits. CISM certified. $3.5M+ in documented cost savings.',
     linkedin: 'https://linkedin.com/in/nikolaosbessas',
-    email: 'niko@denivra.com',
-    expertise: ['Enterprise Architecture', 'AI Strategy', 'Finance Transformation'],
+    email: 'bsa@denivra.com',
+    expertise: ['BaaS Architecture', 'Payment Infrastructure', 'Compliance Automation', 'Legacy Modernization'],
+    credentials: ['CISM Certified', '$3.5M+ Savings', '100% Audit Compliance'],
   },
   {
     name: 'Spyros Nakos',
     role: 'Co-Founder & CTO',
-    bio: 'Full-stack engineer and AI systems architect. Built scalable platforms serving millions of users. Expert in voice AI, automation pipelines, and real-time systems.',
+    bio: 'Full-stack engineer and AI systems architect. Built scalable platforms serving millions of users. Expert in voice AI, automation pipelines, and real-time systems. Specializes in turning complex enterprise requirements into elegant, working solutions.',
     linkedin: 'https://linkedin.com/in/spyrosnakos',
     email: 'spyros@denivra.com',
     expertise: ['Voice AI', 'System Architecture', 'Automation'],
+    credentials: [],
   },
 ]
 
