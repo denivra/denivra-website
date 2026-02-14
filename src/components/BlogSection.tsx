@@ -51,7 +51,7 @@ function BlogCard({ post, index }: BlogCardProps) {
       {/* Meta */}
       <div className="flex items-center justify-between text-xs text-dark-500">
         <div className="flex items-center space-x-4">
-          <span>{post.author}</span>
+          <span>{post.author.name}</span>
           <span className="flex items-center">
             <Clock className="w-3 h-3 mr-1" />
             {post.readTime}
@@ -146,7 +146,7 @@ export function FeaturedBlogPost() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 text-sm text-dark-500">
-              <span>{featured.author}</span>
+              <span>{featured.author.name}</span>
               <span className="flex items-center">
                 <Clock className="w-4 h-4 mr-1" />
                 {featured.readTime}
