@@ -278,24 +278,28 @@ export function EnterprisePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="card group hover:border-primary-500/30 cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-purple/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-6 h-6 text-primary-400" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                <p className="text-dark-400 text-sm mb-3">{service.description}</p>
-                <div className="flex items-center text-xs text-primary-400">
-                  <CheckCircle2 className="w-3 h-3 mr-1" />
-                  {service.proof}
-                </div>
-              </motion.div>
+              <Link key={i} to={`/enterprise/${service.slug}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="card group hover:border-primary-500/30 cursor-pointer h-full"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-purple/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <service.icon className="w-6 h-6 text-primary-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                  <p className="text-dark-400 text-sm mb-3">{service.description}</p>
+                  <div className="flex items-center text-xs text-primary-400 mb-2">
+                    <CheckCircle2 className="w-3 h-3 mr-1" />
+                    {service.proof}
+                  </div>
+                  <div className="text-primary-400 text-sm font-medium group-hover:underline flex items-center mt-auto">
+                    Learn More <ArrowRight className="w-4 h-4 ml-1" />
+                  </div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

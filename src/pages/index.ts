@@ -12,6 +12,9 @@ export { CallCentersPage } from './solutions/CallCentersPage'
 export { SmallBusinessPage } from './solutions/SmallBusinessPage'
 export { EnterprisePage } from './solutions/EnterprisePage'
 
+// Enterprise Services
+export { ServicePage } from './enterprise/ServicePage'
+
 // Products
 export { VoiceAIPage } from './products/VoiceAIPage'
 export { ProductPage } from './products/ProductPage'

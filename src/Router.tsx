@@ -12,6 +12,8 @@ import {
   CallCentersPage,
   SmallBusinessPage,
   EnterprisePage,
+  // Enterprise Services
+  ServicePage,
   // Products
   VoiceAIPage,
   ProductPage,
@@ -40,6 +42,17 @@ export function Router() {
         <Route path="/solutions/call-centers" element={<CallCentersPage />} />
         <Route path="/solutions/small-business" element={<SmallBusinessPage />} />
         <Route path="/solutions/enterprise" element={<EnterprisePage />} />
+        
+        {/* Enterprise Services */}
+        <Route path="/enterprise/baas-architecture" element={<ServicePage />} />
+        <Route path="/enterprise/payment-infrastructure" element={<ServicePage />} />
+        <Route path="/enterprise/onboarding-kyc" element={<ServicePage />} />
+        <Route path="/enterprise/compliance-automation" element={<ServicePage />} />
+        <Route path="/enterprise/middleware-integration" element={<ServicePage />} />
+        <Route path="/enterprise/legacy-modernization" element={<ServicePage />} />
+        <Route path="/enterprise/security-architecture" element={<ServicePage />} />
+        <Route path="/enterprise/infrastructure" element={<ServicePage />} />
+        <Route path="/enterprise/:serviceId" element={<ServicePage />} />
         
         {/* Products - New dynamic routes */}
         <Route path="/products/nous-assist" element={<ProductPage />} />
