@@ -185,12 +185,14 @@ Current: 100% static TypeScript files (~2,700 lines). Every content change requi
 - ✅ Error boundary
 - ✅ 404 page
 - ✅ Fix pricing inconsistencies — 1.2 (SmallBusinessPage, ROICalculator, chatbotKnowledge)
+- ✅ 1.1 Deduplicate App.tsx into Layout (extract nav/footer) — 2026-02-14
+- ✅ 1.5 Add analytics (GA4 placeholder) — 2026-02-14
+- ✅ 1.9 Embed Calendly on contact page — 2026-02-14
 
 **In Progress / Next:**
-- [ ] 1.1 Deduplicate App.tsx into Layout (extract nav/footer)
-- [ ] 1.5 Add analytics (Plausible/GA4)
 - [ ] 1.6 Consolidate enterprise pages (8 → 1)
-- [ ] 1.9 Embed Calendly on contact page
+- [ ] 1.8 Image optimization
+- [ ] Clean up remaining pages with duplicate nav/footer (blog, legal, solutions)
 
 **Commits:**
 - `104494f` — Security fixes
@@ -198,3 +200,5 @@ Current: 100% static TypeScript files (~2,700 lines). Every content change requi
 - `5c98bbc` — Performance (lazy loading, 404)
 - `ace3e5e` — ErrorBoundary, .env.example
 - `f9a664b` — Pricing consistency fixes
+- `01cabbd` — Phase 1.1: Layout component (dedupe nav/footer)
+- `f1d8b8c` — Phase 1.5 + 1.9: GA4 analytics + Calendly embed
