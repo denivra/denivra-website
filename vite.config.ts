@@ -3,8 +3,11 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/denivra-website/',
+  base: '/',
   server: {
     port: 3000,
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],
   },
 })

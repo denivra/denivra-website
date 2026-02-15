@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Building2, Clock, CheckCircle2, TrendingUp, Quote, ChevronRight, Bot } from 'lucide-react'
+import DOMPurify from 'dompurify'
 import { caseStudies } from '../data/caseStudies'
 import { ChatWidget } from '../components/ChatWidget'
 
@@ -43,7 +44,7 @@ export function CaseStudyPage() {
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500/20 text-primary-400 text-sm font-semibold flex items-center justify-center mt-0.5">
                     {i + 1}
                   </span>
-                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: formatInlineText(item) }} />
+                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatInlineText(item)) }} />
                 </li>
               ))}
             </ol>
@@ -54,7 +55,7 @@ export function CaseStudyPage() {
               {currentList.items.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: formatInlineText(item) }} />
+                  <span className="text-dark-200" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatInlineText(item)) }} />
                 </li>
               ))}
             </ul>
@@ -216,7 +217,7 @@ export function CaseStudyPage() {
       flushList()
       
       elements.push(
-        <p key={`p-${i}`} className="text-dark-300 text-lg leading-relaxed my-4" dangerouslySetInnerHTML={{ __html: formatInlineText(trimmedLine) }} />
+        <p key={`p-${i}`} className="text-dark-300 text-lg leading-relaxed my-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatInlineText(trimmedLine)) }} />
       )
     }
 

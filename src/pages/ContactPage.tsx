@@ -114,7 +114,7 @@ export function ContactPage() {
 
       setIsSubmitted(true)
     } catch (error) {
-      console.error('Form submission error:', error)
+      // console.error('Form submission error:', error)
       // Show success anyway - we'll handle via backup methods
       setIsSubmitted(true)
     } finally {

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageSquare, X, Send, Bot, Phone, Calendar, DollarSign, Mic, Mail } from 'lucide-react'
+import DOMPurify from 'dompurify'
 
 interface Message {
   id: string
@@ -22,9 +23,9 @@ const INITIAL_BUTTONS: QuickAction[] = [
   { label: 'Voice AI', value: 'Tell me about voice AI', icon: 'voice' },
 ]
 
-// Gateway WebSocket configuration
-const WS_URL = 'wss://nikolaoss-mac-mini.tailc41dc1.ts.net'
-const WS_TOKEN = '8ba1695d02a39d8e1b006668b6ef4d15671901c85926fd17'
+// Gateway WebSocket configuration - loaded from environment variables
+const WS_URL = import.meta.env.VITE_WS_URL || ''
+const WS_TOKEN = import.meta.env.VITE_WS_TOKEN || ''
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -89,7 +90,7 @@ export function ChatWidget() {
     wsRef.current = ws
 
     ws.onopen = () => {
-      console.log('WebSocket connected')
+      // console.log('WebSocket connected')
       // Authenticate
       ws.send(JSON.stringify({ 
         type: 'auth', 
@@ -115,7 +116,7 @@ export function ChatWidget() {
         }
 
         if (data.type === 'auth.error') {
-          console.error('Auth error:', data.error)
+          // console.error('Auth error:', data.error)
           setIsConnected(false)
           return
         }
@@ -163,7 +164,7 @@ export function ChatWidget() {
         }
 
         if (data.type === 'error') {
-          console.error('Chat error:', data.error)
+          // console.error('Chat error:', data.error)
           setIsLoading(false)
           // Add error message
           setMessages(prev => [
@@ -177,12 +178,12 @@ export function ChatWidget() {
           ])
         }
       } catch (e) {
-        console.error('Message parse error:', e)
+        // console.error('Message parse error:', e)
       }
     }
 
     ws.onclose = () => {
-      console.log('WebSocket closed')
+      // console.log('WebSocket closed')
       setIsConnected(false)
       // Reconnect after delay if chat is open
       if (isOpen) {
@@ -191,7 +192,7 @@ export function ChatWidget() {
     }
 
     ws.onerror = (error) => {
-      console.error('WebSocket error:', error)
+      // console.error('WebSocket error:', error)
       setIsConnected(false)
     }
   }, [isOpen, sessionKey])
@@ -392,7 +393,7 @@ export function ChatWidget() {
                     >
                       <div 
                         className="text-sm leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: formatContent(message.content) }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatContent(message.content)) }}
                       />
                       {!message.streaming && (
                         <p className="text-xs opacity-40 mt-2">
