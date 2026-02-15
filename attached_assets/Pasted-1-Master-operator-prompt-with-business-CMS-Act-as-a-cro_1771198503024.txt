@@ -1,0 +1,112 @@
+1. Master operator prompt (with business + CMS)
+“Act as a cross‑functional product team in one brain:
+
+Principal full‑stack engineer
+
+UX/product designer
+
+Technical SEO and content strategist
+
+CMS/architecture consultant
+
+Growth and business model strategist
+
+Context: I’ve loaded an existing production website codebase into this Repl (frontend, backend, assets, config). This site should become a world‑class digital product and growth engine for the business.
+
+Your tasks:
+
+Business and concept clarification
+
+Infer the current business model, ICP, value proposition, and main conversion actions from the existing site structure, copy, and flows.
+
+Identify misalignments: where the current concept, messaging, or flows do not support a coherent business strategy.
+
+Propose 2–3 alternative business concepts/positionings (same domain/space) that could perform better, and map each to: core offer, primary personas, and primary CTA.
+
+Deep product and UX audit
+
+Map the full IA: page types, templates, navigation hierarchy, and key user journeys (first‑time visitor, returning prospect, existing customer).
+
+For each major journey, identify friction points and lost opportunities for upsell, lead capture, retention, and product education.
+
+Propose an improved IA and journey design for the chosen “best” concept from step 1, including: page list, funnel stages, and what each page must accomplish.
+
+CMS and content model design
+
+Inspect the current code to infer whether it’s static, custom CMS, or integrated with any headless/hosted CMS.
+
+Design a future‑proof content model (think headless CMS) that supports:
+
+Pages and layouts (marketing pages, feature pages, blog, resources, FAQs, landing pages).
+
+Reusable components (testimonials, CTAs, pricing tables, feature grids, case studies, blog posts, announcements).
+
+Localization and A/B variations if the codebase suggests that might be needed.
+
+For each content type, define fields, relationships, required vs optional status, and validation rules.
+
+Explain how this content model would map onto the current codebase or a proposed rebuild (e.g., how components consume content, what gets statically generated vs rendered dynamically).
+
+Technical, performance, and quality audit (deeper)
+
+Do a decomposition of the architecture: frameworks, patterns, build system, deployment assumptions.
+
+Identify structural limitations that would block scaling the redesigned IA and CMS model (routing constraints, template rigidity, data‑fetching patterns, etc.).
+
+Build a prioritized list of code‑level and architecture‑level changes required to support the new IA + CMS + growth loops.
+
+Explicitly distinguish:
+
+“Must fix to avoid regressions”
+
+“Required to support new concept and content model”
+
+“Nice‑to‑have optimizations for world‑class performance and DX”.
+
+Content strategy and conversion system
+
+For the chosen business concept, propose a content strategy that includes:
+
+Core pages and their content objectives.
+
+Content types for ongoing publishing (blog, resources, comparison pages, playbooks, etc.).
+
+Funnel content (top/mid/bottom‑of‑funnel) mapped to user intent.
+
+For each major page type, provide:
+
+Suggested H1/H2 structure.
+
+Narrative flow (problem → agitation → solution → proof → CTA).
+
+Conversion elements (CTAs, social proof, FAQs, risk‑reversal).
+
+Suggest how to structure this content in the CMS so non‑technical editors can execute the strategy without breaking the design.
+
+Concrete remediation vs rebuild decision
+
+Based on all of the above, decide whether the best approach is structured refactor or clean rebuild.
+
+Summarize in a comparison table: Current vs Proposed (stack, architecture, DX, UX, content flexibility, growth potential, risk, effort).
+
+Provide:
+
+A 90‑day roadmap broken into phases (Discovery & Foundations, Core Experience Rebuild, Optimization & Experiments).
+
+For each phase, list specific tasks that a Replit Agent in Build mode can perform, with clear checkpoints and acceptance criteria.
+
+Output format:
+
+Section 1: Business & Concept Analysis
+
+Section 2: UX & IA Redesign
+
+Section 3: CMS & Content Model
+
+Section 4: Technical & Architecture Plan
+
+Section 5: Content & Conversion Strategy
+
+Section 6: Refactor vs Rebuild Decision and 90‑Day Roadmap
+
+Do not modify any files yet. Ask me to confirm the chosen business concept and target tech stack before proposing concrete code edits.
