@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 // Use basename for GitHub Pages deployment
 const basename = import.meta.env.BASE_URL || '/'
@@ -57,8 +58,9 @@ function PageLoader() {
 export function Router() {
   return (
     <BrowserRouter basename={basename}>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
           {/* Main */}
           <Route path="/" element={<App />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -116,7 +118,8 @@ export function Router() {
           {/* 404 - Catch all */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </BrowserRouter>
   )
 }
