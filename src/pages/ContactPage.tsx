@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   ArrowLeft, Mail, Phone, MessageSquare, MapPin, Clock, Send, 
-  CheckCircle2, Building2, Calendar, PhoneCall, Bot
+  CheckCircle2, Calendar, PhoneCall
 } from 'lucide-react'
-import { ChatWidget } from '../components/ChatWidget'
 
 declare global {
   interface Window {
@@ -40,14 +39,12 @@ export function ContactPage() {
 
   // Load HubSpot form if configured
   useEffect(() => {
-    // Check if HubSpot is configured
     const hubspotPortalId = import.meta.env.VITE_HUBSPOT_PORTAL_ID
     const hubspotFormId = import.meta.env.VITE_HUBSPOT_FORM_ID
     
     if (hubspotPortalId && hubspotFormId) {
       setUseHubSpot(true)
       
-      // Load HubSpot script
       const script = document.createElement('script')
       script.src = '//js.hsforms.net/forms/v2.js'
       script.async = true
@@ -74,7 +71,6 @@ export function ContactPage() {
     setIsSubmitting(true)
 
     try {
-      // Submit to Clawdbot/webhook endpoint
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -86,7 +82,6 @@ export function ContactPage() {
       })
 
       if (!response.ok) {
-        // Fallback: try HubSpot direct submission
         const hubspotPortalId = import.meta.env.VITE_HUBSPOT_PORTAL_ID
         const hubspotFormId = import.meta.env.VITE_HUBSPOT_FORM_ID
         
@@ -114,8 +109,6 @@ export function ContactPage() {
 
       setIsSubmitted(true)
     } catch (error) {
-      // console.error('Form submission error:', error)
-      // Show success anyway - we'll handle via backup methods
       setIsSubmitted(true)
     } finally {
       setIsSubmitting(false)
@@ -140,25 +133,7 @@ export function ContactPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2 text-dark-300 hover:text-white transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back to Home</span>
-            </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <>
       {/* Hero */}
       <section className="pt-32 pb-12 bg-grid relative">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
@@ -191,7 +166,6 @@ export function ContactPage() {
                 desc: 'Instant AI-powered help',
                 action: 'Open Chat',
                 onClick: () => {
-                  // Trigger chat widget open
                   if (window.openPivotChat) {
                     window.openPivotChat()
                   } else {
@@ -502,15 +476,6 @@ export function ContactPage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-dark-400 text-sm">
-          © 2025 Denivra Inc. All rights reserved.
-        </div>
-      </footer>
-
-      <ChatWidget />
-    </div>
+    </>
   )
 }

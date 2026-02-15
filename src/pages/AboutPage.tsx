@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Bot, ArrowRight, Linkedin, Mail, MapPin, Calendar,
-  Code, Briefcase, Award, Users, Target, Lightbulb
+  ArrowRight, Linkedin, Mail, MapPin,
+  Users, Target, Lightbulb
 } from 'lucide-react'
 
 const team = [
@@ -69,27 +69,7 @@ const values = [
 
 export function AboutPage() {
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-purple rounded-lg font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all"
-            >
-              Get in Touch
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <>
       {/* Hero */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -272,21 +252,6 @@ export function AboutPage() {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/5">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-              <Bot className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-semibold">Denivra</span>
-          </div>
-          <p className="text-dark-500 text-sm">
-            © {new Date().getFullYear()} Denivra Inc. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+    </>
   )
 }
