@@ -179,14 +179,22 @@ Current: 100% static TypeScript files (~2,700 lines). Every content change requi
 ## Implementation Status
 
 **Completed:**
-- Security fixes (env vars, DOMPurify, console stripping)
-- SEO basics (OG tags, JSON-LD, sitemap, robots.txt)
-- Code splitting (lazy loading all routes)
-- Error boundary
-- 404 page
+- ✅ Security fixes (env vars, DOMPurify, console stripping)
+- ✅ SEO basics (OG tags, JSON-LD, sitemap, robots.txt)
+- ✅ Code splitting (lazy loading all routes) — 1.7
+- ✅ Error boundary
+- ✅ 404 page
+- ✅ Fix pricing inconsistencies — 1.2 (SmallBusinessPage, ROICalculator, chatbotKnowledge)
 
-**Next Priority:**
-- Fix pricing inconsistencies
-- Deduplicate App.tsx into Layout
-- Add analytics
-- Consolidate enterprise pages
+**In Progress / Next:**
+- [ ] 1.1 Deduplicate App.tsx into Layout (extract nav/footer)
+- [ ] 1.5 Add analytics (Plausible/GA4)
+- [ ] 1.6 Consolidate enterprise pages (8 → 1)
+- [ ] 1.9 Embed Calendly on contact page
+
+**Commits:**
+- `104494f` — Security fixes
+- `a44591a` — SEO & Accessibility
+- `5c98bbc` — Performance (lazy loading, 404)
+- `ace3e5e` — ErrorBoundary, .env.example
+- `f9a664b` — Pricing consistency fixes
