@@ -66,6 +66,18 @@ export function ContactPage() {
     }
   }, [])
 
+  // Load Calendly widget
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
+    script.async = true
+    document.head.appendChild(script)
+    
+    return () => {
+      document.head.removeChild(script)
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -474,6 +486,21 @@ export function ContactPage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Calendly Embed Section */}
+      <section className="py-12 bg-dark-900/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-2">Or Schedule Directly</h2>
+            <p className="text-dark-400">Pick a time that works for you</p>
+          </div>
+          <div 
+            className="calendly-inline-widget rounded-xl overflow-hidden" 
+            data-url="https://calendly.com/bsa-denivra/30min?hide_gdpr_banner=1&background_color=0a0a0f&text_color=ffffff&primary_color=8b5cf6"
+            style={{ minWidth: '320px', height: '700px' }}
+          />
         </div>
       </section>
     </>
