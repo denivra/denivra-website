@@ -1,0 +1,11 @@
+# Robots.txt for denivra.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://denivra.com/sitemap.xml
+
+# Disallow admin/api routes
+Disallow: /api/
+Disallow: /.netlify/

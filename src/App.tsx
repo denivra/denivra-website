@@ -70,9 +70,14 @@ function App() {
             
             <div className="hidden md:flex items-center space-x-8">
               <div className="relative group">
-                <button className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1">
+                <button 
+                  className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-label="Products menu"
+                >
                   <span>Products</span>
-                  <ChevronRight className="w-4 h-4 rotate-90" />
+                  <ChevronRight className="w-4 h-4 rotate-90" aria-hidden="true" />
                 </button>
                 <div className="absolute top-full left-0 mt-2 w-56 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
                   <a href="/products/nous-assist" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">
@@ -95,9 +100,14 @@ function App() {
               </div>
               
               <div className="relative group">
-                <button className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1">
+                <button 
+                  className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-label="Industries menu"
+                >
                   <span>Industries</span>
-                  <ChevronRight className="w-4 h-4 rotate-90" />
+                  <ChevronRight className="w-4 h-4 rotate-90" aria-hidden="true" />
                 </button>
                 <div className="absolute top-full left-0 mt-2 w-48 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
                   <a href="/industries/cafe" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">Cafés & Coffee Shops</a>
