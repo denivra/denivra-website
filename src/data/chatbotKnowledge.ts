@@ -66,7 +66,7 @@ export const objectionResponses: Record<string, {
     acknowledge: "I completely understand budget concerns — it's a real consideration for any business investment.",
     isolate: "If we could make the numbers work, is there anything else that would hold you back?",
     reframe: "Let me ask this differently — what's the cost of *not* solving this problem? What are you spending now on manual work, missed opportunities, or errors?",
-    resolve: "Our clients typically see ROI within 60-90 days. Nous Assist starts at $499 — that's less than 20 hours of employee time. If we save you 5 hours/week, it pays for itself in a month.",
+    resolve: "Our clients typically see ROI within 60-90 days. Nous Assist starts at $2,800 — that's about 1-2 months of a part-time hire. If we save you 6+ hours/week, it pays for itself fast.",
     confirm: "Does that help put the investment in perspective?",
   },
   need_to_think: {
@@ -130,7 +130,7 @@ export const qualificationQuestions = {
 export const productInfo = {
   nousAssist: {
     name: 'Nous Assist',
-    price: '$499 one-time + $99/mo optional maintenance',
+    price: '$2,800 one-time + $250/mo optional maintenance',
     target: 'Small businesses, solopreneurs, startups',
     features: [
       'Email triage & auto-response',
@@ -144,7 +144,7 @@ export const productInfo = {
   },
   nousConnect: {
     name: 'Nous Connect',
-    price: '$2,499 one-time + $249/mo maintenance',
+    price: '$7,500 one-time + $750/mo maintenance',
     target: 'Growing businesses, professional services, multi-channel operations',
     features: [
       'Everything in Assist',

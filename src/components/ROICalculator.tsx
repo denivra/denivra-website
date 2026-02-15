@@ -66,9 +66,9 @@ export function ROICalculator() {
     const monthlyCostSaved = monthlyHoursSaved * avgHourlyRate
     const annualCostSaved = monthlyCostSaved * 12
 
-    // ROI calculation (assuming Nous Connect at $2,499 + $199/mo)
-    const setupCost = 2499
-    const monthlyCost = 199
+    // ROI calculation (assuming Nous Connect at $7,500 + $750/mo)
+    const setupCost = 7500
+    const monthlyCost = 750
     const firstYearCost = setupCost + (monthlyCost * 12)
     const roi = ((annualCostSaved - firstYearCost) / firstYearCost) * 100
     const paybackMonths = firstYearCost / monthlyCostSaved
@@ -199,20 +199,20 @@ export function ROICalculator() {
             <div className="text-sm text-dark-400 mb-3">Investment (Nous Connect)</div>
             <div className="flex justify-between items-center">
               <span>One-time setup</span>
-              <span className="font-semibold">$2,499</span>
+              <span className="font-semibold">$7,500</span>
             </div>
             <div className="flex justify-between items-center mt-2">
               <span>Monthly maintenance</span>
-              <span className="font-semibold">$199/mo</span>
+              <span className="font-semibold">$750/mo</span>
             </div>
             <hr className="my-3 border-white/10" />
             <div className="flex justify-between items-center">
               <span className="font-semibold">First Year Total</span>
-              <span className="font-bold text-primary-400">$4,887</span>
+              <span className="font-bold text-primary-400">$16,500</span>
             </div>
             <div className="flex justify-between items-center mt-2 text-green-400">
               <span className="font-semibold">Net First Year Savings</span>
-              <span className="font-bold">${(calculations.annualCostSaved - 4887).toLocaleString()}</span>
+              <span className="font-bold">${(calculations.annualCostSaved - 16500).toLocaleString()}</span>
             </div>
           </div>
 

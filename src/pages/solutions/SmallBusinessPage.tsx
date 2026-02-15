@@ -8,7 +8,7 @@ import {
 import { ChatWidget } from '../../components/ChatWidget'
 
 const benefits = [
-  { value: '$499', label: 'Starting Price', sublabel: 'One-time setup' },
+  { value: '$2,800', label: 'Starting Price', sublabel: 'One-time setup' },
   { value: '6+', label: 'Hours Saved', sublabel: 'Per day on average' },
   { value: '< 2wk', label: 'Setup Time', sublabel: 'Fully operational' },
   { value: '10x', label: 'ROI', sublabel: 'First year average' },
@@ -71,7 +71,7 @@ const testimonials = [
 const packages = [
   {
     name: 'Nous Assist',
-    price: '$499',
+    price: '$2,800',
     description: 'Perfect for solopreneurs and small teams',
     features: [
       'Email triage & auto-response',
@@ -85,7 +85,7 @@ const packages = [
   },
   {
     name: 'Nous Connect',
-    price: '$2,499',
+    price: '$7,500',
     description: 'For growing businesses ready to scale',
     features: [
       'Everything in Assist',
