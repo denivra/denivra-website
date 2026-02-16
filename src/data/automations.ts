@@ -1,10 +1,8 @@
-// Automation Capabilities Library
-
 export interface Automation {
   id: string;
   name: string;
   category: 'communication' | 'document' | 'operations' | 'finance' | 'intelligence' | 'integration';
-  icon: string; // Lucide icon name
+  icon: string;
   tagline: string;
   description: string;
   howItWorks: string[];
@@ -14,11 +12,10 @@ export interface Automation {
     savings: string;
   };
   integrations: string[];
-  availableIn: ('assist' | 'connect' | 'command')[];
+  availableIn: ('solo' | 'pro' | 'enterprise')[];
 }
 
 export const automations: Automation[] = [
-  // COMMUNICATION
   {
     id: 'voice-ai',
     name: 'Voice AI Agents',
@@ -38,7 +35,7 @@ export const automations: Automation[] = [
       savings: '$3,000/month in captured revenue',
     },
     integrations: ['Twilio', 'Vapi', 'Bland AI', 'Google Calendar', 'HubSpot'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'email-triage',
@@ -59,7 +56,7 @@ export const automations: Automation[] = [
       savings: '2.5 hours/day saved',
     },
     integrations: ['Gmail', 'Outlook', 'Microsoft 365'],
-    availableIn: ['assist', 'connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
   {
     id: 'whatsapp-bot',
@@ -80,15 +77,14 @@ export const automations: Automation[] = [
       savings: '4 hours/day in messaging',
     },
     integrations: ['WhatsApp Business', 'Telegram', 'Signal', 'SMS/Twilio'],
-    availableIn: ['assist', 'connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
-  // DOCUMENT PROCESSING
   {
     id: 'receipt-extraction',
     name: 'Receipt Processing',
     category: 'document',
     icon: 'Receipt',
-    tagline: 'Photos → Categorized expenses',
+    tagline: 'Photos to categorized expenses',
     description: 'Snap a photo of any receipt — AI extracts vendor, amount, date, and category. Auto-pushes to QuickBooks or your accounting system.',
     howItWorks: [
       'Client sends receipt via WhatsApp/email/SMS',
@@ -102,7 +98,7 @@ export const automations: Automation[] = [
       savings: '15+ hours/week for accounting practices',
     },
     integrations: ['QuickBooks Online', 'Xero', 'FreshBooks'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'invoice-auditor',
@@ -123,7 +119,7 @@ export const automations: Automation[] = [
       savings: '$200-500/month in caught overcharges',
     },
     integrations: ['QuickBooks', 'Gmail', 'Outlook', 'Box', 'Dropbox'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'document-intake',
@@ -144,9 +140,8 @@ export const automations: Automation[] = [
       savings: '5+ hours/week in document handling',
     },
     integrations: ['Gmail', 'Outlook', 'WhatsApp', 'SMS', 'Box', 'Dropbox', 'Google Drive'],
-    availableIn: ['assist', 'connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
-  // OPERATIONS
   {
     id: 'shift-scheduler',
     name: 'Shift Management',
@@ -166,7 +161,7 @@ export const automations: Automation[] = [
       savings: '3-5 hours/week in scheduling',
     },
     integrations: ['7shifts', 'When I Work', 'Deputy', 'Homebase', 'Google Calendar'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'equipment-monitor',
@@ -174,7 +169,7 @@ export const automations: Automation[] = [
     category: 'operations',
     icon: 'Thermometer',
     tagline: 'Know before it breaks',
-    description: 'IoT sensors track equipment health. AI alerts you to problems before they become failures. Save thousands in spoilage and repairs.',
+    description: 'IoT sensors track equipment health. AI alerts you to problems before they become failures.',
     howItWorks: [
       'Install smart plugs and temperature sensors',
       'AI learns normal operating patterns',
@@ -187,7 +182,7 @@ export const automations: Automation[] = [
       savings: '$2,000-10,000 per prevented incident',
     },
     integrations: ['Shelly smart plugs', 'Govee sensors', 'Home Assistant'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'review-management',
@@ -208,7 +203,7 @@ export const automations: Automation[] = [
       savings: '$100-500/month in retained customers',
     },
     integrations: ['Google Business', 'Yelp', 'TripAdvisor', 'Facebook'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
   {
     id: 'training-bot',
@@ -216,7 +211,7 @@ export const automations: Automation[] = [
     category: 'operations',
     icon: 'GraduationCap',
     tagline: '24/7 answers for your team',
-    description: 'Upload your SOPs, manuals, and policies. AI answers staff questions instantly, anytime. No more 10 PM texts to the owner.',
+    description: 'Upload your SOPs, manuals, and policies. AI answers staff questions instantly, anytime.',
     howItWorks: [
       'Upload training materials, SOPs, FAQs',
       'AI indexes and understands your content',
@@ -229,16 +224,15 @@ export const automations: Automation[] = [
       savings: '30% reduction in training time',
     },
     integrations: ['WhatsApp', 'Slack', 'Teams', 'Telegram'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
-  // FINANCE
   {
     id: 'quickbooks-sync',
     name: 'QuickBooks Integration',
     category: 'finance',
     icon: 'Calculator',
     tagline: 'Expenses in. Reports out.',
-    description: 'Two-way sync with QuickBooks Online. Auto-push expenses, pull reports, reconcile accounts. Accounting on autopilot.',
+    description: 'Two-way sync with QuickBooks Online. Auto-push expenses, pull reports, reconcile accounts.',
     howItWorks: [
       'OAuth connection to QuickBooks',
       'Processed receipts auto-create expense entries',
@@ -251,7 +245,7 @@ export const automations: Automation[] = [
       savings: '2.5 hours/week',
     },
     integrations: ['QuickBooks Online', 'QuickBooks Desktop (via API)'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'payroll-precheck',
@@ -259,7 +253,7 @@ export const automations: Automation[] = [
     category: 'finance',
     icon: 'DollarSign',
     tagline: 'Catch errors before they cost you',
-    description: 'AI reviews timesheets before payroll runs. Flags overtime, missed punches, unusual patterns. No more payroll surprises.',
+    description: 'AI reviews timesheets before payroll runs. Flags overtime, missed punches, unusual patterns.',
     howItWorks: [
       'Pull timesheet data from your system',
       'AI checks against rules: overtime, missed punches, anomalies',
@@ -272,16 +266,15 @@ export const automations: Automation[] = [
       savings: '$300-800/month in prevented overtime',
     },
     integrations: ['7shifts', 'When I Work', 'ADP', 'Gusto', 'Paychex'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
-  // INTELLIGENCE
   {
     id: 'weather-prep',
     name: 'Weather Intelligence',
     category: 'intelligence',
     icon: 'CloudSun',
     tagline: 'Prep sheets that predict demand',
-    description: 'AI correlates weather with historical sales. Automatically adjusts prep sheets. Less waste, fewer stockouts.',
+    description: 'AI correlates weather with historical sales. Automatically adjusts prep sheets.',
     howItWorks: [
       'Pull 7-day weather forecast',
       'Analyze correlation with past sales data',
@@ -294,7 +287,7 @@ export const automations: Automation[] = [
       savings: '$80-300/month in reduced waste',
     },
     integrations: ['Weather APIs', 'POS systems', 'Email/WhatsApp'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
   {
     id: 'event-radar',
@@ -315,7 +308,7 @@ export const automations: Automation[] = [
       savings: '$200-800/month in captured revenue',
     },
     integrations: ['Google Calendar', 'Event APIs', 'Local news feeds'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
   {
     id: 'activity-dashboard',
@@ -323,7 +316,7 @@ export const automations: Automation[] = [
     category: 'intelligence',
     icon: 'BarChart3',
     tagline: 'What your AI did while you slept',
-    description: 'Real-time dashboard showing all automated activity. Tasks completed, decisions made, items flagged. Full visibility, zero guessing.',
+    description: 'Real-time dashboard showing all automated activity. Tasks completed, decisions made, items flagged.',
     howItWorks: [
       'All AI actions logged to local database',
       'Dashboard updates in real-time',
@@ -335,10 +328,9 @@ export const automations: Automation[] = [
       after: '147 tasks/night logged. Full audit trail. Total confidence.',
       savings: 'Priceless: peace of mind',
     },
-    integrations: ['SQLite', 'PostgreSQL', 'Grafana (Command)'],
-    availableIn: ['assist', 'connect', 'command'],
+    integrations: ['SQLite', 'PostgreSQL', 'Grafana (Enterprise)'],
+    availableIn: ['solo', 'pro', 'enterprise'],
   },
-  // INTEGRATION
   {
     id: 'crm-sync',
     name: 'CRM Integration',
@@ -358,7 +350,7 @@ export const automations: Automation[] = [
       savings: '3+ hours/week in CRM maintenance',
     },
     integrations: ['HubSpot', 'Salesforce', 'Pipedrive', 'Close'],
-    availableIn: ['connect', 'command'],
+    availableIn: ['pro', 'enterprise'],
   },
   {
     id: 'legacy-connect',
@@ -379,7 +371,7 @@ export const automations: Automation[] = [
       savings: 'Avoided $500K+ system replacement',
     },
     integrations: ['Custom APIs', 'ODBC', 'REST/SOAP wrappers', 'File-based interfaces'],
-    availableIn: ['command'],
+    availableIn: ['enterprise'],
   },
 ];
 
@@ -391,6 +383,6 @@ export const getAutomationsByCategory = (category: Automation['category']): Auto
   return automations.filter(a => a.category === category);
 };
 
-export const getAutomationsForTier = (tier: 'assist' | 'connect' | 'command'): Automation[] => {
+export const getAutomationsForTier = (tier: 'solo' | 'pro' | 'enterprise'): Automation[] => {
   return automations.filter(a => a.availableIn.includes(tier));
 };

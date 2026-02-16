@@ -9,7 +9,8 @@ export default defineConfig({
     port: 5000,
     allowedHosts: true,
   },
-  esbuild: {
-    drop: ['console', 'debugger'],
+  build: {
+    minify: 'esbuild',
+    target: 'es2020',
   },
 })

@@ -44,7 +44,7 @@ export function NotFoundPage() {
               Looking for something specific?
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <Link to="/products/nous-assist" className="text-sm text-dark-400 hover:text-primary-400">Products</Link>
+              <Link to="/products/nous-solo" className="text-sm text-dark-400 hover:text-primary-400">Products</Link>
               <span className="text-dark-600">•</span>
               <Link to="/pricing" className="text-sm text-dark-400 hover:text-primary-400">Pricing</Link>
               <span className="text-dark-600">•</span>

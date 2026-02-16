@@ -2,148 +2,59 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Bot, Check, X, ArrowRight, HelpCircle, Phone, Mail,
-  Zap, Shield, Clock, Users, BarChart3, MessageSquare
+  Check, X, ArrowRight, HelpCircle, Phone, Mail,
+  Zap, Shield, Clock, Users, BarChart3, MessageSquare,
+  Headphones, Settings, Cpu, Wrench, Star
 } from 'lucide-react'
-
-const tiers = [
-  {
-    id: 'nous-assist',
-    name: 'Nous Assist',
-    tagline: 'For solopreneurs',
-    price: '$2,800',
-    priceNote: 'one-time',
-    monthly: '$250/mo',
-    monthlyNote: 'optional support',
-    description: 'Entry-level AI appliance. Perfect for solo operations that need to scale without hiring.',
-    features: [
-      { name: 'Email triage & auto-response', included: true },
-      { name: 'WhatsApp/SMS chatbot', included: true },
-      { name: 'Document processing', included: true },
-      { name: 'Local SQLite dashboard', included: true },
-      { name: '5 pre-built workflows', included: true },
-      { name: 'Mac Mini hardware included', included: true },
-      { name: 'Voice AI agents', included: false },
-      { name: 'QuickBooks integration', included: false },
-      { name: 'CRM sync', included: false },
-      { name: 'Custom workflows', included: false },
-    ],
-    cta: 'Get Started',
-    popular: false,
-  },
-  {
-    id: 'nous-connect',
-    name: 'Nous Connect',
-    tagline: 'For growing teams',
-    price: '$7,500',
-    priceNote: 'one-time',
-    monthly: '$750/mo',
-    monthlyNote: 'optional support',
-    description: 'Full automation platform with voice AI, accounting sync, and advanced analytics.',
-    features: [
-      { name: 'Everything in Assist', included: true },
-      { name: 'Voice AI agents (24/7)', included: true },
-      { name: 'QuickBooks integration', included: true },
-      { name: 'CRM sync (HubSpot)', included: true },
-      { name: 'Advanced analytics', included: true },
-      { name: 'Custom workflow builder', included: true },
-      { name: 'n8n automation engine', included: true },
-      { name: 'Priority support', included: true },
-      { name: 'Multi-location', included: false },
-      { name: 'White-label', included: false },
-    ],
-    cta: 'Get Started',
-    popular: true,
-  },
-  {
-    id: 'nous-command',
-    name: 'Nous Command',
-    tagline: 'For enterprises',
-    price: 'Custom',
-    priceNote: 'contact us',
-    monthly: 'Custom',
-    monthlyNote: 'SLA included',
-    description: 'Enterprise AI orchestration with fleet management, legacy integration, and white-label.',
-    features: [
-      { name: 'Everything in Connect', included: true },
-      { name: 'Legacy system integration', included: true },
-      { name: 'Multi-box fleet management', included: true },
-      { name: 'Grafana + Metabase analytics', included: true },
-      { name: 'White-label options', included: true },
-      { name: 'Dedicated success manager', included: true },
-      { name: 'SLA guarantees', included: true },
-      { name: 'Custom integrations', included: true },
-      { name: 'On-site installation', included: true },
-      { name: 'Training & onboarding', included: true },
-    ],
-    cta: 'Contact Sales',
-    popular: false,
-  },
-]
+import { products } from '../data/products'
+import { supportTiers, deploymentPackages } from '../data/managedServices'
 
 const faqs = [
   {
-    q: "What's included in the one-time price?",
-    a: "The one-time price covers: Mac Mini hardware (24GB RAM), all software licenses, installation, configuration, initial training, and 30 days of support. After that, monthly support is optional.",
+    q: "What's included in the 'from' price?",
+    a: "The starting price covers: Mac Mini hardware, all software (n8n, Ollama, Qdrant, Grafana), base configuration, starter workflows, and 30 days of support. Industry-specific configurations and custom integrations are available as deployment packages.",
   },
   {
-    q: "Do I need the monthly support?",
-    a: "No, it's optional. Your Nous box will continue running without it. Monthly support includes updates, monitoring, priority support, and hands-on help with new workflows.",
+    q: "What's the difference between Support and Managed Services?",
+    a: "Support (Care/Priority) keeps your system running — patches, monitoring, and help when things break. Managed Services (Managed/Managed+) actively runs your AI operations — building new automations, optimizing workflows, and acting as your dedicated AI team.",
   },
   {
     q: "How long does setup take?",
-    a: "Nous Assist: 2 weeks. Nous Connect: 3-4 weeks. Nous Command: 4-8 weeks depending on complexity. We handle everything remotely.",
+    a: "Starter Setup: 3-5 days. Growth Deployment: 1-2 weeks. Full Deployment: 2-4 weeks. We handle everything remotely — you just plug in the Mac Mini and give us access.",
   },
   {
-    q: "What if I need features from a higher tier?",
-    a: "You can upgrade anytime. We'll credit your original purchase toward the higher tier and migrate your workflows.",
+    q: "Can I upgrade later?",
+    a: "Yes. You can upgrade your hardware tier anytime — we'll credit your original purchase. You can also add managed services or switch support tiers month-to-month.",
   },
   {
     q: "Is my data secure?",
-    a: "Yes. All processing happens locally on hardware you own. Your data never leaves your building. No cloud dependency for core operations.",
+    a: "All processing happens locally on hardware you own. Your data never leaves your building. No cloud dependency for core operations. Enterprise tier includes encrypted storage and full audit logging.",
   },
   {
     q: "What's the typical ROI?",
-    a: "Most clients see full payback within 2-4 months. Average time savings: 15+ hours/week. Use our ROI calculator for a personalized estimate.",
+    a: "Most clients see full payback within 2-4 months. CPA practices save 15+ hours/week. Cafes catch $200-500/month in invoice overcharges. Use our ROI calculator for a personalized estimate.",
+  },
+  {
+    q: "Do I need technical skills?",
+    a: "No. We handle all setup, configuration, and integration remotely. The n8n visual workflow builder is drag-and-drop if you want to build your own automations later.",
   },
 ]
 
 export function PricingPage() {
-  const [billingCycle, setBillingCycle] = useState<'one-time' | 'monthly'>('one-time')
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState<'hardware' | 'services'>('hardware')
 
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-purple rounded-lg font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all"
-            >
-              Contact Sales
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-4">
+    <div className="pt-20">
+      <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold mb-6"
           >
-            Simple, Transparent
-            <span className="gradient-text"> Pricing</span>
+            Invest in Your
+            <span className="gradient-text"> AI Employee</span>
           </motion.h1>
           
           <motion.p
@@ -152,7 +63,7 @@ export function PricingPage() {
             transition={{ delay: 0.1 }}
             className="text-xl text-dark-300 mb-8"
           >
-            One-time setup + optional monthly support. No surprises.
+            One-time hardware + optional support or managed services. No cloud fees. No surprises.
           </motion.p>
 
           <motion.div
@@ -162,114 +73,250 @@ export function PricingPage() {
             className="inline-flex items-center p-1 rounded-xl bg-dark-800/50 border border-white/10"
           >
             <button
-              onClick={() => setBillingCycle('one-time')}
+              onClick={() => setActiveTab('hardware')}
               className={`px-6 py-2 rounded-lg text-sm font-medium transition-all ${
-                billingCycle === 'one-time'
+                activeTab === 'hardware'
                   ? 'bg-gradient-to-r from-primary-500 to-accent-purple text-white'
                   : 'text-dark-400 hover:text-white'
               }`}
             >
-              One-Time Setup
+              Hardware + Setup
             </button>
             <button
-              onClick={() => setBillingCycle('monthly')}
+              onClick={() => setActiveTab('services')}
               className={`px-6 py-2 rounded-lg text-sm font-medium transition-all ${
-                billingCycle === 'monthly'
+                activeTab === 'services'
                   ? 'bg-gradient-to-r from-primary-500 to-accent-purple text-white'
                   : 'text-dark-400 hover:text-white'
               }`}
             >
-              + Monthly Support
+              Support & Managed Services
             </button>
           </motion.div>
         </div>
       </section>
 
-      {/* Pricing Cards */}
-      <section className="py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            {tiers.map((tier, i) => (
-              <motion.div
-                key={tier.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`relative p-8 rounded-2xl border ${
-                  tier.popular
-                    ? 'bg-gradient-to-b from-primary-500/10 to-transparent border-primary-500/50'
-                    : 'bg-dark-800/50 border-white/5'
-                }`}
-              >
-                {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary-500 to-accent-purple rounded-full text-xs font-bold">
-                    MOST POPULAR
-                  </div>
-                )}
+      {activeTab === 'hardware' && (
+        <>
+          <section className="py-12 px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-8">
+                {products.map((product, i) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className={`relative p-8 rounded-2xl border ${
+                      product.highlighted
+                        ? 'bg-gradient-to-b from-primary-500/10 to-transparent border-primary-500/50'
+                        : 'bg-dark-800/50 border-white/5'
+                    }`}
+                  >
+                    {product.highlighted && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary-500 to-accent-purple rounded-full text-xs font-bold uppercase tracking-wider">
+                        Most Popular
+                      </div>
+                    )}
 
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold">{tier.name}</h3>
-                  <p className="text-dark-400 text-sm">{tier.tagline}</p>
-                </div>
-
-                <div className="mb-6">
-                  <div className="flex items-baseline">
-                    <span className="text-4xl font-bold">{tier.price}</span>
-                    <span className="text-dark-400 ml-2">{tier.priceNote}</span>
-                  </div>
-                  {billingCycle === 'monthly' && (
-                    <div className="text-sm text-dark-400 mt-1">
-                      + {tier.monthly} <span className="text-dark-500">{tier.monthlyNote}</span>
+                    <div className="mb-6">
+                      <h3 className="text-xl font-bold">{product.name}</h3>
+                      <p className="text-dark-400 text-sm">{product.tagline}</p>
                     </div>
-                  )}
-                </div>
 
-                <p className="text-dark-300 text-sm mb-6">{tier.description}</p>
+                    <div className="mb-2">
+                      <div className="flex items-baseline">
+                        <span className="text-4xl font-bold gradient-text">{product.price}</span>
+                      </div>
+                      <div className="text-sm text-dark-400 mt-1">{product.priceLabel}</div>
+                    </div>
 
-                <ul className="space-y-3 mb-8">
-                  {tier.features.map((feature, j) => (
-                    <li key={j} className="flex items-start space-x-3">
-                      {feature.included ? (
+                    <div className="flex items-center gap-3 mb-6 text-xs text-dark-400 py-3 border-y border-white/5">
+                      <span>{product.chip}</span>
+                      <span>&bull;</span>
+                      <span>{product.ram}</span>
+                      <span>&bull;</span>
+                      <span>{product.storage}</span>
+                    </div>
+
+                    <p className="text-dark-300 text-sm mb-6">{product.description}</p>
+
+                    <ul className="space-y-3 mb-8">
+                      {product.features.map((feature, j) => (
+                        <li key={j} className="flex items-start space-x-3">
+                          <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-dark-200 text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Link
+                      to={`/products/${product.id}`}
+                      className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all ${
+                        product.highlighted
+                          ? 'bg-gradient-to-r from-primary-500 to-accent-purple hover:shadow-lg hover:shadow-primary-500/25'
+                          : 'bg-white/5 hover:bg-white/10 border border-white/10'
+                      }`}
+                    >
+                      <span>Learn More</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="py-16 px-4 border-t border-white/5">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4">Deployment <span className="gradient-text">Packages</span></h2>
+                <p className="text-dark-300">From starter setup to complete AI operations overhaul</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {deploymentPackages.map((pkg, i) => (
+                  <motion.div
+                    key={pkg.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-6 rounded-2xl bg-dark-800/50 border border-white/5 hover:border-white/10 transition-colors"
+                  >
+                    <h3 className="text-lg font-bold mb-1">{pkg.name}</h3>
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-2xl font-bold gradient-text">{pkg.price}</span>
+                      <span className="text-dark-400 text-sm">{pkg.priceLabel}</span>
+                    </div>
+                    <p className="text-dark-400 text-sm mb-4">{pkg.description}</p>
+                    
+                    <div className="flex items-center gap-2 mb-4 text-xs text-dark-400">
+                      <Clock className="w-3 h-3" />
+                      <span>Setup: {pkg.setupTime}</span>
+                    </div>
+
+                    <ul className="space-y-2 mb-4">
+                      {pkg.includes.map((item, j) => (
+                        <li key={j} className="flex items-start space-x-2 text-sm">
+                          <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-dark-300">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="text-xs text-dark-400 pt-3 border-t border-white/5">
+                      Best for: {pkg.bestFor}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {activeTab === 'services' && (
+        <section className="py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold mb-2 text-center">Support Plans</h3>
+              <p className="text-dark-400 text-center">Keep your Nous running smoothly</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-16">
+              {supportTiers.filter(t => t.type === 'support').map((tier, i) => (
+                <motion.div
+                  key={tier.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 rounded-2xl bg-dark-800/50 border border-white/5"
+                >
+                  <h3 className="text-xl font-bold mb-1">{tier.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-4">
+                    <span className="text-3xl font-bold gradient-text">{tier.price}</span>
+                    <span className="text-dark-400">{tier.priceLabel}</span>
+                  </div>
+                  <p className="text-dark-400 text-sm mb-6">{tier.description}</p>
+                  <ul className="space-y-3">
+                    {tier.features.map((feature, j) => (
+                      <li key={j} className="flex items-start space-x-3">
                         <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      ) : (
-                        <X className="w-5 h-5 text-dark-600 flex-shrink-0 mt-0.5" />
-                      )}
-                      <span className={feature.included ? 'text-dark-200' : 'text-dark-500'}>
-                        {feature.name}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                        <span className="text-dark-200 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
 
-                <Link
-                  to={tier.id === 'nous-command' ? '/contact' : `/products/${tier.id}`}
-                  className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all ${
-                    tier.popular
-                      ? 'bg-gradient-to-r from-primary-500 to-accent-purple hover:shadow-lg hover:shadow-primary-500/25'
-                      : 'bg-white/5 hover:bg-white/10 border border-white/10'
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold mb-2 text-center">Managed <span className="gradient-text">Services</span></h3>
+              <p className="text-dark-400 text-center">We run your AI operations so you can focus on your business</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {supportTiers.filter(t => t.type === 'managed').map((tier, i) => (
+                <motion.div
+                  key={tier.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`p-8 rounded-2xl border ${
+                    tier.highlighted
+                      ? 'bg-gradient-to-b from-primary-500/10 to-transparent border-primary-500/50'
+                      : 'bg-dark-800/50 border-white/5'
                   }`}
                 >
-                  <span>{tier.cta}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-            ))}
+                  {tier.highlighted && (
+                    <div className="inline-block px-3 py-1 bg-gradient-to-r from-primary-500 to-accent-purple rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                      Recommended
+                    </div>
+                  )}
+                  <h3 className="text-xl font-bold mb-1">{tier.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-4">
+                    <span className="text-3xl font-bold gradient-text">{tier.price}</span>
+                    <span className="text-dark-400">{tier.priceLabel}</span>
+                  </div>
+                  <p className="text-dark-400 text-sm mb-6">{tier.description}</p>
+                  <ul className="space-y-3 mb-6">
+                    {tier.features.map((feature, j) => (
+                      <li key={j} className="flex items-start space-x-3">
+                        <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-dark-200 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/contact"
+                    className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all ${
+                      tier.highlighted
+                        ? 'bg-gradient-to-r from-primary-500 to-accent-purple hover:shadow-lg hover:shadow-primary-500/25'
+                        : 'bg-white/5 hover:bg-white/10 border border-white/10'
+                    }`}
+                  >
+                    <span>{tier.price === 'Custom' ? "Let's Talk" : 'Get Started'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* What's Included */}
       <section className="py-20 px-4 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Every Plan Includes</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Every Nous Includes</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: Zap, title: 'Mac Mini Hardware', desc: '24GB RAM, silent operation, installs anywhere' },
+              { icon: Cpu, title: 'Mac Mini Hardware', desc: 'Apple Silicon, silent operation, fits anywhere' },
               { icon: Shield, title: 'Local Processing', desc: 'Your data stays on your hardware — no cloud dependency' },
               { icon: Clock, title: '30-Day Support', desc: 'Installation, configuration, and initial training included' },
-              { icon: Users, title: 'Onboarding', desc: 'We handle setup remotely — no tech skills required' },
+              { icon: Settings, title: 'Full Setup', desc: 'n8n, Ollama, Qdrant, Grafana — all configured and running' },
               { icon: BarChart3, title: 'Activity Dashboard', desc: 'See exactly what your AI did while you slept' },
-              { icon: MessageSquare, title: 'Pivot Chatbot', desc: 'Your AI assistant, available 24/7' },
+              { icon: Wrench, title: 'Remote Onboarding', desc: 'We handle everything — no tech skills required' },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -292,7 +339,6 @@ export function PricingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="py-20 px-4 bg-dark-900/50">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
@@ -309,8 +355,8 @@ export function PricingPage() {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full px-6 py-4 flex items-center justify-between text-left"
                 >
-                  <span className="font-medium">{faq.q}</span>
-                  <HelpCircle className={`w-5 h-5 text-dark-400 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <span className="font-medium pr-4">{faq.q}</span>
+                  <HelpCircle className={`w-5 h-5 text-dark-400 transition-transform flex-shrink-0 ${openFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === i && (
                   <div className="px-6 pb-4 text-dark-300 text-sm">
@@ -323,12 +369,11 @@ export function PricingPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Still have questions?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
           <p className="text-dark-300 mb-8">
-            Book a call and we'll walk you through everything — no pressure, no sales pitch.
+            Book a 15-minute call. We'll recommend the right setup for your business — no pressure.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -348,21 +393,6 @@ export function PricingPage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/5">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-              <Bot className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-semibold">Denivra</span>
-          </div>
-          <p className="text-dark-500 text-sm">
-            © {new Date().getFullYear()} Denivra Inc. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }

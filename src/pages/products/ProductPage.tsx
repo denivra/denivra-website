@@ -1,21 +1,16 @@
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  ArrowLeft, Check, ArrowRight, Zap, Play, DollarSign
+  ArrowLeft, Check, ArrowRight, Zap, Play, 
+  Cpu, HardDrive, MemoryStick, Brain, Headphones
 } from 'lucide-react'
 import { getProductById, Product } from '../../data/products'
 import { getAutomationsForTier } from '../../data/automations'
 
 const tierEmoji = {
-  starter: '🚀',
-  professional: '⚡',
+  solo: '🚀',
+  pro: '⚡',
   enterprise: '🏢',
-}
-
-const tierLabels = {
-  starter: 'Solo Operations',
-  professional: 'Growing Teams',
-  enterprise: 'Enterprise Scale',
 }
 
 function ProductPageContent({ product }: { product: Product }) {
@@ -23,7 +18,6 @@ function ProductPageContent({ product }: { product: Product }) {
 
   return (
     <>
-      {/* Hero */}
       <section className="relative pt-32 pb-20 bg-grid">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent-purple/20 rounded-full blur-3xl" />
         
@@ -41,7 +35,7 @@ function ProductPageContent({ product }: { product: Product }) {
             <div>
               <div className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-6">
                 <span className="text-2xl">{tierEmoji[product.tier]}</span>
-                <span className="text-sm">{tierLabels[product.tier]}</span>
+                <span className="text-sm">{product.tagline}</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -56,26 +50,43 @@ function ProductPageContent({ product }: { product: Product }) {
                   <span>Book Demo</span>
                 </Link>
                 <div className="flex items-center justify-center space-x-2 text-dark-300">
-                  <DollarSign className="w-5 h-5 text-primary-400" />
-                  <span className="text-2xl font-bold">{product.price}</span>
-                  {product.price !== 'Custom' && <span className="text-dark-400">one-time</span>}
+                  <span className="text-2xl font-bold gradient-text">{product.price}</span>
+                  <span className="text-dark-400">{product.priceLabel}</span>
                 </div>
               </div>
-
-              {product.priceMonthly && (
-                <p className="text-dark-400">
-                  + {product.priceMonthly} optional maintenance (hosting, support, optimization)
-                </p>
-              )}
             </div>
 
             <div className="card">
               <h3 className="font-semibold text-lg mb-4">What's Included</h3>
-              <ul className="space-y-3">
+              
+              <div className="grid grid-cols-3 gap-4 p-4 rounded-xl bg-white/5 mb-6">
+                <div className="text-center">
+                  <Cpu className="w-5 h-5 mx-auto mb-1 text-primary-400" />
+                  <div className="text-xs text-dark-400">Chip</div>
+                  <div className="text-sm font-medium">{product.chip.split(' ').slice(-1)}</div>
+                </div>
+                <div className="text-center">
+                  <MemoryStick className="w-5 h-5 mx-auto mb-1 text-primary-400" />
+                  <div className="text-xs text-dark-400">RAM</div>
+                  <div className="text-sm font-medium">{product.ram.split(' ')[0]}</div>
+                </div>
+                <div className="text-center">
+                  <HardDrive className="w-5 h-5 mx-auto mb-1 text-primary-400" />
+                  <div className="text-xs text-dark-400">Storage</div>
+                  <div className="text-sm font-medium">{product.storage}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 mb-4 text-sm text-dark-400">
+                <Brain className="w-4 h-4 text-accent-purple" />
+                <span>{product.llmCapability}</span>
+              </div>
+
+              <ul className="space-y-2.5">
                 {product.features.map((feature, i) => (
                   <li key={i} className="flex items-start space-x-3">
                     <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-dark-300">{feature}</span>
+                    <span className="text-dark-300 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -84,12 +95,11 @@ function ProductPageContent({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* Capabilities */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              <span className="gradient-text">Capabilities</span> Activated
+              <span className="gradient-text">Capabilities</span>
             </h2>
             <p className="text-dark-400">Everything {product.name} can do for you</p>
           </div>
@@ -115,7 +125,6 @@ function ProductPageContent({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* Integrations */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -140,14 +149,13 @@ function ProductPageContent({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* Available Automations */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
               <span className="gradient-text">{availableAutomations.length}</span> Automations Available
             </h2>
-            <p className="text-dark-400">Pre-built workflows ready to deploy</p>
+            <p className="text-dark-400">{product.workflowCount} pre-built workflows ready to deploy</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -169,27 +177,26 @@ function ProductPageContent({ product }: { product: Product }) {
           {availableAutomations.length > 8 && (
             <div className="text-center mt-8">
               <Link to="/automations" className="text-primary-400 hover:text-primary-300 transition-colors">
-                View all {availableAutomations.length} automations →
+                View all {availableAutomations.length} automations &rarr;
               </Link>
             </div>
           )}
         </div>
       </section>
 
-      {/* How It Works */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-            <p className="text-dark-400">From setup to running autonomously</p>
+            <p className="text-dark-400">From unboxing to running autonomously</p>
           </div>
 
           <div className="space-y-8">
             {[
-              { step: 1, title: 'Discovery Call', desc: 'We map your current workflows, pain points, and integration needs. 30 minutes.' },
-              { step: 2, title: 'Configuration', desc: 'We set up your Mac Mini, connect integrations, and configure AI on your specific data.' },
-              { step: 3, title: 'Training', desc: 'AI learns your patterns — email responses, categorizations, preferences.' },
-              { step: 4, title: 'Go Live', desc: 'System runs 24/7. You review the morning dashboard and handle exceptions.' },
+              { step: 1, title: 'Discovery Call', desc: 'We map your current workflows, pain points, and integration needs. 15-30 minutes.' },
+              { step: 2, title: 'We Ship & Configure', desc: 'Your Mac Mini arrives pre-configured. We connect your email, accounting, CRM, and phone remotely.' },
+              { step: 3, title: 'AI Learns Your Business', desc: 'AI trains on your patterns — email responses, document categorizations, client preferences.' },
+              { step: 4, title: 'You Wake Up to Results', desc: 'System runs 24/7. Morning dashboard shows everything your AI did overnight. Review, approve, done.' },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -212,21 +219,20 @@ function ProductPageContent({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-primary-500/10 via-accent-purple/10 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Meet Your AI Employee?</h2>
           <p className="text-dark-400 mb-8">
-            Book a demo to see {product.name} in action.
+            Book a demo to see {product.name} in action for your business.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn-primary flex items-center space-x-2">
-              <Play className="w-5 h-5" />
+              <Headphones className="w-5 h-5" />
               <span>Book Demo</span>
             </Link>
-            <div className="text-dark-300">
-              or email <a href="mailto:info@denivra.com" className="text-primary-400">info@denivra.com</a>
-            </div>
+            <Link to="/pricing" className="text-primary-400 hover:text-primary-300 font-medium">
+              See all pricing options &rarr;
+            </Link>
           </div>
         </div>
       </section>
@@ -238,7 +244,6 @@ export function ProductPage() {
   const { id: paramId } = useParams<{ id: string }>()
   const location = useLocation()
   
-  // Extract ID from pathname if useParams doesn't work (hardcoded routes)
   const id = paramId || location.pathname.split('/').pop()
   const product = id ? getProductById(id) : undefined
 

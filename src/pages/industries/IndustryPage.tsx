@@ -1,15 +1,23 @@
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  ArrowLeft, Check, ArrowRight, Star, DollarSign, Clock, 
-  Shield, Zap, Play
+  ArrowLeft, Check, ArrowRight, Star, Clock, 
+  Shield, Zap, Play, Headphones, Cpu
 } from 'lucide-react'
 import { getIndustryBySlug, Industry } from '../../data/industries'
+
+const industryEmoji: Record<string, string> = {
+  cafe: '☕',
+  salon: '💇',
+  cpa: '📊',
+  restaurant: '🍽️',
+  realty: '🏠',
+  payroll: '💰',
+}
 
 function IndustryPageContent({ industry }: { industry: Industry }) {
   return (
     <>
-      {/* Hero Section */}
       <section className="relative pt-32 pb-20 bg-grid">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
         
@@ -24,28 +32,28 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-6">
-              <span className="text-2xl">☕</span>
+              <span className="text-2xl">{industryEmoji[industry.id] || '🏢'}</span>
               <span className="text-sm">{industry.name}</span>
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               {industry.heroTitle.split('.')[0]}.<br />
-              <span className="gradient-text">{industry.heroTitle.split('.')[1] || ''}</span>
+              <span className="gradient-text">{industry.heroTitle.split('.').slice(1).join('.').trim()}</span>
             </h1>
 
             <p className="text-xl text-dark-300 mb-8 max-w-2xl">
               {industry.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Link to="/contact" className="btn-primary flex items-center justify-center space-x-2">
                 <Play className="w-5 h-5" />
                 <span>Book Demo</span>
               </Link>
               <div className="flex items-center space-x-4 text-dark-300">
                 <div className="flex items-center space-x-2">
-                  <DollarSign className="w-5 h-5 text-primary-400" />
-                  <span>{industry.priceSetup}</span>
+                  <Cpu className="w-5 h-5 text-primary-400" />
+                  <span>Runs on <strong className="text-white">{industry.recommendedTierName}</strong></span>
                 </div>
                 <div className="text-dark-500">|</div>
                 <div className="flex items-center space-x-2">
@@ -54,11 +62,16 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
                 </div>
               </div>
             </div>
+
+            <div className="inline-flex items-center space-x-2 text-sm text-dark-400">
+              <span>Starts from</span>
+              <span className="text-xl font-bold gradient-text">{industry.startsFrom}</span>
+              <span>&bull; Custom deployment pricing on request</span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Pain Points */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -77,7 +90,7 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
                 className="p-4 rounded-xl bg-red-500/5 border border-red-500/10"
               >
                 <div className="flex items-start space-x-3">
-                  <span className="text-red-400 text-lg">✗</span>
+                  <span className="text-red-400 text-lg flex-shrink-0">✗</span>
                   <span className="text-dark-300">{pain}</span>
                 </div>
               </motion.div>
@@ -86,14 +99,13 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              <span className="gradient-text">{industry.features.length} Capabilities</span> Built-In
+              <span className="gradient-text">{industry.features.length} Capabilities</span> Pre-Configured
             </h2>
-            <p className="text-dark-400">Everything you need, pre-configured</p>
+            <p className="text-dark-400">Ready to go on day one</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -109,7 +121,7 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="font-semibold text-lg">{feature.name}</h3>
                   {feature.monthlyValue && (
-                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full">
+                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full whitespace-nowrap">
                       {feature.monthlyValue}
                     </span>
                   )}
@@ -121,7 +133,6 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
         </div>
       </section>
 
-      {/* What's Included */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
@@ -132,15 +143,23 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
                 <div>
                   <h3 className="font-semibold text-lg mb-3 flex items-center space-x-2">
                     <Shield className="w-5 h-5 text-primary-400" />
-                    <span>Hardware</span>
+                    <span>Hardware & Software</span>
                   </h3>
                   <ul className="space-y-2">
                     {industry.hardware.map((item, i) => (
                       <li key={i} className="flex items-center space-x-2 text-dark-300">
-                        <Check className="w-4 h-4 text-green-400" />
+                        <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
+                    <li className="flex items-center space-x-2 text-dark-300">
+                      <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      <span>n8n workflow engine + Ollama local AI</span>
+                    </li>
+                    <li className="flex items-center space-x-2 text-dark-300">
+                      <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      <span>Qdrant vector database + Grafana dashboards</span>
+                    </li>
                   </ul>
                 </div>
 
@@ -172,7 +191,7 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-dark-400">Monthly Savings (High)</span>
+                    <span className="text-dark-400">Monthly Savings (Optimistic)</span>
                     <span className="text-2xl font-bold text-green-400">
                       ${industry.roi.monthlySavingsHigh.toLocaleString()}
                     </span>
@@ -191,11 +210,9 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
               {industry.caseStudy && (
                 <div className="mt-6 p-6 rounded-xl bg-primary-500/10 border border-primary-500/20">
                   <div className="flex items-center space-x-1 mb-3">
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <Star className="w-4 h-4 text-yellow-400" />
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    ))}
                   </div>
                   <p className="text-dark-200 italic mb-4">"{industry.caseStudy.quote}"</p>
                   <div className="flex items-center justify-between">
@@ -215,35 +232,24 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
         </div>
       </section>
 
-      {/* Pricing */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Investment</h2>
-          <p className="text-dark-400 mb-8">One-time setup. No hidden fees. Your data stays yours.</p>
+          <h2 className="text-3xl font-bold mb-4">Ready to Automate Your Business?</h2>
+          <p className="text-dark-300 mb-2">
+            {industry.name} runs on <strong className="text-white">{industry.recommendedTierName}</strong>, starting from <strong className="gradient-text">{industry.startsFrom}</strong>.
+          </p>
+          <p className="text-dark-400 mb-8">
+            Custom deployment and integration pricing available on request.
+          </p>
 
-          <div className="card inline-block">
-            <div className="flex items-center justify-center space-x-8">
-              <div>
-                <div className="text-sm text-dark-400 mb-1">Setup</div>
-                <div className="text-3xl font-bold gradient-text">{industry.priceSetup}</div>
-              </div>
-              <div className="text-dark-500 text-2xl">+</div>
-              <div>
-                <div className="text-sm text-dark-400 mb-1">Monthly</div>
-                <div className="text-3xl font-bold text-green-400">{industry.priceMonthly}</div>
-                <div className="text-xs text-dark-500">(electricity only)</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn-primary inline-flex items-center space-x-2">
+              <Headphones className="w-5 h-5" />
               <span>Book a Demo</span>
-              <ArrowRight className="w-4 h-4" />
             </Link>
-            <p className="text-dark-400 text-sm mt-4">
-              30-minute call. See exactly how {industry.name} works for your business.
-            </p>
+            <Link to="/pricing" className="text-primary-400 hover:text-primary-300 font-medium">
+              See all pricing options &rarr;
+            </Link>
           </div>
         </div>
       </section>
@@ -255,7 +261,6 @@ export function IndustryPage() {
   const { slug: paramSlug } = useParams<{ slug: string }>()
   const location = useLocation()
   
-  // Extract slug from pathname if useParams doesn't work (hardcoded routes)
   const slug = paramSlug || location.pathname.split('/').pop()
   const industry = slug ? getIndustryBySlug(slug) : undefined
 
