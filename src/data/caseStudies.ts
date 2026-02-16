@@ -44,7 +44,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     implementation: {
       timeline: '6 weeks',
-      products: ['Nous Command'],
+      products: ['Nous Enterprise'],
       integrations: ['Custom legacy system', 'GitHub', 'Confluence'],
     },
     testimonial: {
@@ -146,7 +146,7 @@ Our AI-assisted approach:
     ],
     implementation: {
       timeline: '2 weeks',
-      products: ['Nous Connect'],
+      products: ['Nous Pro'],
       integrations: ['QuickBooks Online', 'Gmail', 'Google Drive'],
     },
     testimonial: {
@@ -226,7 +226,7 @@ We caught duplicates others miss:
 | Labor savings (at $25/hr) | $338 |
 | **Total Monthly Savings** | **$2,338** |
 
-**ROI: 10x in the first month** (Nous Connect = $249/month)
+**ROI: 10x in the first month** (Nous Pro = $249/month)
 
 ## What We Learned
 
@@ -263,7 +263,7 @@ We aimed for 95% automation, 5% human review. That 5% catches edge cases without
     ],
     implementation: {
       timeline: '10 days',
-      products: ['Nous Connect'],
+      products: ['Nous Pro'],
       integrations: ['Vapi', 'Google Calendar', 'Follow Up Boss CRM'],
     },
     fullContent: `
@@ -342,7 +342,7 @@ Trained on all active listings:
 
 | Item | Monthly |
 |------|---------|
-| Nous Connect subscription | $249 |
+| Nous Pro subscription | $249 |
 | Voice minutes (~500) | $75 |
 | **Total cost** | **$324** |
 
@@ -379,7 +379,7 @@ Trained on all active listings:
     ],
     implementation: {
       timeline: '3 weeks',
-      products: ['Nous Connect'],
+      products: ['Nous Pro'],
       integrations: ['Shopify', 'Gorgias', 'Instagram', 'Klaviyo'],
     },
     fullContent: `
@@ -493,7 +493,7 @@ Human agents get context, not cold transfers.
 
 ### Cost
 - 2 full-time support hires avoided: $8,000/month
-- Nous Connect cost: $249/month
+- Nous Pro cost: $249/month
 - Additional AI usage: $200/month
 - **Net savings: $7,550/month**
 

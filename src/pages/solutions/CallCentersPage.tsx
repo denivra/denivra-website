@@ -5,7 +5,6 @@ import {
   CheckCircle2, ArrowRight, BarChart3, Headphones, Bot, Zap,
   Globe, Shield, MessageSquare
 } from 'lucide-react'
-import { ChatWidget } from '../../components/ChatWidget'
 
 const stats = [
   { value: '60%', label: 'Cost Reduction', icon: TrendingDown },
@@ -72,27 +71,7 @@ const useCases = [
 
 export function CallCentersPage() {
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link to="/contact" className="btn-primary">
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
+    <>
       <section className="pt-32 pb-20 bg-grid relative overflow-hidden">
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-accent-purple/20 rounded-full blur-3xl" />
@@ -123,13 +102,12 @@ export function CallCentersPage() {
                 Schedule Demo
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
-              <Link to="/#roi" className="btn-secondary">
+              <Link to="/roi-calculator" className="btn-secondary">
                 Calculate Your Savings
               </Link>
             </div>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -147,7 +125,6 @@ export function CallCentersPage() {
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -181,7 +158,6 @@ export function CallCentersPage() {
         </div>
       </section>
 
-      {/* Use Cases */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -214,7 +190,6 @@ export function CallCentersPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -227,21 +202,12 @@ export function CallCentersPage() {
             <Link to="/contact" className="btn-primary">
               Get Custom Quote
             </Link>
-            <Link to="/#roi" className="btn-secondary">
+            <Link to="/roi-calculator" className="btn-secondary">
               ROI Calculator
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-dark-400">
-          <p>© 2025 Denivra Inc. All rights reserved.</p>
-        </div>
-      </footer>
-
-      <ChatWidget />
-    </div>
+    </>
   )
 }

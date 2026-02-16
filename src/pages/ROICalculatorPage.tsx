@@ -17,9 +17,9 @@ const industries = [
 ]
 
 const packages = [
-  { id: 'assist', name: 'Nous Assist', price: 2800, monthly: 250, automationPercent: 40 },
-  { id: 'connect', name: 'Nous Connect', price: 7500, monthly: 750, automationPercent: 65 },
-  { id: 'command', name: 'Nous Command', price: 20000, monthly: 1500, automationPercent: 80 },
+  { id: 'solo', name: 'Nous Solo', price: 2800, monthly: 99, automationPercent: 40 },
+  { id: 'pro', name: 'Nous Pro', price: 4800, monthly: 249, automationPercent: 65 },
+  { id: 'enterprise', name: 'Nous Enterprise', price: 7500, monthly: 499, automationPercent: 80 },
 ]
 
 export function ROICalculatorPage() {
@@ -29,7 +29,7 @@ export function ROICalculatorPage() {
   const [emailsPerDay, setEmailsPerDay] = useState(50)
   const [callsPerDay, setCallsPerDay] = useState(20)
   const [industry, setIndustry] = useState('general')
-  const [selectedPackage, setSelectedPackage] = useState('connect')
+  const [selectedPackage, setSelectedPackage] = useState('pro')
 
   const industryData = industries.find(i => i.id === industry) || industries[0]
   const packageData = packages.find(p => p.id === selectedPackage) || packages[1]

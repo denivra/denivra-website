@@ -5,10 +5,8 @@ import {
   CheckCircle2, ArrowRight, BarChart3, Bot, Globe,
   FileCode, Layers, Cpu, Database, GitBranch, Phone,
   CreditCard, FileSearch, Network, ShieldCheck, HardDrive,
-  Menu, X, ChevronRight
+  ChevronRight
 } from 'lucide-react'
-import { useState } from 'react'
-import { ChatWidget } from '../../components/ChatWidget'
 
 const credentials = [
   { value: '$3.5M+', label: 'Cost Savings Documented' },
@@ -132,47 +130,8 @@ const industries = [
 ]
 
 export function EnterprisePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <Link to="/#products" className="text-dark-300 hover:text-white transition-colors">Products</Link>
-              <Link to="/solutions/enterprise" className="text-white font-medium">Enterprise</Link>
-              <Link to="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</Link>
-              <Link to="/contact" className="btn-primary text-sm">Request Assessment</Link>
-            </div>
-
-            <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-        </div>
-        
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-dark-900 border-t border-white/5">
-            <div className="px-4 py-3 space-y-2">
-              <Link to="/" className="block py-2 text-dark-300">Home</Link>
-              <Link to="/case-studies" className="block py-2 text-dark-300">Case Studies</Link>
-              <Link to="/contact" className="block py-2 btn-primary text-center">Request Assessment</Link>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero */}
+    <>
       <section className="pt-32 pb-20 bg-grid relative overflow-hidden">
         <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-primary-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-purple/10 rounded-full blur-3xl" />
@@ -213,7 +172,6 @@ export function EnterprisePage() {
             </div>
           </motion.div>
 
-          {/* Credential Metrics */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -230,7 +188,6 @@ export function EnterprisePage() {
         </div>
       </section>
 
-      {/* Differentiator */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -264,7 +221,6 @@ export function EnterprisePage() {
         </div>
       </section>
 
-      {/* Services */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -305,7 +261,6 @@ export function EnterprisePage() {
         </div>
       </section>
 
-      {/* Process */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -340,7 +295,6 @@ export function EnterprisePage() {
         </div>
       </section>
 
-      {/* Industries */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -359,7 +313,6 @@ export function EnterprisePage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-primary-500/10 via-accent-purple/10 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -387,27 +340,6 @@ export function EnterprisePage() {
           </p>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <Link to="/" className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            <div className="flex items-center space-x-6 text-dark-400 text-sm">
-              <Link to="/privacy" className="hover:text-white">Privacy</Link>
-              <Link to="/terms" className="hover:text-white">Terms</Link>
-              <span>© 2025 Denivra Inc.</span>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      <ChatWidget />
-    </div>
+    </>
   )
 }

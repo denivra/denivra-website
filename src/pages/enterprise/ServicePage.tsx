@@ -2,9 +2,7 @@ import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  Bot, ArrowRight, Check, ChevronRight, Shield, Clock,
-  BarChart3, Building2, Phone, Mail, Calendar, ArrowLeft,
-  FileText, Zap, Users, Globe, Lock
+  ArrowRight, Check, ChevronRight, Calendar, ArrowLeft, Phone
 } from 'lucide-react'
 import { getServiceById, enterpriseServices } from '../../data/enterpriseServices'
 
@@ -19,7 +17,7 @@ export function ServicePage() {
 
   if (!service) {
     return (
-      <div className="min-h-screen bg-dark-950 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Service Not Found</h1>
           <p className="text-dark-400 mb-8">The service you're looking for doesn't exist.</p>
@@ -31,37 +29,12 @@ export function ServicePage() {
     )
   }
 
-  // Get related services (exclude current)
   const relatedServices = enterpriseServices
     .filter(s => s.id !== service.id)
     .slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <Link to="/solutions/enterprise" className="text-dark-300 hover:text-white transition-colors flex items-center">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Enterprise
-              </Link>
-              <Link to="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</Link>
-              <Link to="/contact" className="btn-primary text-sm">Request Assessment</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Breadcrumb */}
+    <>
       <div className="pt-20 pb-4 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center text-sm text-dark-400">
@@ -74,7 +47,6 @@ export function ServicePage() {
         </div>
       </div>
 
-      {/* Hero Section */}
       <section className="py-20 relative bg-grid">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-purple/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
@@ -105,7 +77,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Proof Points Bar */}
       <section className="py-12 bg-dark-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -125,7 +96,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Challenge Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -162,7 +132,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Approach Section */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -196,7 +165,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Deliverables Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -232,7 +200,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Technologies Section */}
       {service.technologies && (
         <section className="py-12 border-y border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -253,7 +220,6 @@ export function ServicePage() {
         </section>
       )}
 
-      {/* Case Study CTA */}
       {service.caseStudy && (
         <section className="py-20 bg-dark-900/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,7 +236,6 @@ export function ServicePage() {
         </section>
       )}
 
-      {/* Related Services */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -304,7 +269,6 @@ export function ServicePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="py-20 bg-gradient-to-r from-primary-500/10 via-accent-purple/10 to-accent-pink/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
@@ -326,21 +290,6 @@ export function ServicePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between text-dark-400 text-sm">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-white font-bold">Denivra</span>
-            </div>
-            <p>© 2025 Denivra Inc. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   )
 }

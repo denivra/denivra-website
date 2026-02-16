@@ -5,7 +5,6 @@ import {
   CheckCircle2, ArrowRight, Calendar, FileText, Bot, Zap,
   Users, TrendingUp, Sparkles
 } from 'lucide-react'
-import { ChatWidget } from '../../components/ChatWidget'
 
 const benefits = [
   { value: '$2,800', label: 'Starting Price', sublabel: 'One-time setup' },
@@ -19,37 +18,37 @@ const features = [
     icon: Mail,
     title: 'Email Automation',
     description: 'AI reads, categorizes, and responds to routine emails. Never miss a lead or forget a follow-up.',
-    included: 'Nous Assist',
+    included: 'Nous Solo',
   },
   {
     icon: MessageSquare,
     title: 'Chat & SMS',
     description: 'WhatsApp, SMS, and web chat — all handled by AI. Instant responses, 24/7.',
-    included: 'Nous Assist',
+    included: 'Nous Solo',
   },
   {
     icon: Calendar,
     title: 'Appointment Booking',
     description: 'Customers book directly through chat or voice. Syncs with your calendar automatically.',
-    included: 'Nous Assist',
+    included: 'Nous Solo',
   },
   {
     icon: Phone,
     title: 'Voice AI',
     description: 'AI answers your phone, qualifies leads, and books appointments while you focus on work.',
-    included: 'Nous Connect',
+    included: 'Nous Pro',
   },
   {
     icon: FileText,
     title: 'Invoice & Billing',
     description: 'QuickBooks integration. Automated invoicing, payment reminders, and reconciliation.',
-    included: 'Nous Connect',
+    included: 'Nous Pro',
   },
   {
     icon: TrendingUp,
     title: 'Growth Insights',
     description: 'Know what works. AI analyzes your customer interactions and suggests improvements.',
-    included: 'Nous Connect',
+    included: 'Nous Pro',
   },
 ]
 
@@ -70,8 +69,8 @@ const testimonials = [
 
 const packages = [
   {
-    name: 'Nous Assist',
-    price: '$2,800',
+    name: 'Nous Solo',
+    price: 'from $2,800',
     description: 'Perfect for solopreneurs and small teams',
     features: [
       'Email triage & auto-response',
@@ -82,13 +81,14 @@ const packages = [
     ],
     cta: 'Get Started',
     highlighted: false,
+    link: '/products/nous-solo',
   },
   {
-    name: 'Nous Connect',
-    price: '$7,500',
+    name: 'Nous Pro',
+    price: 'from $4,800',
     description: 'For growing businesses ready to scale',
     features: [
-      'Everything in Assist',
+      'Everything in Solo',
       'Voice AI agents',
       'QuickBooks integration',
       'Advanced analytics',
@@ -97,32 +97,13 @@ const packages = [
     ],
     cta: 'Most Popular',
     highlighted: true,
+    link: '/products/nous-pro',
   },
 ]
 
 export function SmallBusinessPage() {
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">Denivra</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link to="/contact" className="btn-primary">
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
+    <>
       <section className="pt-32 pb-20 bg-grid relative overflow-hidden">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-accent-purple/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl" />
@@ -150,16 +131,15 @@ export function SmallBusinessPage() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact" className="btn-primary">
-                Start Free Trial
+                Book a Demo
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
-              <Link to="/#roi" className="btn-secondary">
+              <Link to="/roi-calculator" className="btn-secondary">
                 Calculate Your Savings
               </Link>
             </div>
           </motion.div>
 
-          {/* Benefits */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -177,7 +157,6 @@ export function SmallBusinessPage() {
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -216,7 +195,6 @@ export function SmallBusinessPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -249,7 +227,6 @@ export function SmallBusinessPage() {
         </div>
       </section>
 
-      {/* Pricing */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -257,7 +234,7 @@ export function SmallBusinessPage() {
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl text-dark-300">
-              One-time setup fee. No hidden costs. Optional monthly maintenance.
+              One-time hardware + setup. No hidden costs. Optional monthly support.
             </p>
           </div>
 
@@ -290,7 +267,7 @@ export function SmallBusinessPage() {
                   ))}
                 </ul>
                 <Link
-                  to="/contact"
+                  to={pkg.link}
                   className={pkg.highlighted ? 'btn-primary w-full text-center' : 'btn-secondary w-full text-center'}
                 >
                   {pkg.cta}
@@ -301,7 +278,6 @@ export function SmallBusinessPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 bg-dark-900/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -311,20 +287,11 @@ export function SmallBusinessPage() {
             Let AI handle the busywork while you focus on growing your business.
           </p>
           <Link to="/contact" className="btn-primary">
-            Start Your Free Trial
+            Book a Demo
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-dark-400">
-          <p>© 2025 Denivra Inc. All rights reserved.</p>
-        </div>
-      </footer>
-
-      <ChatWidget />
-    </div>
+    </>
   )
 }

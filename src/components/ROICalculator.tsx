@@ -66,9 +66,9 @@ export function ROICalculator() {
     const monthlyCostSaved = monthlyHoursSaved * avgHourlyRate
     const annualCostSaved = monthlyCostSaved * 12
 
-    // ROI calculation (assuming Nous Connect at $7,500 + $750/mo)
-    const setupCost = 7500
-    const monthlyCost = 750
+    // ROI calculation (assuming Nous Pro at $4,800 + $249/mo)
+    const setupCost = 4800
+    const monthlyCost = 249
     const firstYearCost = setupCost + (monthlyCost * 12)
     const roi = ((annualCostSaved - firstYearCost) / firstYearCost) * 100
     const paybackMonths = firstYearCost / monthlyCostSaved
@@ -196,23 +196,23 @@ export function ROICalculator() {
           </motion.div>
 
           <div className="card bg-dark-800/50">
-            <div className="text-sm text-dark-400 mb-3">Investment (Nous Connect)</div>
+            <div className="text-sm text-dark-400 mb-3">Investment (Nous Pro)</div>
             <div className="flex justify-between items-center">
               <span>One-time setup</span>
-              <span className="font-semibold">$7,500</span>
+              <span className="font-semibold">$4,800</span>
             </div>
             <div className="flex justify-between items-center mt-2">
-              <span>Monthly maintenance</span>
-              <span className="font-semibold">$750/mo</span>
+              <span>Monthly support</span>
+              <span className="font-semibold">$249/mo</span>
             </div>
             <hr className="my-3 border-white/10" />
             <div className="flex justify-between items-center">
               <span className="font-semibold">First Year Total</span>
-              <span className="font-bold text-primary-400">$16,500</span>
+              <span className="font-bold text-primary-400">$7,788</span>
             </div>
             <div className="flex justify-between items-center mt-2 text-green-400">
               <span className="font-semibold">Net First Year Savings</span>
-              <span className="font-bold">${(calculations.annualCostSaved - 16500).toLocaleString()}</span>
+              <span className="font-bold">${(calculations.annualCostSaved - 7788).toLocaleString()}</span>
             </div>
           </div>
 

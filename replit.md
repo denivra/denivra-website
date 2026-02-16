@@ -2,16 +2,21 @@
 
 ## Overview
 
-Denivra is a marketing and product website for Denivra Inc., an AI automation agency that sells two things: (1) the "Nous" product line — on-premises AI automation appliances built on Mac Mini hardware for small businesses (cafés, salons, CPAs, restaurants, payroll, real estate), and (2) enterprise consulting services for banks and fintechs (BaaS architecture, payment infrastructure, compliance automation, legacy modernization).
+Denivra is a marketing and product website for Denivra Inc., an AI automation agency that sells two things: (1) the "Nous" product line — on-premises AI automation appliances built on Mac Mini hardware powered by n8n, Ollama, and local LLMs for small businesses (cafés, salons, CPAs, restaurants, payroll, real estate), and (2) enterprise consulting services for banks and fintechs (BaaS architecture, payment infrastructure, compliance automation, legacy modernization).
 
 The site is a React single-page application with client-side routing, built with Vite, TypeScript, and Tailwind CSS. It includes 30+ pages covering products, industry verticals, enterprise services, blog posts, case studies, an ROI calculator, a chatbot widget, and legal pages.
 
-**Known Issues (from project docs):**
-- Product pages (`/products/nous-assist`, etc.) have a routing bug where `useParams()` returns undefined because routes are hardcoded instead of using `:id` param — the components fall back to extracting the ID from `useLocation().pathname`
-- HubSpot form integration uses placeholder environment variables
-- Chatbot (Pivot) connects via WebSocket to an external gateway that may not be configured
-- The `vite.config.ts` has a git merge conflict marker that needs resolving (the `base` property)
-- `docs/` folder contains a stale GitHub Pages build with hardcoded asset paths — not relevant to Replit deployment
+## Recent Changes (Feb 2026)
+
+- **Product Tier Rename**: Assist → Solo ($2,800), Connect → Pro ($4,800), Command → Enterprise ($7,500)
+- **Hardware Specs Added**: Each tier now shows Apple M4 chip, RAM (24GB/48GB), storage, and LLM capability
+- **Managed Services Data**: New `managedServices.ts` with support tiers ($99/$249/mo) and managed services packages ($499+/mo)
+- **Homepage Rebuild**: New hero "Your AI Employee That Never Sleeps", n8n+Ollama badge, hardware-first messaging
+- **Pricing Page Rebuild**: Tabbed interface (Hardware + Setup vs Support & Managed Services), deployment packages, FAQ
+- **Product/Industry Pages**: Show recommended tier, "starts from" pricing, hardware specs
+- **Solution/Enterprise Pages Cleanup**: Removed duplicate nav/footer/ChatWidget from SmallBusinessPage, EnterprisePage, CallCentersPage, ServicePage — all now use shared Layout
+- **Updated product references**: All "Nous Assist"→"Nous Solo", "Nous Connect"→"Nous Pro" across solution pages
+- **Vite config cleaned**: Removed merge conflict, removed console/debugger stripping from dev mode
 
 ## User Preferences
 
@@ -34,11 +39,11 @@ The router is defined in `src/Router.tsx`. All page components are lazy-loaded. 
 
 Key route groups:
 - `/` — Home page
-- `/products/:id` — Product detail pages (nous-assist, nous-connect, nous-command)
+- `/products/:id` — Product detail pages (nous-solo, nous-pro, nous-enterprise)
 - `/products/voice-ai` — Standalone voice AI page
 - `/industries/:slug` — Industry-specific pages (cafe, cpa, restaurant, salon, payroll, realty)
 - `/solutions/*` — Solution pages (call-centers, small-business, enterprise)
-- `/enterprise/*` — Enterprise service detail pages
+- `/enterprise/:serviceId` — Enterprise service detail pages
 - `/blog`, `/blog/:slug` — Blog listing and individual posts
 - `/case-studies`, `/case-studies/:slug` — Case study listing and detail
 - `/pricing`, `/roi-calculator`, `/automations`, `/about`, `/contact`
@@ -46,8 +51,9 @@ Key route groups:
 
 ### Data Layer
 There is **no database**. All content is stored as TypeScript data files in `src/data/`:
-- `products.ts` — Three product tiers (Nous Assist $2,800, Nous Connect $7,500, Nous Command custom)
-- `industries.ts` — Six industry verticals with features, pricing, ROI data
+- `products.ts` — Three product tiers (Nous Solo $2,800, Nous Pro $4,800, Nous Enterprise $7,500) with hardware specs
+- `managedServices.ts` — Support tiers ($99/$249/mo) and managed services packages ($499+/mo)
+- `industries.ts` — Six industry verticals with features, pricing, ROI data, recommended tier mapping
 - `blogPosts.ts` — Blog content with markdown-like string content
 - `caseStudies.ts` — Case study content with metrics and testimonials
 - `automations.ts` — Automation capabilities catalog
@@ -59,6 +65,7 @@ Each data file exports getter functions (e.g., `getProductById()`, `getIndustryB
 ### Component Architecture
 - `src/components/` — Shared UI components (Navigation, Footer, ChatWidget, ROICalculator, ProductCard, ErrorBoundary, etc.)
 - `src/pages/` — Page-level components organized by section (products/, industries/, solutions/, enterprise/, blog/, legal/)
+- Pages render as fragments (`<>...</>`) and rely on Layout for nav/footer/chat
 - Pages that render dynamic content (ProductPage, IndustryPage, ServicePage, CaseStudyPage, BlogPostPage) extract their ID/slug from URL params or pathname
 
 ### ChatWidget (Pivot AI)
@@ -78,8 +85,7 @@ Located in `netlify/functions/` (designed for Netlify deployment):
 - Dev server: `npm run dev` (Vite on port 5000, host 0.0.0.0)
 - Build: `npm run build` (outputs to `dist/`)
 - Preview: `npm run preview`
-- The `vite.config.ts` has a merge conflict that should be resolved — keep `base: '/'` for Replit deployment
-- Production build strips `console` and `debugger` statements via esbuild
+- `vite.config.ts` — Clean config with `base: '/'`, ES2020 target
 
 ### Styling Conventions
 - Dark theme with `bg-dark-950` as the base background
@@ -92,6 +98,19 @@ Located in `netlify/functions/` (designed for Netlify deployment):
 ### Path Aliases
 TypeScript path alias `@/*` maps to `./src/*` (configured in `tsconfig.json`). Note: Vite config does not currently include the corresponding resolve alias — this may need to be added if `@/` imports are used.
 
+## Product Tiers
+
+| Tier | Price | Chip | RAM | Storage | LLM Capability |
+|------|-------|------|-----|---------|----------------|
+| Nous Solo | from $2,800 | Apple M4 10-core | 24GB Unified | 512GB SSD | Llama 3.1 (8B) for focused tasks |
+| Nous Pro | from $4,800 | Apple M4 Pro 12-core | 48GB Unified | 1TB SSD | Llama 3.1 (8B-13B) + Mixtral |
+| Nous Enterprise | from $7,500 | Apple M4 Pro 12-core | 48GB Unified | 2TB SSD (encrypted) | Llama 3.1 (70B quantized) + any model |
+
+### Industry → Tier Mapping
+- Café, Salon → Nous Solo
+- CPA, Restaurant, Realty → Nous Pro
+- Payroll → Nous Enterprise
+
 ## External Dependencies
 
 ### Environment Variables
@@ -103,7 +122,6 @@ TypeScript path alias `@/*` maps to `./src/*` (configured in `tsconfig.json`). N
 | `VITE_WS_TOKEN` | Auth token for chatbot WebSocket | Optional |
 | `VITE_CLAWDBOT_WEBCHAT_URL` | Clawdbot chat endpoint (serverless) | Used in Netlify functions |
 | `VITE_BLAND_AI_PHONE` | Bland AI phone number | Referenced but not critical |
-| `GOOGLE_API_KEY` | Google Imagen API for image generation scripts | Only for offline scripts |
 
 ### Third-Party Services
 - **HubSpot** — CRM and form embedding for lead capture (not yet connected)

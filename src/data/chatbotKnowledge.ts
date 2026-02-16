@@ -66,7 +66,7 @@ export const objectionResponses: Record<string, {
     acknowledge: "I completely understand budget concerns — it's a real consideration for any business investment.",
     isolate: "If we could make the numbers work, is there anything else that would hold you back?",
     reframe: "Let me ask this differently — what's the cost of *not* solving this problem? What are you spending now on manual work, missed opportunities, or errors?",
-    resolve: "Our clients typically see ROI within 60-90 days. Nous Assist starts at $2,800 — that's about 1-2 months of a part-time hire. If we save you 6+ hours/week, it pays for itself fast.",
+    resolve: "Our clients typically see ROI within 60-90 days. Nous Solo starts from $2,800 — that's about 1-2 months of a part-time hire. If we save you 6+ hours/week, it pays for itself fast.",
     confirm: "Does that help put the investment in perspective?",
   },
   need_to_think: {
@@ -87,7 +87,7 @@ export const objectionResponses: Record<string, {
     acknowledge: "Timing matters. There's never a perfect moment, but some are definitely better than others.",
     isolate: "What would make this the right time? A certain budget cycle, team capacity, or milestone?",
     reframe: "Here's the thing — the problem you described doesn't pause. Every week you wait, that's another [X hours lost / Y dollars spent / Z opportunities missed]. At what point does waiting cost more than acting?",
-    resolve: "We can start small — Nous Assist is designed exactly for this. Minimal commitment, fast setup, proves value before you scale.",
+    resolve: "We can start small — Nous Solo is designed exactly for this. Minimal commitment, fast setup, proves value before you scale.",
     confirm: "Would a pilot approach make more sense for where you are right now?",
   },
   need_stakeholder_approval: {
@@ -128,26 +128,26 @@ export const qualificationQuestions = {
 
 // Product Knowledge
 export const productInfo = {
-  nousAssist: {
-    name: 'Nous Assist',
-    price: '$2,800 one-time + $250/mo optional maintenance',
+  nousSolo: {
+    name: 'Nous Solo',
+    price: 'from $2,800 one-time + $99/mo optional support',
     target: 'Small businesses, solopreneurs, startups',
     features: [
       'Email triage & auto-response',
       'WhatsApp/SMS chatbot',
       'Basic CRM integration',
-      'SQLite dashboard',
+      'Simple dashboard',
       '5 workflows included',
     ],
     bestFor: 'Businesses processing <500 emails/month, wanting to dip toes into automation',
     notFor: 'Complex multi-system integrations, voice AI, enterprise compliance',
   },
-  nousConnect: {
-    name: 'Nous Connect',
-    price: '$7,500 one-time + $750/mo maintenance',
+  nousPro: {
+    name: 'Nous Pro',
+    price: 'from $4,800 one-time + $249/mo optional support',
     target: 'Growing businesses, professional services, multi-channel operations',
     features: [
-      'Everything in Assist',
+      'Everything in Solo',
       'Voice AI agents (24/7 phone support)',
       'QuickBooks/Xero integration',
       'Advanced analytics dashboard',
@@ -157,12 +157,12 @@ export const productInfo = {
     bestFor: 'Businesses with call volume, invoice processing, multi-channel customer service',
     notFor: 'Enterprise compliance requirements, 50k+ monthly interactions',
   },
-  nousCommand: {
-    name: 'Nous Command',
-    price: 'Custom (typically $10K-50K)',
+  nousEnterprise: {
+    name: 'Nous Enterprise',
+    price: 'from $7,500 one-time + custom managed services',
     target: 'Enterprise, regulated industries, complex transformations',
     features: [
-      'Everything in Connect',
+      'Everything in Pro',
       'Legacy system modernization',
       'Full Grafana/Metabase analytics',
       'White-label options',
