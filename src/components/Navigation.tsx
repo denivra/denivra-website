@@ -26,15 +26,15 @@ export function Navigation() {
               <div className="absolute top-full left-0 mt-2 w-64 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
                 <Link to="/products/nous-solo" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">
                   <div className="font-medium text-white">Nous Solo</div>
-                  <div className="text-xs text-dark-400">Your night shift employee &bull; from $2,800</div>
+                  <div className="text-xs text-dark-400">10 workflows &bull; from $2,800</div>
                 </Link>
                 <Link to="/products/nous-pro" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
                   <div className="font-medium text-white">Nous Pro</div>
-                  <div className="text-xs text-dark-400">Your operations manager &bull; from $4,800</div>
+                  <div className="text-xs text-dark-400">25+ workflows &bull; from $4,800</div>
                 </Link>
                 <Link to="/products/nous-enterprise" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
                   <div className="font-medium text-white">Nous Enterprise</div>
-                  <div className="text-xs text-dark-400">Your AI department &bull; from $7,500</div>
+                  <div className="text-xs text-dark-400">50+ workflows &bull; from $7,500</div>
                 </Link>
                 <Link to="/products/voice-ai" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-b-xl border-t border-white/5">
                   <div className="font-medium text-white">Voice AI</div>
@@ -85,7 +85,32 @@ export function Navigation() {
             
             <Link to="/pricing" className="text-dark-300 hover:text-white transition-colors">Pricing</Link>
             <Link to="/use-cases" className="text-dark-300 hover:text-white transition-colors">Use Cases</Link>
-            <Link to="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</Link>
+
+            <div className="relative group">
+              <button className="text-dark-300 hover:text-white transition-colors flex items-center space-x-1">
+                <span>Resources</span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="absolute top-full left-0 mt-2 w-56 bg-dark-900 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all shadow-xl">
+                <Link to="/case-studies" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-t-xl">
+                  <div className="font-medium text-white">Case Studies</div>
+                  <div className="text-xs text-dark-400">Real results from real businesses</div>
+                </Link>
+                <Link to="/blog" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
+                  <div className="font-medium text-white">Blog</div>
+                  <div className="text-xs text-dark-400">Insights and tutorials</div>
+                </Link>
+                <Link to="/roi-calculator" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5">
+                  <div className="font-medium text-white">ROI Calculator</div>
+                  <div className="text-xs text-dark-400">See your potential savings</div>
+                </Link>
+                <Link to="/automations" className="block px-4 py-3 text-sm text-dark-300 hover:text-white hover:bg-white/5 rounded-b-xl">
+                  <div className="font-medium text-white">Automations</div>
+                  <div className="text-xs text-dark-400">Browse all automations</div>
+                </Link>
+              </div>
+            </div>
+
             <Link
               to="/contact"
               className="px-5 py-2 bg-gradient-to-r from-primary-500 to-accent-purple rounded-lg font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all"
@@ -135,10 +160,17 @@ export function Navigation() {
                 <Link to="/solutions/enterprise" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Consulting Services</Link>
               </div>
               
+              <div className="space-y-2">
+                <div className="text-xs text-dark-400 uppercase tracking-wider">Resources</div>
+                <Link to="/case-studies" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Case Studies</Link>
+                <Link to="/blog" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+                <Link to="/roi-calculator" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</Link>
+                <Link to="/automations" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Automations</Link>
+              </div>
+
               <div className="pt-4 border-t border-white/10 space-y-2">
                 <Link to="/pricing" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
                 <Link to="/use-cases" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Use Cases</Link>
-                <Link to="/case-studies" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Case Studies</Link>
                 <Link
                   to="/contact"
                   className="block w-full text-center px-4 py-3 bg-gradient-to-r from-primary-500 to-accent-purple rounded-lg font-medium"

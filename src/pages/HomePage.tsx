@@ -1,17 +1,20 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Phone, MessageSquare, Mail, Calculator, Zap, Clock, 
-  BarChart3, ChevronDown,
-  Sparkles, Shield, Globe, ArrowRight, Check,
-  Coffee, Building2, Scissors, Briefcase, Home, FileText, Star, X, Cpu, Server, Lock,
-  Headphones, Settings, TrendingUp
+import {
+  ArrowRight, Calculator, ChevronDown,
+  Sparkles, Building2, Scissors, Briefcase, Home, FileText, Star, X,
+  Cpu, Server, Headphones, Settings, TrendingUp, BarChart3, Phone,
+  Mail, MessageSquare, Coffee
 } from 'lucide-react'
-import { ROICalculator } from '../components/ROICalculator'
-import { ProductCard } from '../components/ProductCard'
-import { CaseStudiesSection } from '../components/CaseStudiesSection'
-import { WorkflowDemo } from '../components/WorkflowDemo'
+import {
+  MacMiniVisualization,
+  AnimatedFlow,
+  SecondBrainSection,
+  ROICalculator,
+  ProductCard,
+  CaseStudiesSection
+} from '../components/index'
 import { products } from '../data/products'
 import { industries } from '../data/industries'
 
@@ -46,6 +49,108 @@ const useCases = [
   },
 ]
 
+const howItWorks = [
+  {
+    step: '01',
+    title: 'Ship',
+    description: 'A pre-configured Mac Mini with n8n, Ollama, and your industry workflows — ready to plug in.',
+    icon: Server,
+  },
+  {
+    step: '02',
+    title: 'Connect',
+    description: 'We integrate with your email, accounting, CRM, and phone system. Remote setup, no tech skills needed.',
+    icon: Settings,
+  },
+  {
+    step: '03',
+    title: 'AI Works',
+    description: 'Nous processes emails, handles calls, extracts documents, and updates your systems — 24/7.',
+    icon: Cpu,
+  },
+  {
+    step: '04',
+    title: 'Results',
+    description: 'Morning dashboard shows everything your AI did overnight. Review, approve, done.',
+    icon: TrendingUp,
+  },
+]
+
+const flowDemos = [
+  {
+    title: 'Expense to QuickBooks',
+    subtitle: 'AI reading receipts while you sleep',
+    steps: [
+      {
+        icon: '📸',
+        label: 'Receipt Photo',
+        detail: 'Email or uploaded to your inbox',
+        color: 'from-cyan-500/20 to-blue-500/20',
+      },
+      {
+        icon: '🔍',
+        label: 'AI Extract',
+        detail: 'Vendor, date, amount, category detected',
+        color: 'from-primary-500/20 to-cyan-500/20',
+      },
+      {
+        icon: '🏷️',
+        label: 'Categorize',
+        detail: 'Matched against 90-day history',
+        color: 'from-accent-purple/20 to-primary-500/20',
+      },
+      {
+        icon: '📊',
+        label: 'QuickBooks Entry',
+        detail: 'Auto-created with approval pending',
+        color: 'from-green-500/20 to-emerald-500/20',
+      },
+      {
+        icon: '✅',
+        label: 'Confirmation',
+        detail: 'Logged to audit trail, email receipt sent',
+        color: 'from-emerald-500/20 to-green-500/20',
+      },
+    ],
+  },
+  {
+    title: 'Service to Payment',
+    subtitle: 'Complete job-to-payment automation',
+    steps: [
+      {
+        icon: '🎯',
+        label: 'Service Complete',
+        detail: 'Logged in your operations system',
+        color: 'from-blue-500/20 to-cyan-500/20',
+      },
+      {
+        icon: '📝',
+        label: 'Generate Invoice',
+        detail: 'With all service details and pricing',
+        color: 'from-primary-500/20 to-blue-500/20',
+      },
+      {
+        icon: '✉️',
+        label: 'Email Client',
+        detail: 'Professional template, payment link included',
+        color: 'from-accent-purple/20 to-primary-500/20',
+      },
+      {
+        icon: '💳',
+        label: 'Stripe Payment',
+        detail: 'Client pays securely, funds settle overnight',
+        color: 'from-orange-500/20 to-yellow-500/20',
+      },
+      {
+        icon: '📚',
+        label: 'Record in Books',
+        detail: 'Automatic accounting entry + reconciliation',
+        color: 'from-green-500/20 to-emerald-500/20',
+      },
+    ],
+  },
+]
+
 const industryIcons: Record<string, typeof Coffee> = {
   cafe: Coffee,
   cpa: FileText,
@@ -55,70 +160,48 @@ const industryIcons: Record<string, typeof Coffee> = {
   realty: Home,
 }
 
-const howItWorks = [
-  {
-    step: '01',
-    title: 'We Ship Your Nous',
-    description: 'A pre-configured Mac Mini with n8n, Ollama, and your industry workflows — ready to plug in.',
-    icon: Server,
-  },
-  {
-    step: '02',
-    title: 'Connect Your Tools',
-    description: 'We integrate with your email, accounting, CRM, and phone system. Remote setup, no tech skills needed.',
-    icon: Settings,
-  },
-  {
-    step: '03',
-    title: 'AI Goes to Work',
-    description: 'Nous processes emails, handles calls, extracts documents, and updates your systems — 24/7.',
-    icon: Cpu,
-  },
-  {
-    step: '04',
-    title: 'You Wake Up to Results',
-    description: 'Morning dashboard shows everything your AI did overnight. Review, approve, done.',
-    icon: TrendingUp,
-  },
-]
-
 export function HomePage() {
   const [showROICalculator, setShowROICalculator] = useState(false)
 
+
   return (
     <>
+      {/* 1. HERO SECTION */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 bg-grid">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-accent-pink/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '4s' }} />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Badge */}
             <div className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-8">
               <Sparkles className="w-4 h-4 text-accent-purple" />
-              <span className="text-sm">Powered by n8n + Ollama &bull; Local-first AI &bull; Your data never leaves your building</span>
+              <span className="text-sm">Local AI · Your data never leaves your building · ~$2/mo to run</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-              Your AI Employee<br />
-              <span className="gradient-text">That Never Sleeps</span>
+            {/* Headline */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight max-w-4xl">
+              Your Business Has a<br />
+              <span className="gradient-text">Night Shift Now</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-dark-300 mb-8 max-w-3xl mx-auto text-balance">
-              A Mac Mini in your office that processes emails, handles phone calls, 
-              extracts documents into QuickBooks, and manages your operations — all while you sleep.
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-dark-300 mb-8 max-w-3xl text-balance">
+              A Mac Mini in your office that reads emails, answers phones, files receipts into QuickBooks, and syncs your CRM — all while you sleep. No cloud. No monthly fees. Just results.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
               <Link to="/contact" className="btn-primary flex items-center space-x-2 text-lg px-8 py-4">
                 <span>Book a Demo</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <button 
+              <button
                 className="btn-secondary flex items-center space-x-2 text-lg px-8 py-4"
                 onClick={() => setShowROICalculator(true)}
               >
@@ -127,7 +210,8 @@ export function HomePage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16">
+            {/* Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mb-16">
               {[
                 { value: 'from $2,800', label: 'One-Time Setup' },
                 { value: '~$2/mo', label: 'Running Cost' },
@@ -147,20 +231,15 @@ export function HomePage() {
               ))}
             </div>
 
+            {/* Mac Mini Visualization */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               className="relative max-w-5xl mx-auto"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent z-10 pointer-events-none" />
               <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-primary-500/10">
-                <img 
-                  src="/images/hero-device.png" 
-                  alt="Nous AI - Mac Mini automation appliance on desk" 
-                  className="w-full h-auto"
-                  loading="eager"
-                />
+                <MacMiniVisualization />
               </div>
             </motion.div>
           </motion.div>
@@ -171,37 +250,39 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-24 relative">
+      {/* 2. SOCIAL PROOF BAR */}
+      <section className="py-12 bg-dark-900/50 border-t border-b border-white/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="section-title">What <span className="gradient-text">Nous</span> Does While You Sleep</h2>
-            <p className="section-subtitle">Real automation powered by n8n workflows and local AI. Not another chatbot wrapper.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {useCases.map((useCase, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="card group"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${useCase.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <useCase.icon className="w-6 h-6 text-primary-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
-                <p className="text-dark-400 text-sm mb-4">{useCase.description}</p>
-                <div className="text-primary-400 text-sm font-semibold">{useCase.stats}</div>
-              </motion.div>
-            ))}
+          <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16"
+            >
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold gradient-text">40+</div>
+                <div className="text-dark-400 text-sm mt-2">Businesses Automated</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-white/10" />
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold gradient-text">6</div>
+                <div className="text-dark-400 text-sm mt-2">Industries Covered</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-white/10" />
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold gradient-text">$3.5M+</div>
+                <div className="text-dark-400 text-sm mt-2">Total Client Savings</div>
+              </div>
+            </motion.div>
+            <p className="text-dark-400 mt-8">
+              Trusted by 40+ businesses across 6 industries
+            </p>
           </div>
         </div>
       </section>
 
-      <WorkflowDemo />
-
+      {/* 3. HOW IT WORKS */}
       <section className="py-24 bg-dark-900/50 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -237,100 +318,41 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* 4. FLAGSHIP FLOW DEMOS */}
       <section className="py-24 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="section-title">The <span className="gradient-text">Receipts</span></h2>
-            <p className="section-subtitle">Real outputs from real Nous deployments. Not mockups.</p>
+            <h2 className="section-title">Watch <span className="gradient-text">Nous Work</span></h2>
+            <p className="section-subtitle">Real automation. Real results. No cloud involved.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card"
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded bg-primary-500/20 flex items-center justify-center">
-                  <BarChart3 className="w-4 h-4 text-primary-400" />
-                </div>
-                <span className="text-sm text-dark-400">OVERNIGHT REPORT &bull; CPA PRACTICE</span>
-              </div>
-              <div className="font-mono text-sm space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Receipts extracted:</span>
-                  <span className="text-white">312</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Pushed to QuickBooks:</span>
-                  <span className="text-white">298</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Emails triaged:</span>
-                  <span className="text-white">128</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Auto-responses sent:</span>
-                  <span className="text-white">23</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Items flagged for review:</span>
-                  <span className="text-yellow-400">3</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-dark-400">Accuracy rate:</span>
-                  <span className="text-green-400">97.1%</span>
-                </div>
-                <div className="flex justify-between pt-2 border-t border-white/10">
-                  <span className="text-dark-400">Processing cost:</span>
-                  <span className="text-green-400">$4.27</span>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card"
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded bg-yellow-500/20 flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-yellow-400" />
-                </div>
-                <span className="text-sm text-dark-400">INVOICE AUDIT ALERT &bull; CAFE</span>
-              </div>
-              <div className="space-y-3">
-                <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
-                  <div className="text-yellow-400 text-sm font-medium mb-1">Price Increase Detected</div>
-                  <div className="text-dark-300 text-sm">
-                    <strong>Supplier:</strong> Fresh Produce Co.<br/>
-                    <strong>Item:</strong> Avocados (case)<br/>
-                    <strong>Previous:</strong> $42.00 &rarr; <strong>Current:</strong> $48.30<br/>
-                    <strong>Change:</strong> +15% vs 90-day average
-                  </div>
-                </div>
-                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <div className="text-green-400 text-sm font-medium mb-1">Duplicate Invoice Caught</div>
-                  <div className="text-dark-300 text-sm">
-                    <strong>Vendor:</strong> Paper Supplies Inc.<br/>
-                    <strong>Amount:</strong> $347.50 &bull; Already paid on 01/15<br/>
-                    <strong>Saved:</strong> $347.50
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <span className="text-xs px-3 py-1 bg-green-500/20 text-green-400 rounded-full">Approve</span>
-                  <span className="text-xs px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full">Flag for Review</span>
-                  <span className="text-xs px-3 py-1 bg-red-500/20 text-red-400 rounded-full">Dispute</span>
-                </div>
-              </div>
-            </motion.div>
+            {flowDemos.map((demo, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <AnimatedFlow
+                  title={demo.title}
+                  subtitle={demo.subtitle}
+                  steps={demo.steps}
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="products" className="py-24 bg-dark-900/50 relative">
+      {/* 5. SECOND BRAIN SECTION */}
+      <section className="py-24 bg-dark-900/50 relative overflow-hidden">
+        <SecondBrainSection />
+      </section>
+
+      {/* 6. PRODUCT TIER COMPARISON */}
+      <section id="products" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="section-title">Choose Your <span className="gradient-text">Nous</span></h2>
@@ -339,8 +361,8 @@ export function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {products.map((product, i) => (
-              <ProductCard 
-                key={i} 
+              <ProductCard
+                key={i}
                 id={product.id}
                 name={product.name}
                 tagline={product.tagline}
@@ -374,7 +396,8 @@ export function HomePage() {
         </div>
       </section>
 
-      <section id="industries" className="py-24 relative">
+      {/* 7. INDUSTRY CAROUSEL */}
+      <section id="industries" className="py-24 bg-dark-900/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="section-title">Pre-Configured for <span className="gradient-text">Your Industry</span></h2>
@@ -439,81 +462,41 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-24 bg-dark-900/50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      {/* 8. USE CASES PREVIEW GRID */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="section-title">Two Ways to <span className="gradient-text">Work With Us</span></h2>
-            <p className="section-subtitle">Whether you're a coffee shop or a Fortune 500 bank</p>
+            <h2 className="section-title">What <span className="gradient-text">Nous</span> Does While You Sleep</h2>
+            <p className="section-subtitle">Real automation powered by n8n workflows and local AI. Not another chatbot wrapper.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card border-primary-500/20 hover:border-primary-500/40 transition-colors"
-            >
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-cyan-500/20 flex items-center justify-center">
-                  <Cpu className="w-6 h-6 text-primary-400" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {useCases.map((useCase, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="card group"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${useCase.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <useCase.icon className="w-6 h-6 text-primary-400" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold">Nous AI Products</h3>
-                  <p className="text-primary-400 text-sm">For small businesses</p>
-                </div>
-              </div>
-              <p className="text-dark-300 mb-6">
-                AI automation hardware that handles calls, emails, invoices, and scheduling. 
-                Like hiring a night-shift employee who never calls in sick.
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Mac Mini with n8n + Ollama pre-configured</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Voice AI, email automation, document processing</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> QuickBooks, CRM, and 50+ integrations</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Your data stays local — no cloud fees</li>
-              </ul>
-              <div className="flex items-center justify-between">
-                <div className="text-dark-400">From <span className="text-white font-bold text-xl">$2,800</span></div>
-                <Link to="/pricing" className="text-primary-400 hover:text-primary-300 font-medium">See Pricing &rarr;</Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card border-accent-purple/20 hover:border-accent-purple/40 transition-colors"
-            >
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-purple/20 to-pink-500/20 flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-accent-purple" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold">Enterprise Consulting</h3>
-                  <p className="text-accent-purple text-sm">For banks & fintechs</p>
-                </div>
-              </div>
-              <p className="text-dark-300 mb-6">
-                Banking infrastructure expertise from someone who's built it. 
-                BaaS architecture, payment systems, compliance automation, legacy modernization.
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> 15+ years production banking systems</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> $3.5M+ documented client savings</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> 100% regulatory compliance track record</li>
-                <li className="flex items-center text-dark-300 text-sm"><Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> CISM certified</li>
-              </ul>
-              <div className="flex items-center justify-between">
-                <div className="text-dark-400">From <span className="text-white font-bold text-xl">$200/hr</span></div>
-                <Link to="/solutions/enterprise" className="text-accent-purple hover:text-accent-purple/80 font-medium">Learn More &rarr;</Link>
-              </div>
-            </motion.div>
+                <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
+                <p className="text-dark-400 text-sm mb-4">{useCase.description}</p>
+                <div className="text-primary-400 text-sm font-semibold">{useCase.stats}</div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="roi" className="py-24 relative">
+      {/* 9. CASE STUDIES SECTION */}
+      <CaseStudiesSection limit={3} />
+
+      {/* 10. ROI CALCULATOR SECTION */}
+      <section id="roi" className="py-24 bg-dark-900/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="section-title">Calculate Your <span className="gradient-text">ROI</span></h2>
@@ -523,55 +506,10 @@ export function HomePage() {
         </div>
       </section>
 
-      <CaseStudiesSection limit={3} />
-
-      <section className="py-24 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="section-title">Built by <span className="gradient-text">Builders</span></h2>
-              <p className="text-dark-300 mb-6">
-                Denivra was founded by a technologist who got tired of enterprise bloatware. 
-                We build AI that actually works — not another dashboard that requires three consultants to configure.
-              </p>
-              <p className="text-dark-300 mb-8">
-                Our approach: <strong className="text-white">Local-first AI</strong>. Your data stays on hardware you own. 
-                No cloud subscriptions bleeding your budget. No vendor lock-in. Just a Mac Mini in your office 
-                running autonomous AI that works while you sleep.
-              </p>
-              <Link to="/about" className="text-primary-400 hover:text-primary-300 font-medium">
-                About Denivra &rarr;
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: Lock, label: 'Local-First', desc: 'Your data, your building' },
-                { icon: Globe, label: 'No Cloud Fees', desc: '$2/mo electricity' },
-                { icon: Clock, label: '24/7 Operation', desc: 'Never sleeps, never quits' },
-                { icon: Zap, label: 'Fast Setup', desc: 'Under 2 weeks live' },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="card text-center"
-                >
-                  <item.icon className="w-8 h-8 mx-auto mb-3 text-primary-400" />
-                  <div className="font-semibold text-sm">{item.label}</div>
-                  <div className="text-dark-400 text-xs">{item.desc}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* 11. FINAL CTA */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-accent-purple/10 to-accent-pink/10" />
-        
+
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -579,7 +517,7 @@ export function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Hire Your<br /><span className="gradient-text">AI Employee?</span>
+              Ready to Put Your<br /><span className="gradient-text">Business on Autopilot?</span>
             </h2>
             <p className="text-xl text-dark-300 mb-8">
               Book a 15-minute demo. We'll show you exactly what Nous can automate for your business.
@@ -595,6 +533,7 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* ROI Calculator Modal */}
       <AnimatePresence>
         {showROICalculator && (
           <motion.div
