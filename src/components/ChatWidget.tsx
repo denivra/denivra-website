@@ -191,7 +191,7 @@ export function ChatWidget() {
       }
     }
 
-    ws.onerror = (error) => {
+    ws.onerror = () => {
       // console.error('WebSocket error:', error)
       setIsConnected(false)
     }

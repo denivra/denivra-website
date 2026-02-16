@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Clock, User, Calendar, Bot, Share2, Twitter, Linkedin } from 'lucide-react'
+import { ArrowLeft, Clock, Calendar, Bot, Twitter, Linkedin } from 'lucide-react'
 import { getBlogPost, blogPosts } from '../../data/blogPosts'
 import { ChatWidget } from '../../components/ChatWidget'
 

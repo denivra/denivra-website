@@ -1,7 +1,7 @@
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  ArrowLeft, Check, ArrowRight, Star, Clock, 
+  ArrowLeft, Check, Star, Clock, 
   Shield, Zap, Play, Headphones, Cpu,
   Coffee, Scissors, FileText, Building2, Home, Briefcase
 } from 'lucide-react'

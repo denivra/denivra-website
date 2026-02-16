@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { 
-  Phone, PhoneCall, Mic, Volume2, Globe, Clock,
-  CheckCircle2, ArrowRight, Bot, Zap, Brain, Settings,
-  MessageSquare, Calendar, FileText, Shield
-} from 'lucide-react'
+import { PhoneCall, Mic, Volume2, Globe,
+  CheckCircle2, ArrowRight, Bot, Zap, Brain, Settings} from 'lucide-react'
 import { ChatWidget } from '../../components/ChatWidget'
 
 const capabilities = [

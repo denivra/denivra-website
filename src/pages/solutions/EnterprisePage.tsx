@@ -1,12 +1,10 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Building2, Shield, Server, Lock, Users, Zap, Award,
-  CheckCircle2, ArrowRight, BarChart3, Bot, Globe,
-  FileCode, Layers, Cpu, Database, GitBranch, Phone,
-  CreditCard, FileSearch, Network, ShieldCheck, HardDrive,
-  ChevronRight
-} from 'lucide-react'
+  Building2, Shield,
+  CheckCircle2, ArrowRight,
+  FileCode, Layers,
+  CreditCard, FileSearch, Network, ShieldCheck, HardDrive} from 'lucide-react'
 
 const credentials = [
   { value: '$3.5M+', label: 'Cost Savings Documented' },

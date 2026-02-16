@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Mail, FileText, Calculator, CreditCard, CheckCircle, 
-  ArrowRight, MessageSquare, Users, Receipt, Send,
+  Mail, FileText, Calculator, CreditCard, CheckCircle, MessageSquare, Users, Receipt, Send,
   ChevronRight
 } from 'lucide-react'
 

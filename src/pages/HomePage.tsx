@@ -2,11 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Phone, Mail, MessageSquare, Zap, Clock, 
+  Phone, MessageSquare, Mail, Calculator, Zap, Clock, 
   BarChart3, ChevronDown,
-  Sparkles, Shield, Globe, ArrowRight, Check, Calculator,
-  Coffee, Building2, Scissors, Briefcase, Home, FileText,
-  Play, Star, X, Cpu, Server, Lock,
+  Sparkles, Shield, Globe, ArrowRight, Check,
+  Coffee, Building2, Scissors, Briefcase, Home, FileText, Star, X, Cpu, Server, Lock,
   Headphones, Settings, TrendingUp
 } from 'lucide-react'
 import { ROICalculator } from '../components/ROICalculator'

@@ -92,7 +92,7 @@ export function BlogSection({ limit = 4, showTitle = true, showViewAll = true }:
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {displayPosts.map((post, i) => (
-            <BlogCard key={post.id} post={post} index={i} />
+            <BlogCard key={post.slug} post={post} index={i} />
           ))}
         </div>
 

@@ -48,7 +48,7 @@ const tierStyles: Record<string, string> = {
 export function AutomationsPage() {
   const [selectedCategory, setSelectedCategory] = useState<Automation['category'] | 'all'>('all')
 
-  const categories = ['all', ...Object.keys(categoryLabels)] as const
+  const categories: (Automation['category'] | 'all')[] = ['all', ...Object.keys(categoryLabels) as Automation['category'][]]
   
   const filteredAutomations = selectedCategory === 'all' 
     ? automations 

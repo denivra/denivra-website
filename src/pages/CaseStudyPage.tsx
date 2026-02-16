@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Building2, Clock, CheckCircle2, TrendingUp, Quote, ChevronRight, Bot } from 'lucide-react'
+import { Building2, CheckCircle2, TrendingUp, Quote, ChevronRight, Bot } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import { caseStudies } from '../data/caseStudies'
 import { ChatWidget } from '../components/ChatWidget'

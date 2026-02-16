@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Phone, PhoneCall, Clock, DollarSign, Users, TrendingDown, 
-  CheckCircle2, ArrowRight, BarChart3, Headphones, Bot, Zap,
+  Phone, PhoneCall, Clock, TrendingDown, 
+  CheckCircle2, ArrowRight, BarChart3, Headphones, Zap,
   Globe, Shield, MessageSquare
 } from 'lucide-react'
 

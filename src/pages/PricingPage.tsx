@@ -2,10 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Check, X, ArrowRight, HelpCircle, Phone, Mail,
-  Zap, Shield, Clock, Users, BarChart3, MessageSquare,
-  Headphones, Settings, Cpu, Wrench, Star
-} from 'lucide-react'
+  Check, ArrowRight, HelpCircle, Phone, Mail, Shield, Clock, BarChart3, Settings, Cpu, Wrench} from 'lucide-react'
 import { products } from '../data/products'
 import { supportTiers, deploymentPackages } from '../data/managedServices'
 

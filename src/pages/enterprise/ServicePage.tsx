@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  ArrowRight, Check, ChevronRight, Calendar, ArrowLeft, Phone
+  ArrowRight, Check, ChevronRight, Calendar, Phone
 } from 'lucide-react'
 import { getServiceById, enterpriseServices } from '../../data/enterpriseServices'
 

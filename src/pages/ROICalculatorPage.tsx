@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Bot, Calculator, DollarSign, Clock, TrendingUp, Users,
-  ArrowRight, Check, Phone, Mail, Zap
+  Bot, Calculator, DollarSign, Clock, TrendingUp, Check, Phone, Zap
 } from 'lucide-react'
 
 const industries = [
@@ -38,7 +37,6 @@ export function ROICalculatorPage() {
   const weeklyManualHours = teamSize * hoursOnManualTasks
   const weeklyManualCost = weeklyManualHours * avgHourlyCost
   const monthlyManualCost = weeklyManualCost * 4.33
-  const yearlyManualCost = monthlyManualCost * 12
 
   const automationRate = packageData.automationPercent / 100
   const adjustedAutomationRate = automationRate * industryData.multiplier

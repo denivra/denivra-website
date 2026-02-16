@@ -4,10 +4,9 @@ import { motion } from 'framer-motion'
 import {
   Mail, MessageSquare, FileText, Calculator, Users, Calendar,
   Phone, Settings, ShoppingCart, Shield, Megaphone, UserPlus,
-  ArrowRight, Clock, Wrench
-} from 'lucide-react'
+  ArrowRight, Clock} from 'lucide-react'
 import {
-  useCases, categoryLabels, categoryIcons,
+  useCases, categoryIcons,
   getAllCategories, UseCaseCategory
 } from '../data/useCases'
 

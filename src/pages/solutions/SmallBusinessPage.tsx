@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
-  Building2, Clock, DollarSign, Mail, MessageSquare, Phone,
-  CheckCircle2, ArrowRight, Calendar, FileText, Bot, Zap,
-  Users, TrendingUp, Sparkles
+  Building2, Mail, MessageSquare, Phone,
+  CheckCircle2, ArrowRight, Calendar, FileText, TrendingUp, Sparkles
 } from 'lucide-react'
 
 const benefits = [

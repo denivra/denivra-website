@@ -15,9 +15,7 @@ import {
 } from 'lucide-react'
 import {
   getUseCaseById, getUseCasesByCategory,
-  categoryLabels, categoryIcons,
-  UseCaseCategory
-} from '../data/useCases'
+  categoryLabels, categoryIcons} from '../data/useCases'
 
 const lucideIconMap: Record<string, typeof Mail> = {
   Mail, MessageSquare, FileText, Calculator, Users, Calendar,

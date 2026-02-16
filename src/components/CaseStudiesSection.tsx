@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Building2, TrendingUp, Clock, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Building2, TrendingUp, Clock} from 'lucide-react'
 import { caseStudies, CaseStudy } from '../data/caseStudies'
 
 interface CaseStudyCardProps {

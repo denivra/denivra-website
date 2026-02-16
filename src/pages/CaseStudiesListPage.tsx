@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ArrowRight, Building2, Clock, TrendingUp, Filter } from 'lucide-react'
-import { caseStudies, CaseStudy } from '../data/caseStudies'
+import { ArrowLeft, ArrowRight, Building2, Clock, Filter } from 'lucide-react'
+import { caseStudies} from '../data/caseStudies'
 import { ChatWidget } from '../components/ChatWidget'
 
 export function CaseStudiesListPage() {
