@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, Cpu, HardDrive, MemoryStick } from 'lucide-react'
+import { Check, ArrowRight, Cpu, HardDrive, MemoryStick, Rocket, Zap, Building2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 interface ProductCardProps {
@@ -39,11 +39,7 @@ export function ProductCard({
     enterprise: 'from-purple-500 to-pink-500',
   }
 
-  const tierIcons = {
-    solo: '🚀',
-    pro: '⚡',
-    enterprise: '🏢',
-  }
+  const TierIcon = tier === 'solo' ? Rocket : tier === 'pro' ? Zap : Building2
 
   return (
     <motion.div
@@ -67,7 +63,7 @@ export function ProductCard({
         <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tierGradients[tier]} bg-opacity-20 flex items-center justify-center`}
           style={{ background: `linear-gradient(135deg, ${tier === 'solo' ? 'rgba(6,182,212,0.2)' : tier === 'pro' ? 'rgba(14,165,233,0.2)' : 'rgba(168,85,247,0.2)'}, ${tier === 'solo' ? 'rgba(59,130,246,0.2)' : tier === 'pro' ? 'rgba(168,85,247,0.2)' : 'rgba(236,72,153,0.2)'})` }}
         >
-          <span className="text-2xl">{tierIcons[tier]}</span>
+          <TierIcon className="w-6 h-6 text-white" />
         </div>
         <div className="text-xs px-3 py-1 rounded-full bg-white/5 text-dark-300">
           {workflowCount} workflows

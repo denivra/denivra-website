@@ -1,0 +1,21 @@
+Notes for the website:
+* I want you to check the news solo.
+* I think of the capabilities we have to add more stuff like a light connection to HubSpot.
+* Summary of the emails.
+* Propose actions.
+* The fact that it can be controlled through Telegram messages.
+* Have something like "Hey, you can text him anytime and it will do the work" (even if it has to do research, has to access your local files, has to send text messages or emails and get answers to get your job done). This is what it does.
+* So I just want to make it more appealing. It seems like the 7 automations or like I don't know, we may need to revise it.
+* Also, there's no pictures - nothing. You don't think we need to have pictures?
+* You have emojis, but you don't think emojis or for professional websites. I don't know.
+* Let me know what you think.
+Also, I think we need to add some use cases or we need to create a page with use cases. It can be 50, 60 use cases, but you have to fucking describe them well. You need to create some flows so they can see how the whole thing moves, or maybe some infographics. Then, in each one of the products, we will have a list with the use cases that are applicable. All they have to do is click, and it will send them to the page that gets very well analyzed. I think that's a must. And you know, you have to think from and with the mindset of a business owner who struggles. Now, a lot of times he doesn't even know that he struggles. 
+
+Also maybe it makes sense under its news to have how many flows they're coming with the box. Let's say we're asking for 2,400 and you get 6, 7, or 8 automations ready. What I want to do is list automations available so they get a spot of what else they can do. Of course it's not included and it can be done with an additional cost. 
+
+Also, figure out a way how you can add animations. For example, have a use case that somebody reads his email. He identified expenses, he does a classification, and then it makes an API call with his accounting software. That it can be QuickBooks and do the entries.
+
+When somebody gets a message from an employee saying that the service the customer Mr. Smith at whatever address has been completed, we can send the invoice. Then automatically the system can go see the actual work within Hubspot, add the message as a confirmation that the service was completed, and then go through, creating a voice, sending it over along with a Stripe link in order to get the payment. When the payment gets received, boom, the cycle was closed, so something like that but with every use case so people can see how it actually works. If you don't see how it works, you will never ever be like a believer and a buyer. 
+
+Also I want you to assess the colors of the website. That dark blue, I don't know if it's appropriate. You need to find other very successful websites with similar concepts and their customers are trying to approach and see how and what they're using so we can use the same. 
+

@@ -2,15 +2,16 @@ import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   ArrowLeft, Check, ArrowRight, Zap, Play, 
-  Cpu, HardDrive, MemoryStick, Brain, Headphones
+  Cpu, HardDrive, MemoryStick, Brain, Headphones,
+  Rocket, Building2
 } from 'lucide-react'
 import { getProductById, Product } from '../../data/products'
 import { getAutomationsForTier } from '../../data/automations'
 
-const tierEmoji = {
-  solo: '🚀',
-  pro: '⚡',
-  enterprise: '🏢',
+const tierIconMap = {
+  solo: Rocket,
+  pro: Zap,
+  enterprise: Building2,
 }
 
 function ProductPageContent({ product }: { product: Product }) {
@@ -34,7 +35,7 @@ function ProductPageContent({ product }: { product: Product }) {
           >
             <div>
               <div className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-6">
-                <span className="text-2xl">{tierEmoji[product.tier]}</span>
+                {(() => { const TierIcon = tierIconMap[product.tier]; return <TierIcon className="w-5 h-5 text-primary-400" />; })()}
                 <span className="text-sm">{product.tagline}</span>
               </div>
 

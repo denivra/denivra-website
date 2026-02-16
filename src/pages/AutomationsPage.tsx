@@ -2,13 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  Bot, ArrowLeft, Phone, Mail, MessageSquare, FileText, 
+  Phone, Mail, MessageSquare, FileText, 
   BarChart3, Calendar, Thermometer, Star, GraduationCap,
   Calculator, DollarSign, CloudSun, MapPin, Users, Server,
-  Menu, X, Check, ArrowRight, Inbox, FileSearch
+  ArrowRight, Inbox, FileSearch
 } from 'lucide-react'
 import { automations, Automation } from '../data/automations'
-import { ChatWidget } from '../components/ChatWidget'
 
 const categoryLabels: Record<Automation['category'], string> = {
   communication: 'Communication',
