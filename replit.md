@@ -8,13 +8,21 @@ The site is a React single-page application with client-side routing, built with
 
 ## Recent Changes (Feb 2026)
 
+- **Use Cases System**: New `useCases.ts` data file with 68 detailed use cases, each with workflow steps, tier applicability, tools, and industry mapping. New UseCasesPage and UseCaseDetailPage with animated workflow visualizations
+- **Animated Workflow Demos**: WorkflowDemo component on homepage showing 3 real-world automation flows (Email→QuickBooks, Service→Invoice→Stripe, Telegram Command) with animated step-by-step diagrams
+- **Emoji → Icon Migration**: All emojis replaced with Lucide icons across ProductCard, ProductPage, IndustryPage for professional look
+- **Solo Capabilities Enhanced**: Added Telegram control ("message it anytime"), email summaries with proposed actions, HubSpot light sync, research tasks, local file access to Nous Solo product data
+- **Images Added**: Hero device image, product Mac Mini image, workflow illustration, office setup photo in public/images/
+- **Navigation Updated**: Added "Use Cases" link to desktop and mobile navigation
+- **Product Pages Enhanced**: Now show included workflow count per tier, link to filtered use cases page with workflow diagrams
+- **AutomationsPage Fixed**: Removed duplicate nav/footer/ChatWidget, now uses shared Layout; fixed old tier names (Assist/Connect/Command → Solo/Pro/Enterprise)
 - **Product Tier Rename**: Assist → Solo ($2,800), Connect → Pro ($4,800), Command → Enterprise ($7,500)
 - **Hardware Specs Added**: Each tier now shows Apple M4 chip, RAM (24GB/48GB), storage, and LLM capability
 - **Managed Services Data**: New `managedServices.ts` with support tiers ($99/$249/mo) and managed services packages ($499+/mo)
-- **Homepage Rebuild**: New hero "Your AI Employee That Never Sleeps", n8n+Ollama badge, hardware-first messaging
+- **Homepage Rebuild**: New hero "Your AI Employee That Never Sleeps", n8n+Ollama badge, hardware-first messaging, hero device image
 - **Pricing Page Rebuild**: Tabbed interface (Hardware + Setup vs Support & Managed Services), deployment packages, FAQ
 - **Product/Industry Pages**: Show recommended tier, "starts from" pricing, hardware specs
-- **Solution/Enterprise Pages Cleanup**: Removed duplicate nav/footer/ChatWidget from SmallBusinessPage, EnterprisePage, CallCentersPage, ServicePage — all now use shared Layout
+- **Solution/Enterprise Pages Cleanup**: Removed duplicate nav/footer/ChatWidget from SmallBusinessPage, EnterprisePage, CallCentersPage, ServicePage, AutomationsPage — all now use shared Layout
 - **Updated product references**: All "Nous Assist"→"Nous Solo", "Nous Connect"→"Nous Pro" across solution pages
 - **Vite config cleaned**: Removed merge conflict, removed console/debugger stripping from dev mode
 
@@ -46,6 +54,7 @@ Key route groups:
 - `/enterprise/:serviceId` — Enterprise service detail pages
 - `/blog`, `/blog/:slug` — Blog listing and individual posts
 - `/case-studies`, `/case-studies/:slug` — Case study listing and detail
+- `/use-cases`, `/use-cases/:slug` — Use case listing and detail with workflow visualizations
 - `/pricing`, `/roi-calculator`, `/automations`, `/about`, `/contact`
 - `/privacy`, `/terms` — Legal pages
 
@@ -56,6 +65,7 @@ There is **no database**. All content is stored as TypeScript data files in `src
 - `industries.ts` — Six industry verticals with features, pricing, ROI data, recommended tier mapping
 - `blogPosts.ts` — Blog content with markdown-like string content
 - `caseStudies.ts` — Case study content with metrics and testimonials
+- `useCases.ts` — 68 detailed use cases with workflow steps, tier applicability, tools, and industry mapping
 - `automations.ts` — Automation capabilities catalog
 - `enterpriseServices.ts` — Enterprise consulting service descriptions
 - `chatbotKnowledge.ts` — SPIN-model sales knowledge base for the chatbot

@@ -2,17 +2,18 @@ import { useParams, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   ArrowLeft, Check, ArrowRight, Star, Clock, 
-  Shield, Zap, Play, Headphones, Cpu
+  Shield, Zap, Play, Headphones, Cpu,
+  Coffee, Scissors, FileText, Building2, Home, Briefcase
 } from 'lucide-react'
 import { getIndustryBySlug, Industry } from '../../data/industries'
 
-const industryEmoji: Record<string, string> = {
-  cafe: '☕',
-  salon: '💇',
-  cpa: '📊',
-  restaurant: '🍽️',
-  realty: '🏠',
-  payroll: '💰',
+const industryIconMap: Record<string, typeof Coffee> = {
+  cafe: Coffee,
+  salon: Scissors,
+  cpa: FileText,
+  restaurant: Building2,
+  realty: Home,
+  payroll: Briefcase,
 }
 
 function IndustryPageContent({ industry }: { industry: Industry }) {
@@ -32,7 +33,7 @@ function IndustryPageContent({ industry }: { industry: Industry }) {
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-6">
-              <span className="text-2xl">{industryEmoji[industry.id] || '🏢'}</span>
+              {(() => { const IndustryIcon = industryIconMap[industry.id] || Building2; return <IndustryIcon className="w-5 h-5 text-primary-400" />; })()}
               <span className="text-sm">{industry.name}</span>
             </div>
 

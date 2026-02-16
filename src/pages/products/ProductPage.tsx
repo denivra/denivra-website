@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { getProductById, Product } from '../../data/products'
 import { getAutomationsForTier } from '../../data/automations'
+import { getUseCasesForTier } from '../../data/useCases'
 
 const tierIconMap = {
   solo: Rocket,
@@ -16,6 +17,7 @@ const tierIconMap = {
 
 function ProductPageContent({ product }: { product: Product }) {
   const availableAutomations = getAutomationsForTier(product.tier)
+  const tierUseCases = getUseCasesForTier(product.tier)
 
   return (
     <>
@@ -58,6 +60,14 @@ function ProductPageContent({ product }: { product: Product }) {
             </div>
 
             <div className="card">
+              <div className="mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-dark-800 to-dark-900">
+                <img 
+                  src="/images/product-mac-mini.png" 
+                  alt={`${product.name} - Mac Mini AI appliance`}
+                  className="w-full h-48 object-cover opacity-90"
+                  loading="eager"
+                />
+              </div>
               <h3 className="font-semibold text-lg mb-4">What's Included</h3>
               
               <div className="grid grid-cols-3 gap-4 p-4 rounded-xl bg-white/5 mb-6">
@@ -154,12 +164,12 @@ function ProductPageContent({ product }: { product: Product }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              <span className="gradient-text">{availableAutomations.length}</span> Automations Available
+              <span className="gradient-text">{product.workflowCount}</span> Pre-Built Workflows Included
             </h2>
-            <p className="text-dark-400">{product.workflowCount} pre-built workflows ready to deploy</p>
+            <p className="text-dark-400">Ready to deploy out of the box. {tierUseCases.length}+ use cases available.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {availableAutomations.slice(0, 8).map((automation, i) => (
               <motion.div
                 key={i}
@@ -175,13 +185,24 @@ function ProductPageContent({ product }: { product: Product }) {
             ))}
           </div>
 
-          {availableAutomations.length > 8 && (
-            <div className="text-center mt-8">
-              <Link to="/automations" className="text-primary-400 hover:text-primary-300 transition-colors">
-                View all {availableAutomations.length} automations &rarr;
+          <div className="text-center space-y-3">
+            {availableAutomations.length > 8 && (
+              <div>
+                <Link to="/automations" className="text-primary-400 hover:text-primary-300 transition-colors">
+                  View all {availableAutomations.length} automations &rarr;
+                </Link>
+              </div>
+            )}
+            <div>
+              <Link 
+                to={`/use-cases?tier=${product.tier}`}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-primary-500/10 to-accent-purple/10 border border-primary-500/20 rounded-xl text-primary-400 hover:border-primary-500/40 transition-colors"
+              >
+                <span>Browse {tierUseCases.length}+ use cases with workflow diagrams</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          )}
+          </div>
         </div>
       </section>
 

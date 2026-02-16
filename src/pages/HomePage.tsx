@@ -12,6 +12,7 @@ import {
 import { ROICalculator } from '../components/ROICalculator'
 import { ProductCard } from '../components/ProductCard'
 import { CaseStudiesSection } from '../components/CaseStudiesSection'
+import { WorkflowDemo } from '../components/WorkflowDemo'
 import { products } from '../data/products'
 import { industries } from '../data/industries'
 
@@ -127,7 +128,7 @@ export function HomePage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16">
               {[
                 { value: 'from $2,800', label: 'One-Time Setup' },
                 { value: '~$2/mo', label: 'Running Cost' },
@@ -146,6 +147,23 @@ export function HomePage() {
                 </motion.div>
               ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="relative max-w-5xl mx-auto"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent z-10 pointer-events-none" />
+              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-primary-500/10">
+                <img 
+                  src="/images/hero-device.png" 
+                  alt="Nous AI - Mac Mini automation appliance on desk" 
+                  className="w-full h-auto"
+                  loading="eager"
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -182,6 +200,8 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      <WorkflowDemo />
 
       <section className="py-24 bg-dark-900/50 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />

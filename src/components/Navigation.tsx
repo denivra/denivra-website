@@ -84,6 +84,7 @@ export function Navigation() {
             </div>
             
             <Link to="/pricing" className="text-dark-300 hover:text-white transition-colors">Pricing</Link>
+            <Link to="/use-cases" className="text-dark-300 hover:text-white transition-colors">Use Cases</Link>
             <Link to="/case-studies" className="text-dark-300 hover:text-white transition-colors">Case Studies</Link>
             <Link
               to="/contact"
@@ -136,6 +137,7 @@ export function Navigation() {
               
               <div className="pt-4 border-t border-white/10 space-y-2">
                 <Link to="/pricing" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+                <Link to="/use-cases" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Use Cases</Link>
                 <Link to="/case-studies" className="block py-2 text-dark-300 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Case Studies</Link>
                 <Link
                   to="/contact"

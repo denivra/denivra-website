@@ -27,6 +27,9 @@ const IndustryPage = lazy(() => import('./pages/industries/IndustryPage').then(m
 const CaseStudiesListPage = lazy(() => import('./pages/CaseStudiesListPage').then(m => ({ default: m.CaseStudiesListPage })))
 const CaseStudyPage = lazy(() => import('./pages/CaseStudyPage').then(m => ({ default: m.CaseStudyPage })))
 
+const UseCasesPage = lazy(() => import('./pages/UseCasesPage').then(m => ({ default: m.UseCasesPage })))
+const UseCaseDetailPage = lazy(() => import('./pages/UseCaseDetailPage').then(m => ({ default: m.UseCaseDetailPage })))
+
 const BlogListPage = lazy(() => import('./pages/blog/BlogListPage').then(m => ({ default: m.BlogListPage })))
 const BlogPostPage = lazy(() => import('./pages/blog/BlogPostPage').then(m => ({ default: m.BlogPostPage })))
 
@@ -69,6 +72,9 @@ export function Router() {
               <Route path="/industries/:slug" element={<IndustryPage />} />
               
               <Route path="/automations" element={<AutomationsPage />} />
+              
+              <Route path="/use-cases" element={<UseCasesPage />} />
+              <Route path="/use-cases/:slug" element={<UseCaseDetailPage />} />
               
               <Route path="/case-studies" element={<CaseStudiesListPage />} />
               <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
